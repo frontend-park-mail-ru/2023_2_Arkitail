@@ -13,10 +13,10 @@
 
 .place-card {
     height: var(--card-size);
-    background-color: blue; /* УБРАТЬ  */
     display: grid;
     grid-template-rows: 5fr 4fr;
     border-radius: var(--card-radius);
+    border: 2px solid var(--dark-gray);
 }
 
 .place-card section:first-child img {

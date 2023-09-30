@@ -11,6 +11,7 @@
     <link href="../../static/css/header.css" rel="stylesheet" />
     <link href="../../static/css/list-of-places.css" rel="stylesheet" />
     <link href="../../static/css/footer.css" rel="stylesheet" />
+    <link href="../../static/css/carousel.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -84,7 +85,130 @@
         <p>Войти</p>
       </button>
     </header>
+
     <main>
+      <div
+        class="carousel"
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="Popular places list"
+        data-carousel
+      >
+        <div class="carousel-buttons">
+          <button
+            class="carousel-button carousel-button_previous"
+            aria-label="Previous slide"
+            data-carousel-button-previous
+          >
+            <p>&#8249;</p>
+          </button>
+          <button
+            class="carousel-button carousel-button_next"
+            aria-label="Next slide"
+            data-carousel-button-next
+          >
+            <p>&#8250;</p>
+          </button>
+        </div>
+        <div class="slides" aria-live="polite" data-carousel-slides-container>
+          <div
+            class="slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden="false"
+            aria-labelledby="bob"
+          >
+            <img src="../../static/img/example1.jpg" />
+            <div class="desc">
+              <p>Название 1</p>
+              <button>
+                <p>Узнать больше</p>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden="true"
+            aria-labelledby="alice"
+          >
+            <img src="../../static/img/example0.jpg" />
+            <div class="desc">
+              <p>Название 2</p>
+              <button>
+                <p>Узнать больше</p>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden="true"
+            aria-labelledby="alice"
+          >
+            <img src="../../static/img/example.jpg" />
+            <div class="desc">
+              <p>Название 3</p>
+              <button>
+                <p>Узнать больше</p>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden="false"
+            aria-labelledby="bob"
+          >
+            <img src="../../static/img/example1.jpg" />
+            <div class="desc">
+              <p>Название 4</p>
+              <button>
+                <p>Узнать больше</p>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden="true"
+            aria-labelledby="alice"
+          >
+            <img src="../../static/img/example0.jpg" />
+            <div class="desc">
+              <p>Название 5</p>
+              <button>
+                <p>Узнать больше</p>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-hidden="true"
+            aria-labelledby="alice"
+          >
+            <img src="../../static/img/example.jpg" />
+            <div class="desc">
+              <p>Название 6</p>
+              <button>
+                <p>Узнать больше</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="list-of-places">
         <div class="place-card">
           <section>
@@ -186,4 +310,6 @@
       <p>© GoTo, Arkitail 2023. We love our users!</p>
     </footer>
   </body>
+
+  <script src="../js/carousel.js"></script>
 </html>
