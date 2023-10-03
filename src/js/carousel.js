@@ -8,13 +8,18 @@ function modulo(number, mod) {
 
 class Carousel {
 
-    constructor(carousel, numberOfVisibleSlides, switchingButtons = true, stopIfHover = true) {
+    constructor(carousel, numberOfVisibleSlides = 3, switchingButtons = true, stopIfHover = true) {
         this.carousel = carousel;
         this.slidesContainer = carousel.querySelector('[data-carousel-slides-container]');
         this.slides = this.slidesContainer.children
 
         this.currentSlide = 0;
-        this.carousel.style.setProperty('--slider-count', numberOfVisibleSlides)
+        if (numberOfVisibleSlides == 3) {
+            this.changeSliderCount()
+            window.addEventListener('resize', this.changeSliderCount.bind(this), true);
+        } else {
+            this.carousel.style.setProperty('--slider-count', numberOfVisibleSlides)
+        }
         this.numSlides = this.slidesContainer.children.length - numberOfVisibleSlides + 1;
 
         if (switchingButtons) {
@@ -35,6 +40,20 @@ class Carousel {
 
     }
 
+    changeSliderCount() {
+        const screenWidth = window.screen.width
+        if (screenWidth < 768) {
+            this.carousel.style.setProperty('--slider-count', 1)
+            this.numSlides = this.slidesContainer.children.length;
+        } else if (screenWidth < 1500) {
+            this.carousel.style.setProperty('--slider-count', 2)
+            this.numSlides = this.slidesContainer.children.length - 1;
+        } else {
+            this.carousel.style.setProperty('--slider-count', 3)
+            this.numSlides = this.slidesContainer.children.length - 2;
+        }
+    }
+
     handleNext() {
         this.currentSlide = modulo(this.currentSlide + 1, this.numSlides);
         this.carousel.style.setProperty('--current-slide', this.currentSlide);
@@ -46,7 +65,7 @@ class Carousel {
     }
 
     startSlideShow() {
-        this.slideInterval = setInterval(this.handleNext.bind(this), 1000); // Авто перелистывание спустя 10сек
+        this.slideInterval = setInterval(this.handleNext.bind(this), 10000); // Авто перелистывание спустя 10сек
     }
 
     stopSlideShow() {
@@ -63,6 +82,3 @@ class Carousel {
         this.buttonNext.style.display = "none";
     }
 }
-
-const carousels = document.querySelectorAll('[data-carousel]');
-carousels.forEach(carousel => new Carousel(carousel, 3));

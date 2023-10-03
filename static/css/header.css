@@ -1,14 +1,16 @@
 header {
-  background-color: var(--white);
+  box-sizing: border-box;
+  background-color: var(--footer-color);
   position: sticky;
   top: 0;
   width: 100%;
   padding-right: 1rem;
   z-index: 10;
-  height: 4rem;
+  height: var(--header-height);
 }
 
 header .logo {
+  width: var(--logo-wight);
   justify-self: center;
   display: inline-block;
   margin: .6rem 2rem .6rem calc(50% - 6.8rem);
@@ -126,6 +128,11 @@ header .logo {
 }
 
 @media (max-width: 768px) {
+  .nav {
+    top: var(--header-height);
+    z-index: 9;
+  }
+
   .btn-register {
     display: none;
   }

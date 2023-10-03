@@ -8,12 +8,13 @@
     --transparent-white: rgba(255, 255, 255, .8);
     --white: #fff;
     --black: #000;
+    --header-height: 4.2rem;
+    --logo-wight: 6rem;
 }
 
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
@@ -26,8 +27,4 @@ a {
 
 ul {
     list-style: none;
-}
-
-.logo {
-    width: 6rem;
 }

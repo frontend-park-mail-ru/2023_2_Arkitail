@@ -1,9 +1,6 @@
-:root {
+.list-of-places {
     --card-size: 20rem;
     --card-radius: 20px;
-}
-
-.list-of-places {
     display: grid;
     padding: 2rem 4rem;
     grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));

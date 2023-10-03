@@ -4,6 +4,7 @@
 }
 
 footer {
+    box-sizing: border-box;
     background-color: var(--footer-color);
     width: 100%;
     height: var(--footer-height);
@@ -12,7 +13,7 @@ footer {
 }
 
 main {
-    min-height: calc(100vh - var(--footer-height) - 4rem);
+    min-height: calc(100vh - var(--footer-height) - var(--header-height));
 }
 
 footer>* {
@@ -20,3 +21,6 @@ footer>* {
     margin: .6rem auto;
 }
 
+footer .logo {
+    width: var(--logo-wight);
+}

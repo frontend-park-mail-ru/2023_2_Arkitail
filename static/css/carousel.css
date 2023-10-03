@@ -1,8 +1,8 @@
 .carousel {
     --slider-width: 100%;
     --btn-size: 3rem;
-    --slider-count: 3;
 
+    --slider-count: 0;
     --current-slide: 0;
     position: relative;
     overflow: hidden;
