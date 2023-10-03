@@ -1,6 +1,7 @@
 const registrationForm = document.querySelector('form');
 
 const EMAIL_TEMPLATE = /^\S+@\S+\.\S+$/;
+
 const PASSWORD_LENTH_TEMPLATE = /^.{8,64}$/;
 const PASSWORD_LETTERS_TEMPLATE = /^.*([a-z].*[A-Z]|[A-Z].*[a-z]).*$/;
 const PASSWORD_DIGITS_TEMPLATE = /^.*\d+.*$/;
@@ -19,6 +20,7 @@ const formSubmitCallback = (e) => {
     };
 
     const formInputs = registrationForm.elements;
+
     const requestBody = JSON.stringify(
         {
             login: formInputs['name'].value,
