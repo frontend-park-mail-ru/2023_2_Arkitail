@@ -1,0 +1,33 @@
+:root {
+    --light-gray: #d6dde4;
+    --dark-gray: #667085;
+    --transparent-dark-gray: rgba(102, 112, 133, .5);
+    --transparent-darkest-gray: rgba(0, 11, 35, .5);
+    --primary: #19a3ff;
+    --secondary: #047857;
+    --transparent-white: rgba(255, 255, 255, .8);
+    --white: #fff;
+    --black: #000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--light-gray);
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+.logo {
+    width: 6rem;
+}

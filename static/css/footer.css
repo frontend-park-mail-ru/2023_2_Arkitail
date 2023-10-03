@@ -1,0 +1,22 @@
+:root {
+    --footer-height: 12.5rem;
+    --footer-color: #AFBFD1;
+}
+
+footer {
+    background-color: var(--footer-color);
+    width: 100%;
+    height: var(--footer-height);
+    text-align: center;
+    padding: 1rem 3rem 2rem;
+}
+
+main {
+    min-height: calc(100vh - var(--footer-height) - 4rem);
+}
+
+footer>* {
+    display: block;
+    margin: .6rem auto;
+}
+
