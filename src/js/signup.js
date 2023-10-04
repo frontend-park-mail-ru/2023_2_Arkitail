@@ -1,46 +1,30 @@
-const registrationForm = document.querySelector('form');
+pages['signup'].querySelector('.goto-form form').addEventListener('submit', event => {
+    event.preventDefault();
 
-const EMAIL_TEMPLATE = /^\S+@\S+\.\S+$/;
+    const method = 'POST';
 
-const PASSWORD_LENTH_TEMPLATE = /^.{8,64}$/;
-const PASSWORD_LETTERS_TEMPLATE = /^.*([a-z].*[A-Z]|[A-Z].*[a-z]).*$/;
-const PASSWORD_DIGITS_TEMPLATE = /^.*\d+.*$/;
-
-function validateInput(target, template) {
-    return target.match(template).lenth == 1;
-}
-
-const formSubmitCallback = (e) => {
-    e.preventDefault();
-
-    const requestMethod = 'POST';
-
-    const requestHeaders = {
+    const headers = {
         'Content-Type': 'text/plain'
     };
 
-    const formInputs = registrationForm.elements;
+    const inputs = pages['signup'].querySelector('.goto-form form').elements;
 
-    const requestBody = JSON.stringify(
-        {
-            login: formInputs['name'].value,
-            password: formInputs['password'].value
-        }
-    );
+    const body = JSON.stringify({
+        login: inputs['name'].value,
+        password: inputs['password'].value
+    });
 
-    console.log(requestBody)
+    console.log(body);
 
     fetch(
-        'http://localhost:8080/api/v1/signup',
+        API_V1_URL + 'signup',
         {
-            method: requestMethod,
-            headers: requestHeaders,
-            body: requestBody
+            method: method,
+            headers: headers,
+            body: body
         }
     )
     .then(response => response.json())
     .then(console.log);
 
-}
-
-registrationForm.submit.addEventListener('click', formSubmitCallback);
+});
