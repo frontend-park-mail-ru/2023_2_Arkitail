@@ -13,7 +13,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
@@ -26,8 +25,4 @@ a {
 
 ul {
     list-style: none;
-}
-
-.logo {
-    width: 6rem;
 }
