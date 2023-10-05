@@ -1,6 +1,11 @@
 function authenticate() {
+    if (context.authenticated.pending) {
+        console.error("[authenticate()] Authentication request already pending")
+    }
+
     const requestMethod = 'GET';
 
+    context.authenticated.pending = true;
     fetch(
         API_V1_URL + 'auth',
         {
@@ -8,12 +13,25 @@ function authenticate() {
         }
     ).then(response => {
         if (response.status == 200) {
-            context.authenticated = true;
+            context.authenticated.status = true;
         } else if (response.status == 401) {
-            context.authenticated = false;
+            context.authenticated.status = false;
         } else {
-            context.authenticated = false;
+            context.authenticated.status = false;
             console.error('Authentication fatal error');
         }
+
+        context.authenticated.pending = false
     })
+}
+
+function checkAuthenticated() {
+    console.log('Cookie:', document.cookie);
+    authenticate();
+
+    if (context.authenticated.pending) {
+        return null
+    }
+
+    return context.authenticated.status
 }

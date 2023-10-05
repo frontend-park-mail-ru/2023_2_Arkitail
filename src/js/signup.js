@@ -19,6 +19,7 @@ pages['signup'].querySelector('.goto-form form').addEventListener('submit', even
     fetch(
         API_V1_URL + 'signup',
         {
+            credentials: 'same-origin',
             method: method,
             headers: headers,
             body: body

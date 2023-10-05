@@ -12,8 +12,9 @@ const routing = {
 };
 
 let context = {
-    authenticated: false,
-    activePage: 'signup'
+    authenticated: {pending: false, status: false},
+    activePage: 'signup',
+    sessionId: ''
 }
 
 const initRouting = () => {
