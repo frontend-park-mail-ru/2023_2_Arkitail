@@ -6,20 +6,20 @@ const pages = {
     'login': document.querySelector('.goto-login-page')
 };
 
-const routing = {
-    'from-signup-to-login': {
+const routing = [
+    {
         src: 'signup',
         dst: 'login',
         gateway: '.goto-login-link',
         callback: null
     },
-    'from-signup-to-login': {
+    {
         src: 'login',
         dst: 'signup',
         gateway: '.goto-signup-link',
         callback: null
     }
-}
+];
 
 let context = {
     authenticated: {pending: false, status: false},
@@ -28,7 +28,7 @@ let context = {
 }
 
 const initRouting = () => {
-    for (const [_, route] of Object.entries(routing)) {
+    routing.forEach(route => {
         pages[route.src].querySelector(route.gateway).addEventListener('click', (event) => {
             event.preventDefault();
 
@@ -36,7 +36,7 @@ const initRouting = () => {
             context.activePage = route.dst;
             pages[previous].replaceWith(pages[context.activePage]);
         });
-    }
+    });
 }
 
 initRouting()
