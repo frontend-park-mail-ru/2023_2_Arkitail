@@ -2,18 +2,21 @@ const API_V1_URL = 'http://localhost:8080/api/v1/';
 
 const root = document.querySelector('#root');
 const pages = {
+    'list-of-places': document.querySelector('.goto-list-of-places-page'),
     'signup': document.querySelector('.goto-signup-page'),
     'login': document.querySelector('.goto-login-page')
 };
 
 const routing = {
     '.goto-login-link': {src: 'signup', dst: 'login'},
-    '.goto-signup-link': {src: 'login', dst: 'signup'}
+    '.goto-signup-link': {src: 'login', dst: 'signup'},
+    '.goto-login-list-of-places-link': {src: 'list-of-places', dst: 'login'},
+    '.goto-signup-list-of-places-link': {src: 'list-of-places', dst: 'signup'},
 };
 
 let context = {
     authenticated: false,
-    activePage: 'signup'
+    activePage: 'list-of-places'
 }
 
 const initRouting = () => {

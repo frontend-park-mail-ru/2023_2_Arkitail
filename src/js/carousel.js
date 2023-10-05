@@ -8,10 +8,44 @@ function modulo(number, mod) {
 
 class Carousel {
 
-    constructor(carousel, numberOfVisibleSlides = 3, switchingButtons = true, stopIfHover = true) {
-        this.carousel = carousel;
-        this.slidesContainer = carousel.querySelector('[data-carousel-slides-container]');
-        this.slides = this.slidesContainer.children
+    constructor(parent, numberOfVisibleSlides = 3, switchingButtons = true, stopIfHover = true) {
+        this.parent = parent
+        this.template = Handlebars.compile(`
+        <div
+              class="carousel"
+              role="group"
+              aria-roledescription="carousel"
+              aria-label="Popular places list"
+              data-carousel
+            >
+            <div class="carousel-buttons">
+                <button
+                  class="carousel-button carousel-button_previous"
+                  aria-label="Previous slide"
+                  data-carousel-button-previous
+                >
+                  <p>&#8249;</p>
+                </button>
+                <button
+                  class="carousel-button carousel-button_next"
+                  aria-label="Next slide"
+                  data-carousel-button-next
+                >
+                  <p>&#8250;</p>
+                </button>
+            </div>
+            <div
+                class="slides"
+                aria-live="polite"
+                data-carousel-slides-container
+            >                
+            </div>
+        </div>
+        `)
+        this.parent.innerHTML = this.template({ places: this.places })
+
+        this.carousel = this.parent.querySelector('[data-carousel]');
+        this.slidesContainer = this.carousel.querySelector('[data-carousel-slides-container]');
 
         this.currentSlide = 0;
         if (numberOfVisibleSlides == 3) {
@@ -23,8 +57,8 @@ class Carousel {
         this.numSlides = this.slidesContainer.children.length - numberOfVisibleSlides + 1;
 
         if (switchingButtons) {
-            this.buttonPrevious = carousel.querySelector('[data-carousel-button-previous]');
-            this.buttonNext = carousel.querySelector('[data-carousel-button-next]');
+            this.buttonPrevious = this.carousel.querySelector('[data-carousel-button-previous]');
+            this.buttonNext = this.carousel.querySelector('[data-carousel-button-next]');
             this.carousel.addEventListener("mouseover", this.showArrows.bind(this));
             this.carousel.addEventListener("mouseout", this.hideArrows.bind(this));
             this.buttonPrevious.addEventListener('click', this.handlePrevious.bind(this));
@@ -80,5 +114,9 @@ class Carousel {
     hideArrows() {
         this.buttonPrevious.style.display = "none";
         this.buttonNext.style.display = "none";
+    }
+
+    appendSlide(place) {
+        new CarouselSlide(this.slidesContainer, place)
     }
 }
