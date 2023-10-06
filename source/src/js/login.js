@@ -29,7 +29,6 @@ function login() {
     fetch(
         API_V1_URL + 'login',
         {
-            credentials: 'same-origin',
             method: method,
             headers: headers,
             body: body

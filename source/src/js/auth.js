@@ -9,6 +9,7 @@ function authenticate() {
     fetch(
         API_V1_URL + 'auth',
         {
+            credentials: 'include',
             method: requestMethod,
         }
     ).then(response => {
@@ -23,15 +24,4 @@ function authenticate() {
 
         context.authenticated.pending = false
     })
-}
-
-function checkAuthenticated() {
-    console.log('Cookie:', document.cookie);
-    authenticate();
-
-    if (context.authenticated.pending) {
-        return null
-    }
-
-    return context.authenticated.status
 }
