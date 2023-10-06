@@ -3,6 +3,7 @@ pages['login'].querySelector('.goto-form form').addEventListener('submit', event
     login();
 });
 
+
 function login() {
     if (context.activePage != 'login') {
         console.error("You are not on login page");
@@ -17,10 +18,10 @@ function login() {
     const inputs = pages['login'].querySelector('.goto-form form').elements;
     const method = 'POST';
     const headers = {
-        'Content-Type': 'text/plain'
+        'Content-Type': 'application/json'
     }
     const body = JSON.stringify({
-        login: inputs['email'].value,
+        login: inputs['login'].value,
         password: inputs['password'].value
     });
 
