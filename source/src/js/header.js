@@ -2,6 +2,7 @@ class Header {
     constructor(parent, data) {
         this.parent = parent
         this.data = data
+        authenticate()
         this.template = Handlebars.compile(`
             <input class="side-menu" type="checkbox" id="side-menu" />
             <label class="hamb" for="side-menu">
@@ -47,7 +48,7 @@ class Header {
 
         this.parent.innerHTML = this.template({
             items: this.data.leftMenu,
-            urls: this.data.urlClass, authorized: true
+            urls: this.data.urlClass, authorized: context.authenticated.status
         }) // значение authorized заменить на context.authenticated
     }
 }

@@ -5,6 +5,7 @@ figure.logo {
     align-content: center;
     justify-content: center;
     justify-items: center;
+    padding-bottom: 1rem;
 }
 
 figure.logo img {

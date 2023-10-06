@@ -30,83 +30,18 @@
         </footer>
       </div>
 
-      <div class="goto-login-page">
-        <div class="slider"></div>
-        <div class="goto-form">
-          <figure>
-            <img src="/static/img/logo.svg" alt="GoTo" />
-            <figcaption>
-              <p>Время путешествовать</p>
-            </figcaption>
-          </figure>
-          <form>
-            <div class="form-item email">
-              <input name="login" type="text" placeholder="Ваш логин" />
-            </div>
-            <div class="form-item password">
-              <input name="password" type="password" placeholder="Ваш пароль" />
-            </div>
-            <div class="form-submit submit">
-              <input type="submit" value="Войти" />
-            </div>
-          </form>
-          <div class="form-footer">
-            <p class="forgot-password">Забыли пароль?</p>
-            <p class="non-registered">Ещё не зарегестрированы?</p>
-            <p class="register">
-              <span class="goto-signup-link">Зарегестрироваться</span>
-            </p>
-          </div>
+      <div class="goto-login-page form">
+        <!-- <div class="slider"></div> -->
+        <div login-form class="goto-form">
+          
         </div>
       </div>
-      <div class="goto-signup-page">
-        <div class="slider"></div>
-        <div class="goto-form">
-          <figure class="logo">
-            <img src="/static/img/logo.svg" alt="GoTo" />
-            <figcaption>
-              <p>Начните путешествовать сейчас</p>
-              <p>моментальная регистрация</p>
-            </figcaption>
-          </figure>
-          <form>
-            <div class="form-item name">
-              <input name="name" type="text" placeholder="Ваше имя" />
-            </div>
-            <div class="form-item email">
-              <input name="email" type="text" placeholder="Ваша почта" />
-            </div>
-            <div class="form-item password">
-              <input name="password" type="password" placeholder="Ваш пароль" />
-            </div>
-            <div class="form-item repeat-password">
-              <input
-                name="repeat-password"
-                type="password"
-                placeholder="Ваш пароль еще раз"
-              />
-            </div>
-            <div class="input-group-label">Дата рождения</div>
-            <div class="form-item input-group">
-              <div class="input-group-item">
-                <input name="day" type="text" placeholder="День" />
-              </div>
-              <div class="input-group-item">
-                <input name="month" type="text" placeholder="Месяц" />
-              </div>
-              <div class="input-group-item">
-                <input name="year" type="text" placeholder="Год" />
-              </div>
-            </div>
-            <div class="form-submit submit">
-              <input name="submit" type="submit" value="Зарегестрироваться" />
-            </div>
-          </form>
-          <div class="form-footer">
-            <p class="login">
-              Уже есть аккаунт? <span class="goto-login-link">Войти</span>
-            </p>
-          </div>
+
+      
+      <div class="goto-signup-page form">
+        <!-- <div class="slider"></div> -->
+        <div signup-form class="goto-form">
+          
         </div>
       </div>
     </div>
@@ -114,20 +49,23 @@
     <script src="/node_modules/handlebars/dist/handlebars.js"></script>
 
 
+    <script src="/src/js/spa.js"></script>
+    <script src="/src/js/auth.js"></script>
     <script src="/src/js/header.js"></script>
-
+    
     <script src="/src/js/carousel-slide.js"></script>
     <script src="/src/js/carousel.js"></script>
     <script src="/src/js/place-card.js"></script>
     <script src="/src/js/list-of-places.js"></script>
     <script src="/src/js/footer.js"></script>
+    
+    <script src="/src/js/login-form.js"></script>
+    <script src="/src/js/signup-form.js"></script>
 
     <script src="/src/js/index.js"></script>
 
-    <script src="/src/js/spa.js"></script>
     <script src="/src/js/login.js"></script>
     <script src="/src/js/signup.js"></script>
-    <script src="/src/js/auth.js"></script>
 
   </body>
 </html>

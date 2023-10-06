@@ -1,7 +1,7 @@
 class Footer {
-    constructor(parent) {
-      this.parent = parent
-        this.template =  Handlebars.compile(`
+  constructor(parent) {
+    this.parent = parent
+    this.template = Handlebars.compile(`
         <img class="logo" src="../../static/img/logo.svg" alt="GoTo" />
 
         <hr />
@@ -21,6 +21,6 @@ class Footer {
         <p>© GoTo, Arkitail 2023. We love our users!</p>
         `)
 
-        this.parent.innerHTML = this.template()
-    }
+    this.parent.innerHTML = this.template()
+  }
 }

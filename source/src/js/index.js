@@ -24,17 +24,20 @@ const config = {
         },
         urlClass: {
             favourites: '',
-            login: 'goto-login-list-of-places-link',
-            signup: 'goto-signup-list-of-places-link',
+            login: 'goto-login-link',
+            signup: 'goto-signup-link',
         }
     },
 
 };
 
-new Header(document.querySelector('header'), config.header)
-let carousel = new Carousel(document.querySelector('[main-carousel]'));
-let listOfPlaces = new ListOfPlaces(document.querySelector('[main-list-of-places]'));
-new Footer(document.querySelector('footer'))
+new Header(pages['list-of-places'].querySelector('header'), config.header)
+let mainCarousel = new Carousel(pages['list-of-places'].querySelector('[main-carousel]'));
+let listOfPlaces = new ListOfPlaces(pages['list-of-places'].querySelector('[main-list-of-places]'));
+new Footer(pages['list-of-places'].querySelector('footer'))
+
+new LoginForm(pages['login'].querySelector('[login-form]'))
+new SignupForm(pages['signup'].querySelector('[signup-form]'))
 
 fetch(
     '/api/v1/places',
@@ -44,12 +47,15 @@ fetch(
 )
     .then(response => response.json())
     .then(function (result) {
-    
+
         for (const [_, place] of result.entries()) {
-            carousel.appendSlide(place)
+            mainCarousel.appendSlide(place)
             listOfPlaces.appendPlace(place)
         }
     });
 
 
+initRouting()
+
+root.replaceChildren(pages[context.activePage])
 
