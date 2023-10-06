@@ -1,20 +1,23 @@
 header {
-  background-color: var(--white);
+  box-sizing: border-box;
+  background-color: var(--footer-color);
   position: sticky;
   top: 0;
   width: 100%;
   padding-right: 1rem;
   z-index: 10;
-  height: 4rem;
+  height: var(--header-height);
 }
 
 header .logo {
+  width: var(--logo-wight);
   justify-self: center;
   display: inline-block;
   margin: .6rem 2rem .6rem calc(50% - 6.8rem);
+  cursor: pointer;
 }
 
-.nav {
+header nav {
   width: fit-content;
   height: fit-content;
   position: fixed;
@@ -32,8 +35,16 @@ header .logo {
   padding: 1rem 2rem;
 }
 
+.menu .logout {
+  color: var(--red);
+}
+
 .menu a:hover {
   color: var(--primary);
+}
+
+.menu .logout:hover {
+  color: var(--extra-red);
 }
 
 .menu .active a {
@@ -101,15 +112,29 @@ header .logo {
   top: 0;
 }
 
-.btn-login,
-.btn-register {
+.right-menu {
+  display: flex;
   cursor: pointer;
   top: 0;
   position: relative;
   float: right;
   border-radius: 10px;
-  padding: .6rem;
   margin: .7rem 1rem .7rem 0;
+}
+
+.right-menu>.heart {
+  height: 1.6rem;
+  font-size: 1.3rem;
+  padding: .4rem .2rem;
+}
+
+.right-menu:hover > .heart {
+  color: var(--secondary);
+}
+
+.btn-login,
+.btn-register {
+  padding: .6rem;
 }
 
 .btn-login {
@@ -126,7 +151,12 @@ header .logo {
 }
 
 @media (max-width: 768px) {
-  .btn-register {
+  header nav {
+    top: var(--header-height);
+    z-index: 9;
+  }
+
+  .hidden-on-mobile {
     display: none;
   }
 
@@ -147,7 +177,7 @@ header .logo {
 }
 
 @media (min-width: 768px) {
-  .nav {
+  header nav {
     max-height: none;
     top: 0;
     position: relative;

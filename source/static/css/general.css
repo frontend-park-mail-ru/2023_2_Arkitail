@@ -8,6 +8,10 @@
     --transparent-white: rgba(255, 255, 255, .8);
     --white: #fff;
     --black: #000;
+    --red: rgb(136, 8, 15);
+    --extra-red: rgb(210, 8, 18);
+    --header-height: 4rem;
+    --logo-wight: 6rem;
 }
 
 * {
