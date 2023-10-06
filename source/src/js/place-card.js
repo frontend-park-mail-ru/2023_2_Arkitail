@@ -1,3 +1,4 @@
+
 class PlaceCard {
     constructor(parent, place) {
         this.parent = parent
@@ -6,7 +7,7 @@ class PlaceCard {
         <div class="place-card">
             <section>
             <p>{{place.cost}}</p>
-            <img src="../../static/img/example.jpg" />
+            <img src="{{place.imageUrl}}" />
             </section>
 
             <section>

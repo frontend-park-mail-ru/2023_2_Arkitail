@@ -10,7 +10,7 @@ class CarouselSlide {
             aria-hidden="false"
             aria-labelledby="bob"
         >
-            <img src="../../static/img/example1.jpg" />
+            <img src="{{place.imageUrl}}" />
             <div class="desc">
             <p>{{place.name}}</p>
             <button>

@@ -19,18 +19,31 @@ const routing = [
         dst: 'signup',
         gateway: '.goto-signup-link',
         callback: null
-    }
+    },
+    {
+        src: 'list-of-places',
+        dst: 'signup',
+        gateway: '.goto-signup-link',
+        callback: null
+    },
+    {
+        src: 'list-of-places',
+        dst: 'login',
+        gateway: '.goto-login-link',
+        callback: null
+    },
 ];
 
 let context = {
     authenticated: {pending: false, status: false},
-    activePage: 'signup',
+    activePage: 'list-of-places',
     sessionId: ''
 }
 
 const initRouting = () => {
     routing.forEach(route => {
         pages[route.src].querySelector(route.gateway).addEventListener('click', (event) => {
+            console.log("click")
             event.preventDefault();
 
             let previous = context.activePage;
@@ -40,6 +53,3 @@ const initRouting = () => {
     });
 }
 
-initRouting()
-
-root.replaceChildren(pages[context.activePage])
