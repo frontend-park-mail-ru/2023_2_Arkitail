@@ -1,4 +1,4 @@
-const API_V1_URL = 'http://localhost:8080/api/v1/';
+const API_V1_URL = '/api/v1/';
 
 const root = document.querySelector('#root');
 const pages = {

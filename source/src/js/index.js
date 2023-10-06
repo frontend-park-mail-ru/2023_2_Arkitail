@@ -37,7 +37,7 @@ let listOfPlaces = new ListOfPlaces(document.querySelector('[main-list-of-places
 new Footer(document.querySelector('footer'))
 
 fetch(
-    'http://localhost:8080/api/v1/places',
+    '/api/v1/places',
     {
         method: 'GET',
     }
