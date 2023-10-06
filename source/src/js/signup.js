@@ -44,8 +44,8 @@ pages['signup'].querySelector('.goto-form form').addEventListener('submit', even
             target: inputs['email'],
             template: EMAIL_TEMPLATE
         }, {
-            target: inputs['password'],
-            template: new RegExp('^' + inputs['repeat-password'].value + '$')
+            target: inputs['repeat-password'],
+            template: new RegExp('^' + inputs['password'].value + '$')
         }, {
             target: inputs['password'],
             template: PASSWORD_TEMPLATE
