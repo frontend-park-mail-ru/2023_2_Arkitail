@@ -4,7 +4,7 @@ const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 4
 const LOGIN_TEMPLATE = /^\S*$/;
 const LOGIN_ERROR = "Логин не должен содержать пробелы";
 
-const EMAIL_TEMPLATE = /^\w+@\w+\.\w+$/;
+const EMAIL_TEMPLATE = /^.*@.*$/;
 const EMAIL_ERROR = "Введена некоректная почта";
 
 const LENGTH_PASSWORD_TEMPLATE = /^\w{4,32}$/;
@@ -64,7 +64,7 @@ class SignupForm {
         </div>
       </form>
       <div class="form-footer">
-        <p class="login">
+        <p gateway="login" class="login">
           Уже есть аккаунт? <span class="goto-login-link">Войти</span>
         </p>
       </div>
@@ -72,9 +72,19 @@ class SignupForm {
 
     this.parent.innerHTML = this.template();
 
+    this.parent
+    .querySelectorAll(`[gateway]`)
+    .forEach(elem => elem.addEventListener('click', function(event) {
+        event.preventDefault();
+        context.activePage = event.currentTarget.getAttribute('gateway');
+        render();
+    }));
+
     this.inputs = parent.querySelector(".goto-form form").elements;
 
     this.validationMsg = this.parent.querySelector("[validation-msg]");
+
+
 
     this.parent
       .querySelector(".goto-form form")
@@ -154,6 +164,8 @@ class SignupForm {
             inputs_to_validate.forEach((input) => {
               input.target.value = "";
             });
+            context.activePage = 'list-of-places';
+            render();
             console.log("Signup succeed");
           } else if (response.status == 401) {
             this.validationMsg.innerText = USER_ALREADY_EXISTS_ERROR;

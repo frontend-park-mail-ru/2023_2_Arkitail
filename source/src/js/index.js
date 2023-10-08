@@ -3,35 +3,27 @@ const config = {
         leftMenu: {
             search: {
                 name: 'Поиск',
-                className: 'active',
                 showToUnauthorized: true,
             },
             trips: {
                 name: 'Поездки',
-                className: '',
                 showToUnauthorized: false,
             },
             album: {
                 name: 'Альбом',
-                className: '',
-                showToUnauthorized: false,
-            },
-            logout: {
-                name: 'Выйти',
-                className: 'logout',
                 showToUnauthorized: false,
             },
         },
-        urlClass: {
+        urls: {
             favourites: '',
-            login: 'goto-login-link',
-            signup: 'goto-signup-link',
+            login: 'login',
+            signup: 'signup',
         }
     },
 
 };
 
-new Header(pages['list-of-places'].querySelector('header'), config.header)
+header = new Header(pages['list-of-places'].querySelector('header'), config.header);
 let mainCarousel = new Carousel(pages['list-of-places'].querySelector('[main-carousel]'), 1);
 let listOfPlaces = new ListOfPlaces(pages['list-of-places'].querySelector('[main-list-of-places]'));
 new Footer(pages['list-of-places'].querySelector('footer'))
@@ -53,8 +45,6 @@ fetch(
         }
     });
 
-
-initRouting()
 
 root.replaceChildren(pages[context.activePage])
 

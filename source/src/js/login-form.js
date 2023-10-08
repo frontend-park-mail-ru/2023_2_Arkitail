@@ -29,13 +29,20 @@ class LoginForm {
         <div class="form-footer">
             <p class="forgot-password">Забыли пароль?</p>
             <p class="non-registered">Ещё не зарегестрированы?</p>
-            <p class="register">
+            <p gateway="signup" class="register">
                 <span class="goto-signup-link">Зарегестрироваться</span>
             </p>
         </div>
     `);
 
     this.parent.innerHTML = this.template();
+    this.parent
+    .querySelectorAll(`[gateway]`)
+    .forEach(elem => elem.addEventListener('click', function(event) {
+        event.preventDefault();
+        context.activePage = event.currentTarget.getAttribute('gateway');
+        render();
+    }));
 
     this.validationMsg = this.parent.querySelector("[validation-msg]");
     this.inputs = this.parent.querySelector(".goto-form form").elements;
@@ -46,7 +53,7 @@ class LoginForm {
       .querySelector(".goto-form form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
-        this.login();
+        this.login().then(header.authRender);
       });
   }
 
@@ -72,7 +79,7 @@ class LoginForm {
 
     context.authenticated.pending = true;
 
-    fetch(API_V1_URL + "login", {
+    return fetch(API_V1_URL + "login", {
       method: method,
       headers: headers,
       body: body,
@@ -86,6 +93,8 @@ class LoginForm {
         this.validationMsg.innerText = "";
         context.authenticated.status = true;
         console.log("Login succeed");
+        context.activePage = 'list-of-places';
+        render();
       } else if (response.status == 401) {
         this.validationMsg.innerText = DATA_ERROR;
         this.arrInputs.forEach((input) => {

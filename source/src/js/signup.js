@@ -25,6 +25,9 @@ function validate_inputs(inputs) {
     }, true);
 }
 
+pages['signup'].querySelector('.form-footer .goto-login-link').addEventListener('click', event => {
+    });
+
 pages['signup'].querySelector('.goto-form form').addEventListener('submit', event => {
     event.preventDefault();
 
@@ -72,7 +75,9 @@ pages['signup'].querySelector('.goto-form form').addEventListener('submit', even
             body: body
         }
     ).then(response => {
-        console.log(response.headers);
+        console.log('HELLO');
+        context.activePage = 'list-of-places';
+        render();
     })
 
 });

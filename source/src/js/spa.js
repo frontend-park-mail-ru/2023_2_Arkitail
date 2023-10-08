@@ -7,48 +7,17 @@ const pages = {
     'login': document.querySelector('.goto-login-page')
 };
 
-const routing = [
-    {
-        src: 'signup',
-        dst: 'login',
-        gateway: '.goto-login-link',
-        callback: null
-    },
-    {
-        src: 'login',
-        dst: 'signup',
-        gateway: '.goto-signup-link',
-        callback: null
-    },
-    {
-        src: 'list-of-places',
-        dst: 'signup',
-        gateway: '.goto-signup-link',
-        callback: null
-    },
-    {
-        src: 'list-of-places',
-        dst: 'login',
-        gateway: '.goto-login-link',
-        callback: null
-    },
-];
-
 let context = {
     authenticated: {pending: false, status: false},
     activePage: 'list-of-places'
 }
 
-const initRouting = () => {
-    routing.forEach(route => {
-        pages[route.src].querySelector(route.gateway).addEventListener('click', (event) => {
-            console.log("click")
-            event.preventDefault();
+window.addEventListener('popstate', event => {
+    context = event.state;
+    console.log(context.activePage);
+})
 
-            let previous = context.activePage;
-            context.activePage = route.dst;
-            pages[previous].replaceWith(pages[context.activePage]);
-        });
-    });
-}
-
+const render = () => {
+    console.log(context.activePage);
+    root.replaceChildren(pages[context.activePage]);
+};

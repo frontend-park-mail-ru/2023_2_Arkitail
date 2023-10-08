@@ -38,6 +38,8 @@ function login() {
         if (response.status == 200) {
             context.authenticated.status = true;
             console.log("Login succeed");
+            context.activePage = 'list-of-places';
+            render();
         } else if (response.status == 401) {
             context.authenticated.status = false;
         } else {
