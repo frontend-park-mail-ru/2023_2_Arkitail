@@ -18,6 +18,10 @@ class LoginForm {
             <div class="form-submit submit">
                 <input type="submit" value="Войти" />
             </div>
+
+            <div>
+                <p validation-msg class="validation-error"></p>
+            </div>
         </form>
         <div class="form-footer">
             <p class="forgot-password">Забыли пароль?</p>

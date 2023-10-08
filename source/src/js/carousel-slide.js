@@ -8,7 +8,7 @@ class CarouselSlide {
             role="group"
             aria-roledescription="slide"
             aria-hidden="false"
-            aria-labelledby="bob"
+            aria-labelledby="{{place.id}}"
         >
             <img src="{{place.imageUrl}}" />
             <div class="desc">

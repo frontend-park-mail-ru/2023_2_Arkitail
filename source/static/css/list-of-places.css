@@ -9,6 +9,7 @@
 }
 
 .place-card {
+    font-size: 1rem;
     height: var(--card-size);
     display: grid;
     grid-template-rows: 5fr 4fr;

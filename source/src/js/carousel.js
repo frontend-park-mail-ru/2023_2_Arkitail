@@ -44,17 +44,18 @@ class Carousel {
         `)
         this.parent.innerHTML = this.template({ places: this.places })
 
+        this.numberOfVisibleSlides = numberOfVisibleSlides
         this.carousel = this.parent.querySelector('[data-carousel]');
         this.slidesContainer = this.carousel.querySelector('[data-carousel-slides-container]');
 
         this.currentSlide = 0;
-        if (numberOfVisibleSlides == 3) {
+        if (this.numberOfVisibleSlides == 3) {
             this.changeSliderCount()
             window.addEventListener('resize', this.changeSliderCount.bind(this), true);
         } else {
-            this.carousel.style.setProperty('--slider-count', numberOfVisibleSlides)
+            this.carousel.style.setProperty('--slider-count', this.numberOfVisibleSlides)
         }
-        this.numSlides = this.slidesContainer.children.length - numberOfVisibleSlides + 1;
+        this.numSlides = this.slidesContainer.children.length - this.numberOfVisibleSlides + 1;
 
         if (switchingButtons) {
             this.buttonPrevious = this.carousel.querySelector('[data-carousel-button-previous]');
@@ -75,16 +76,21 @@ class Carousel {
     }
 
     changeSliderCount() {
-        const screenWidth = window.screen.width
-        if (screenWidth < 768) {
-            this.carousel.style.setProperty('--slider-count', 1)
-            this.numSlides = this.slidesContainer.children.length;
-        } else if (screenWidth < 1500) {
-            this.carousel.style.setProperty('--slider-count', 2)
-            this.numSlides = this.slidesContainer.children.length - 1;
+        if (this.numberOfVisibleSlides == 3) {
+            const screenWidth = window.screen.width
+            if (screenWidth < 768) {
+                this.carousel.style.setProperty('--slider-count', 1)
+                this.numSlides = this.slidesContainer.children.length;
+            } else if (screenWidth < 1500) {
+                this.carousel.style.setProperty('--slider-count', 2)
+                this.numSlides = this.slidesContainer.children.length - 1;
+            } else {
+                this.carousel.style.setProperty('--slider-count', 3)
+                this.numSlides = this.slidesContainer.children.length - 2;
+            }
         } else {
-            this.carousel.style.setProperty('--slider-count', 3)
-            this.numSlides = this.slidesContainer.children.length - 2;
+            this.numSlides = this.slidesContainer.children.length - this.numberOfVisibleSlides + 1;
+
         }
     }
 
@@ -118,5 +124,6 @@ class Carousel {
 
     appendSlide(place) {
         new CarouselSlide(this.slidesContainer, place)
+        this.changeSliderCount()
     }
 }

@@ -32,7 +32,7 @@ const config = {
 };
 
 new Header(pages['list-of-places'].querySelector('header'), config.header)
-let mainCarousel = new Carousel(pages['list-of-places'].querySelector('[main-carousel]'));
+let mainCarousel = new Carousel(pages['list-of-places'].querySelector('[main-carousel]'), 1);
 let listOfPlaces = new ListOfPlaces(pages['list-of-places'].querySelector('[main-list-of-places]'));
 new Footer(pages['list-of-places'].querySelector('footer'))
 
@@ -47,7 +47,6 @@ fetch(
 )
     .then(response => response.json())
     .then(function (result) {
-
         for (const [_, place] of result.entries()) {
             mainCarousel.appendSlide(place)
             listOfPlaces.appendPlace(place)
