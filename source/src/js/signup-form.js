@@ -12,69 +12,63 @@ const LENGTH_PASSWORD_ERROR = "Длина пароля должна быть о�
 
 const REPEAT_PASSWORD_ERROR = "Пароли не совпадают"
 
-const YEAR_TEMPLATE = /^\d{4}$/;
-const YEAR_ERROR = "";
-
-const MONTH_TEMPLATE = /^\d{1,2}$/;
-const MONTH_ERROR = "";
-
-const DAY_TEMPLATE = /^\d{1,2}$/;
-const DAY_ERROR = "";
+const USER_ALREADY_EXISTS_ERROR = "Пользователь уже существует"
+const SERVER_ERROR = "Server error"
 
 class SignupForm {
   constructor(parent) {
     this.parent = parent
     this.template = Handlebars.compile(`
-          <figure class="logo">
-            <img src="/static/img/logo.svg" alt="GoTo" />
-            <figcaption>
-              <p class="title">Начните путешествовать сейчас</p>
-              <p>моментальная регистрация</p>
-            </figcaption>
-          </figure>
-          <form>
-            <div class="form-item name">
-              <input name="name" type="text" placeholder="Ваше имя" />
-            </div>
-            <div class="form-item email">
-              <input name="email" type="text" placeholder="Ваша почта" />
-            </div>
-            <div class="form-item password">
-              <input name="password" type="password" placeholder="Ваш пароль" />
-            </div>
-            <div class="form-item repeat-password">
-              <input
-                name="repeat-password"
-                type="password"
-                placeholder="Ваш пароль еще раз"
-              />
-            </div>
-            <div class="input-group-label">Дата рождения</div>
-            <div class="form-item input-group">
-              <div class="input-group-item">
-                <input name="day" type="text" placeholder="День" />
-              </div>
-              <div class="input-group-item">
-                <input name="month" type="text" placeholder="Месяц" />
-              </div>
-              <div class="input-group-item">
-                <input name="year" type="text" placeholder="Год" />
-              </div>
-            </div>
-            <div class="form-submit submit">
-              <input name="submit" type="submit" value="Зарегистрироваться" />
-            </div>
-
-            <div>
-                <p validation-msg class="validation-error"></p>
-            </div>
-          </form>
-          <div class="form-footer">
-            <p class="login">
-              Уже есть аккаунт? <span class="goto-login-link">Войти</span>
-            </p>
+      <figure class="logo">
+        <img src="/static/img/logo.svg" alt="GoTo" />
+        <figcaption>
+          <p class="title">Начните путешествовать сейчас</p>
+          <p>моментальная регистрация</p>
+        </figcaption>
+      </figure>
+      <form>
+        <div class="form-item name">
+          <input name="name" type="text" placeholder="Ваше имя" />
+        </div>
+        <div class="form-item email">
+          <input name="email" type="text" placeholder="Ваша почта" />
+        </div>
+        <div class="form-item password">
+          <input name="password" type="password" placeholder="Ваш пароль" />
+        </div>
+        <div class="form-item repeat-password">
+          <input
+            name="repeat-password"
+            type="password"
+            placeholder="Ваш пароль еще раз"
+          />
+        </div>
+        <!-- <div class="input-group-label">Дата рождения</div>
+        <div class="form-item input-group">
+          <div class="input-group-item">
+            <input name="day" type="text" placeholder="День" />
           </div>
-        `)
+          <div class="input-group-item">
+            <input name="month" type="text" placeholder="Месяц" />
+          </div>
+          <div class="input-group-item">
+            <input name="year" type="text" placeholder="Год" />
+          </div>
+        </div> -->
+        <div class="form-submit submit">
+          <input name="submit" type="submit" value="Зарегистрироваться" />
+        </div>
+
+        <div>
+            <p validation-msg class="validation-error"></p>
+        </div>
+      </form>
+      <div class="form-footer">
+        <p class="login">
+          Уже есть аккаунт? <span class="goto-login-link">Войти</span>
+        </p>
+      </div>
+    `)
 
     this.parent.innerHTML = this.template()
 
@@ -149,10 +143,6 @@ class SignupForm {
       });
 
       console.log(body);
-      this.validationMsg.innerText = ""
-      inputs_to_validate.forEach((input) => {
-        input.target.value = ""
-      })
 
       fetch(
         API_V1_URL + 'signup',
@@ -163,6 +153,19 @@ class SignupForm {
         }
       ).then(response => {
         console.log(response.headers);
+        if (response.status == 200) {
+          context.authenticated.status = true;
+          this.validationMsg.innerText = ""
+          inputs_to_validate.forEach((input) => {
+            input.target.value = ""
+          })
+          console.log("Signup succeed");
+        } else if (response.status == 401) {
+          this.validationMsg.innerText = USER_ALREADY_EXISTS_ERROR
+        } else {
+          this.validationMsg.innerText = SERVER_ERROR
+          console.error("Signup fatal error");
+        }
       })
 
     });
