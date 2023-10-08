@@ -12,6 +12,15 @@ const LENGTH_PASSWORD_ERROR = "Длина пароля должна быть о�
 
 const REPEAT_PASSWORD_ERROR = "Пароли не совпадают"
 
+const YEAR_TEMPLATE = /^\d{4}$/;
+const YEAR_ERROR = "";
+
+const MONTH_TEMPLATE = /^\d{1,2}$/;
+const MONTH_ERROR = "";
+
+const DAY_TEMPLATE = /^\d{1,2}$/;
+const DAY_ERROR = "";
+
 class SignupForm {
   constructor(parent) {
     this.parent = parent
@@ -140,6 +149,10 @@ class SignupForm {
       });
 
       console.log(body);
+      this.validationMsg.innerText = ""
+      inputs_to_validate.forEach((input) => {
+        input.target.value = ""
+      })
 
       fetch(
         API_V1_URL + 'signup',
