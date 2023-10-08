@@ -1,6 +1,6 @@
 .carousel {
     --slider-width: 100%;
-    --btn-size: 3rem;
+    --btn-size: 4rem;
 
     --slider-count: 0;
     --current-slide: 0;
@@ -17,10 +17,10 @@
     justify-content: center;
 
     height: 100%;
-    width: var(--btn-size);
+    font-size: calc(var(--btn-size)/2);
+    width: calc(var(--btn-size)/2);
     background-color: var(--transparent-darkest-gray);
     border: none;
-    font-size: calc(var(--btn-size));
     cursor: pointer;
 
     transition: color 0.1s;
@@ -29,18 +29,7 @@
 .carousel-button>p {
     color: var(--white);
     position: absolute;
-    top: calc(50% - var(--btn-size) / 2);
-}
-
-@media screen and (min-width: 768px) {
-    .carousel-button {
-        font-size: calc(var(--btn-size)*2/3);
-        width: calc(var(--btn-size)*2/3);
-    }
-
-    .carousel-button>p {
-        top: calc(50% - var(--btn-size) / 4);
-    }
+    top: calc(50% - var(--btn-size)/4);
 }
 
 .carousel-button:hover {
@@ -93,4 +82,19 @@
     cursor: pointer;
     padding: 1rem;
     border-radius: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+    .carousel-button {
+        font-size: calc(var(--btn-size));
+        width: calc(var(--btn-size));
+    }
+
+    .carousel-button>p {
+        top: calc(50% - var(--btn-size)/2);
+    }
+
+    .slide>.desc {
+        left: calc(var(--btn-size)*2);
+    }
 }
