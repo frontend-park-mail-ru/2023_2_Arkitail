@@ -4,16 +4,39 @@ const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 4
 const LOGIN_TEMPLATE = /^\S*$/;
 const LOGIN_ERROR = "Логин не должен содержать пробелы";
 
-const EMAIL_TEMPLATE = /^\w+@\w+\.\w+$/;
+const EMAIL_TEMPLATE = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 const EMAIL_ERROR = "Введена некоректная почта";
 
-const LENGTH_PASSWORD_TEMPLATE = /^\w{4,32}$/;
+// const PASSWORD_TEMPLATE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])$/;
+// const PASSWORD_ERROR = "Пароль должен содержать хотя бы одну прописную букву, \
+//               одну строчную букву, одну цифру, а также специальный символ";
+
+const UPPERCASE_PASSWORD_TEMPLATE = /^.*(?=[A-Z])/;
+const UPPERCASE_PASSWORD_ERROR =
+  "Пароль должен содержать хотя бы одну прописную букву";
+
+const LOWERCASE_PASSWORD_TEMPLATE = /^.*(?=[a-z])/;
+const LOWERCASE_PASSWORD_ERROR =
+  "Пароль должен содержать хотя бы одну строчную букву";
+
+const DIGIT_PASSWORD_TEMPLATE = /^.*(?=[0-9])/;
+const DIGIT_PASSWORD_ERROR = "Пароль должен содержать хотя бы одну цифру";
+
+const SPECIAL_CHAR_PASSWORD_TEMPLATE = /^.*(?=[!@#$%^&*])/;
+const SPECIAL_CHAR_PASSWORD_ERROR =
+  "Пароль должен содержать хотя бы один специальный символ из !@#$%^&*";
+
+const LENGTH_PASSWORD_TEMPLATE = /^.{4,32}$/;
 const LENGTH_PASSWORD_ERROR = "Длина пароля должна быть от 4 до 32";
 
 const REPEAT_PASSWORD_ERROR = "Пароли не совпадают";
 
 const USER_ALREADY_EXISTS_ERROR = "Пользователь уже существует";
 const SIGNUP_SERVER_ERROR = "Server error";
+
+function blockSpecialChars(template) {
+  return template.replace(/\s[!@#$%^&*]/g, "\\$&")
+}
 
 class SignupForm {
   constructor(parent) {
@@ -92,7 +115,7 @@ class SignupForm {
             target: this.inputs["repeat-password"],
             templates: [
               {
-                template: new RegExp("^" + this.inputs["password"].value + "$"),
+                template: new RegExp("^" + blockSpecialChars(this.inputs["password"].value) + "$"),
                 error: REPEAT_PASSWORD_ERROR,
               },
             ],
@@ -100,6 +123,22 @@ class SignupForm {
           {
             target: this.inputs["password"],
             templates: [
+              {
+                template: SPECIAL_CHAR_PASSWORD_TEMPLATE,
+                error: SPECIAL_CHAR_PASSWORD_ERROR,
+              },
+              {
+                template: DIGIT_PASSWORD_TEMPLATE,
+                error: DIGIT_PASSWORD_ERROR,
+              },
+              {
+                template: LOWERCASE_PASSWORD_TEMPLATE,
+                error: LOWERCASE_PASSWORD_ERROR,
+              },
+              {
+                template: UPPERCASE_PASSWORD_TEMPLATE,
+                error: UPPERCASE_PASSWORD_ERROR,
+              },
               {
                 template: LENGTH_PASSWORD_TEMPLATE,
                 error: LENGTH_PASSWORD_ERROR,
