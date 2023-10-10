@@ -1,4 +1,4 @@
-const LENGTH_LOGIN_TEMPLATE = /.{4,32}$/;
+const LENGTH_LOGIN_TEMPLATE = /.{8,32}$/;
 const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 4 до 32";
 
 const LOGIN_TEMPLATE = /^\S*$/;
@@ -26,8 +26,8 @@ const SPECIAL_CHAR_PASSWORD_TEMPLATE = /^.*(?=[!@#$%^&*])/;
 const SPECIAL_CHAR_PASSWORD_ERROR =
   "Пароль должен содержать хотя бы один специальный символ из !@#$%^&*";
 
-const LENGTH_PASSWORD_TEMPLATE = /^.{4,32}$/;
-const LENGTH_PASSWORD_ERROR = "Длина пароля должна быть от 4 до 32";
+const LENGTH_PASSWORD_TEMPLATE = /^.{8,32}$/;
+const LENGTH_PASSWORD_ERROR = "Длина пароля должна быть от 8 до 32";
 
 const REPEAT_PASSWORD_ERROR = "Пароли не совпадают";
 
