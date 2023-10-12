@@ -1,19 +1,16 @@
-class ListOfPlaces {
-  constructor(parent) {
-    this.parent = parent
+class ListOfPlaces extends Page {
+  constructor(template) {
+    super(template);
     this.template = Handlebars.compile(`
-      <div class="filters">
+      <div class="filters"></div>
+      <div class="list-of-places"></div>
+    `);
 
-      </div>
-      <div class="list-of-places">
-      </div>
-      `)
-
-    this.parent.innerHTML += this.template()
-    this.list = this.parent.querySelector('.list-of-places')
+    // this.list = this.parent.querySelector('.list-of-places');
   }
 
   appendPlace(place) {
     new PlaceCard(this.list, place)
   }
+  
 }

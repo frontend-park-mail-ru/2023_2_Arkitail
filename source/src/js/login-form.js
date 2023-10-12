@@ -1,9 +1,9 @@
 const DATA_ERROR = "Неверный логин или пароль";
 const LOGIN_SERVER_ERROR = "Server error";
 
-class LoginForm {
-  constructor(parent) {
-    this.parent = parent;
+class LoginForm extends Page {
+  constructor(template) {
+    super(template);
     this.template = Handlebars.compile(`
         <figure class="logo">
             <img src="/static/img/logo.svg" alt="GoTo" />
@@ -35,25 +35,17 @@ class LoginForm {
         </div>
     `);
 
-    this.parent.innerHTML = this.template();
-    this.parent
-    .querySelectorAll(`[gateway]`)
-    .forEach(elem => elem.addEventListener('click', function(event) {
-        event.preventDefault();
-        context.activePage = event.currentTarget.getAttribute('gateway');
-        render();
-    }));
-
-    this.validationMsg = this.parent.querySelector("[validation-msg]");
-    this.inputs = this.parent.querySelector(".goto-form form").elements;
+    this.render({});
+    this.validationMsg = this.node.querySelector("[validation-msg]");
+    this.inputs = this.node.querySelector("form").elements;
 
     this.arrInputs = [this.inputs["login"], this.inputs["password"]];
 
-    this.parent
-      .querySelector(".goto-form form")
-      .addEventListener("submit", (event) => {
+    this.node
+      .querySelector("form")
+      .addEventListener("submit", event => {
         event.preventDefault();
-        this.login().then(header.authRender);
+        this.login();
       });
   }
 
@@ -72,6 +64,7 @@ class LoginForm {
     const headers = {
       "Content-Type": "application/json",
     };
+
     const body = JSON.stringify({
       login: this.inputs["login"].value,
       password: this.inputs["password"].value,
@@ -110,5 +103,13 @@ class LoginForm {
 
       context.authenticated.pending = false;
     });
+  }
+
+  invalidateInputs() {
+
+  }
+
+  clearForm() {
+
   }
 }

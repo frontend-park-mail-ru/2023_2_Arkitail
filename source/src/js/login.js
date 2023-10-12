@@ -4,15 +4,15 @@ pages['login'].querySelector('.goto-form form').addEventListener('submit', event
 });
 
 
-function login() {
+function login(form) {
     if (context.activePage != 'login') {
-        console.error("You are not on login page");
+        console.error("You are not on login page");  // Debug purposes
         return null;
     }
 
     if (context.authenticated.pending) {
-        console.error("[login()] Authentication request already pending")
-        return null
+        console.error("[login()] Authentication request already pending");
+        return null;
     }
 
     const inputs = pages['login'].querySelector('.goto-form form').elements;

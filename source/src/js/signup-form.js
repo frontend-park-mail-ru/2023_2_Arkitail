@@ -15,9 +15,9 @@ const REPEAT_PASSWORD_ERROR = "Пароли не совпадают";
 const USER_ALREADY_EXISTS_ERROR = "Пользователь уже существует";
 const SIGNUP_SERVER_ERROR = "Server error";
 
-class SignupForm {
-  constructor(parent) {
-    this.parent = parent;
+class SignupForm extends Page {
+  constructor(template) {
+    super(template);
     this.template = Handlebars.compile(`
       <figure class="logo">
         <img src="/static/img/logo.svg" alt="GoTo" />
@@ -70,24 +70,13 @@ class SignupForm {
       </div>
     `);
 
-    this.parent.innerHTML = this.template();
+    this.render({});
+    this.inputs = this.node.querySelector("form").elements;
 
-    this.parent
-    .querySelectorAll(`[gateway]`)
-    .forEach(elem => elem.addEventListener('click', function(event) {
-        event.preventDefault();
-        context.activePage = event.currentTarget.getAttribute('gateway');
-        render();
-    }));
+    this.validationMsg = this.node.querySelector("[validation-msg]");
 
-    this.inputs = parent.querySelector(".goto-form form").elements;
-
-    this.validationMsg = this.parent.querySelector("[validation-msg]");
-
-
-
-    this.parent
-      .querySelector(".goto-form form")
+    this.node
+      .querySelector("form")
       .addEventListener("submit", (event) => {
         event.preventDefault();
 
@@ -97,7 +86,7 @@ class SignupForm {
           "Content-Type": "application/json",
         };
 
-        const inputs_to_validate = [
+        const inputsToValidate = [
           {
             target: this.inputs["repeat-password"],
             templates: [
@@ -140,7 +129,7 @@ class SignupForm {
           },
         ];
 
-        if (!this.validateInputs(inputs_to_validate)) {
+        if (!this.validateInputs(inputsToValidate)) {
           console.error("Some invalid inputs");
           return;
         }
@@ -152,16 +141,38 @@ class SignupForm {
 
         console.log(body);
 
+        this.signup({
+          method: method,
+          headers: headers,
+          body: body,
+        }).then(response => {
+          if (response.status == 200) {
+            this.validationMsg.innerText = '';
+            inputsToValidate.forEach(input => {
+              inputsToValidate.forEach((input) => {
+                input.target.value = ""; });
+              context.activePage = 'list-of-places';
+              render();
+              console.log("Signup succeed");
+            });
+          } else if (response.status == 401) {
+            this.validationMsg.innerText = USER_ALREADY_EXISTS_ERROR;
+          } else {
+            this.validationMsg.innerText = SIGNUP_SERVER_ERROR;
+            console.error("Signup fatal error");
+          }
+        });
+
+        /*
         fetch(API_V1_URL + "signup", {
           method: method,
           headers: headers,
           body: body,
         }).then((response) => {
-          console.log(response.headers);
           if (response.status == 200) {
             context.authenticated.status = true;
             this.validationMsg.innerText = "";
-            inputs_to_validate.forEach((input) => {
+            inputsToValidate.forEach((input) => {
               input.target.value = "";
             });
             context.activePage = 'list-of-places';
@@ -174,6 +185,7 @@ class SignupForm {
             console.error("Signup fatal error");
           }
         });
+        */
       });
   }
 
@@ -206,4 +218,28 @@ class SignupForm {
       return acc;
     }, true);
   }
+
+  async signup(fetchBody) {
+        return fetch(
+          API_V1_URL + 'signup',
+          fetchBody,
+        ).then(response => {
+          if (main.context.authenticated.pending) {
+            return response;
+          }
+
+          main.context.authenticated.pending = true;
+
+          if (response.status == 200) {
+            main.context.authnticated.status = true;
+          } else if (response.status == 401) {
+            main.context.authenticated.status = false;
+          } else {
+            main.context.authenticated.status = false;
+          }
+
+          main.context.authnticated.pending = false;
+          return response;
+        });
+    }
 }
