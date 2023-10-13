@@ -8,11 +8,16 @@ class Main {
 
         this.context = {
             activePage: 'list-of-places',
+        };
+
+        this.temporaryContext = {
             authenticated: {
                 pending: false,
                 status: true,
             }
-        };
+        }
+
+        this.restoreState();
 
         this.pages = {
             'login': {
@@ -29,17 +34,17 @@ class Main {
             },
         };
 
-        this.route('list-of-places');
+        this.route(this.context.activePage);
     }
 
     async authenticate() {
-        if (this.context.authenticated.pending) {
+        if (this.temporaryContext.authenticated.pending) {
             console.error("[authenticate()] Authentication request already pending")
         }
 
         const requestMethod = 'GET';
 
-        this.context.authenticated.pending = true;
+        this.temporaryContext.authenticated.pending = true;
 
         return fetch(
             API_V1_URL + 'auth',
@@ -49,15 +54,15 @@ class Main {
             }
         ).then(response => {
             if (response.status == 200) {
-                this.context.authenticated.status = true;
+                this.temporaryContext.authenticated.status = true;
             } else if (response.status == 401) {
-                this.context.authenticated.status = false;
+                this.temporaryContext.authenticated.status = false;
             } else {
-                this.context.authenticated.status = false;
+                this.temporaryContext.authenticated.status = false;
                 console.error('Authentication fatal error');
             }
 
-            this.context.authenticated.pending = false;
+            this.temporaryContext.authenticated.pending = false;
         });
     }
 
@@ -71,9 +76,30 @@ class Main {
             this.headerSlot.replaceChildren();
         }
 
+        if (pageName != this.context.activePage) {
+            this.context.activePage = pageName;
+            window.history.pushState(this.context, '');
+            console.log("HELLO");
+        }
+
         this.context.activePage = pageName;
         this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+    }
+
+    restoreState() {
+        let state = window.history.state;
+        if (state !== null) {
+            this.context = state;
+        } else {
+            this.context.activePage = 'list-of-places';
+        }
+    }
+
+    popState(event) {
+        this.restoreState();
+        this.route(this.context.activePage);
     }
 }
 
 let main = new Main();
+window.addEventListener('popstate', event => main.popState(event));

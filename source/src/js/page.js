@@ -17,8 +17,5 @@ class Page {
     gateway(event) {
         event.preventDefault();
         main.route(event.currentTarget.getAttribute('gateway'));
-        if (this instanceof Header) {
-            console.log("THIS IS HEADER");
-        }
     }
 };

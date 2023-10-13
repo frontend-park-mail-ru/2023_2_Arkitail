@@ -11,26 +11,26 @@
 } */
 
 @media (max-width: 768px) {
-    .form .slider {
+    form .slider {
         display: none;
     }
 }
 
-.form .title {
+form .title {
     font-weight: 900;
     font-size: 2rem;
     color: var(--secondary);
     padding-top: 1rem;
 }
 
-.form .login,
-.form .forgot-password {
+form .login,
+form .forgot-password {
     padding-top: .5rem;
 }
 
-.form .login:hover,
-.form .register:hover,
-.form .forgot-password:hover{
+form .login:hover,
+form .register:hover,
+form .forgot-password:hover{
     cursor: pointer;
     color: var(--primary);
 }
