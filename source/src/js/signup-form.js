@@ -7,7 +7,7 @@ const LOGIN_ERROR = "Логин не должен содержать пробе�
 const EMAIL_TEMPLATE = /^.*@.*$/;
 const EMAIL_ERROR = "Введена некоректная почта";
 
-const LENGTH_PASSWORD_TEMPLATE = /^\w{4,32}$/;
+const LENGTH_PASSWORD_TEMPLATE = /^\S{4,32}$/;
 const LENGTH_PASSWORD_ERROR = "Длина пароля должна быть от 4 до 32";
 
 const REPEAT_PASSWORD_ERROR = "Пароли не совпадают";
@@ -149,35 +149,10 @@ class SignupForm extends Page {
           if (response.status == 200) {
             this.validationMsg.innerText = '';
             inputsToValidate.forEach(input => {
-              inputsToValidate.forEach((input) => {
-                input.target.value = ""; });
-              context.activePage = 'list-of-places';
-              render();
-              console.log("Signup succeed");
-            });
-          } else if (response.status == 401) {
-            this.validationMsg.innerText = USER_ALREADY_EXISTS_ERROR;
-          } else {
-            this.validationMsg.innerText = SIGNUP_SERVER_ERROR;
-            console.error("Signup fatal error");
-          }
-        });
-
-        /*
-        fetch(API_V1_URL + "signup", {
-          method: method,
-          headers: headers,
-          body: body,
-        }).then((response) => {
-          if (response.status == 200) {
-            context.authenticated.status = true;
-            this.validationMsg.innerText = "";
-            inputsToValidate.forEach((input) => {
               input.target.value = "";
             });
-            context.activePage = 'list-of-places';
-            render();
-            console.log("Signup succeed");
+
+            main.route('list-of-places');
           } else if (response.status == 401) {
             this.validationMsg.innerText = USER_ALREADY_EXISTS_ERROR;
           } else {
@@ -185,7 +160,6 @@ class SignupForm extends Page {
             console.error("Signup fatal error");
           }
         });
-        */
       });
   }
 
@@ -224,21 +198,21 @@ class SignupForm extends Page {
           API_V1_URL + 'signup',
           fetchBody,
         ).then(response => {
-          if (main.context.authenticated.pending) {
+          if (main.temporaryContext.authenticated.pending) {
             return response;
           }
 
-          main.context.authenticated.pending = true;
+          main.temporaryContext.authenticated.pending = true;
 
           if (response.status == 200) {
-            main.context.authnticated.status = true;
+            main.temporaryContext.authenticated.status = true;
           } else if (response.status == 401) {
-            main.context.authenticated.status = false;
+            main.temporaryContext.authenticated.status = false;
           } else {
-            main.context.authenticated.status = false;
+            main.temporaryContext.authenticated.status = false;
           }
 
-          main.context.authnticated.pending = false;
+          main.temporaryContext.authenticated.pending = false;
           return response;
         });
     }

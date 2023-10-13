@@ -50,12 +50,12 @@ class LoginForm extends Page {
   }
 
   login() {
-    if (context.activePage != "login") {
+    if (main.context.activePage != "login") {
       console.error("You are not on login page");
       return null;
     }
 
-    if (context.authenticated.pending) {
+    if (main.temporaryContext.authenticated.pending) {
       console.error("[login()] Authentication request already pending");
       return null;
     }
@@ -70,7 +70,7 @@ class LoginForm extends Page {
       password: this.inputs["password"].value,
     });
 
-    context.authenticated.pending = true;
+    main.temporaryContext.authenticated.pending = true;
 
     return fetch(API_V1_URL + "login", {
       method: method,
@@ -84,24 +84,21 @@ class LoginForm extends Page {
           input.style["border-color"] = null;
         });
         this.validationMsg.innerText = "";
-        context.authenticated.status = true;
-        console.log("Login succeed");
-        context.activePage = 'list-of-places';
-        render();
+        main.route('list-of-places');
       } else if (response.status == 401) {
         this.validationMsg.innerText = DATA_ERROR;
         this.arrInputs.forEach((input) => {
           input.style["border-width"] = "2px";
           input.style["border-color"] = "red";
         });
-        context.authenticated.status = false;
+        main.temporaryContext.authenticated.status = false;
       } else {
         this.validationMsg.innerText = LOGIN_SERVER_ERROR;
-        context.authenticated.status = false;
+        main.temporaryContext.authenticated.status = false;
         console.error("Login fatal error");
       }
 
-      context.authenticated.pending = false;
+      main.temporaryContext.authenticated.pending = false;
     });
   }
 

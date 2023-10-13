@@ -79,7 +79,6 @@ class Main {
         if (pageName != this.context.activePage) {
             this.context.activePage = pageName;
             window.history.pushState(this.context, '');
-            console.log("HELLO");
         }
 
         this.context.activePage = pageName;

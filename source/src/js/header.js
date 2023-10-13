@@ -18,7 +18,7 @@ class Header extends Page {
                 {{else}}
                 {{#each items}}
                     {{#if this.showToUnauthorized}}
-                    <li><a  href="#">{{this.name}}</a></li>
+                    <li><a href="#">{{this.name}}</a></li>
                     {{/if}}
                 {{/each}}
                 {{/if}}
@@ -48,23 +48,10 @@ class Header extends Page {
         this.render({});
     }
 
-    /*
-    render() {
-        this.parent.innerHTML = this.template({
-            items: this.data.leftMenu,
-            urls: this.data.urls,
-            authorized: context.authenticated.status,
-        });
+    render(context) {
+        super.render(context);
 
-        this.parent
-        .querySelectorAll('[gateway]')
-        .forEach(elem => elem.addEventListener('click', function(event) {
-            event.preventDefault();
-            context.activePage = event.currentTarget.getAttribute('gateway');
-            render();
-        }));
-
-        this.parent
+        this.node
         .querySelectorAll('[logout]')
         .forEach(elem => elem.addEventListener('click', event => {
             event.preventDefault();
@@ -78,5 +65,4 @@ class Header extends Page {
             .then(() => this.render());
         }));
     }
-    */
 }
