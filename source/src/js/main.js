@@ -53,6 +53,8 @@ class Main {
                 method: requestMethod,
             }
         ).then(response => {
+            this.temporaryContext.authenticated.pending = false;
+
             if (response.status == 200) {
                 this.temporaryContext.authenticated.status = true;
             } else if (response.status == 401) {
@@ -61,8 +63,6 @@ class Main {
                 this.temporaryContext.authenticated.status = false;
                 console.error('Authentication fatal error');
             }
-
-            this.temporaryContext.authenticated.pending = false;
         });
     }
 

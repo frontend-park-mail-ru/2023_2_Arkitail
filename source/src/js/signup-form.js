@@ -15,6 +15,37 @@ const REPEAT_PASSWORD_ERROR = "Пароли не совпадают";
 const USER_ALREADY_EXISTS_ERROR = "Пользователь уже существует";
 const SIGNUP_SERVER_ERROR = "Server error";
 
+const validationData = {
+  'repeat-password': [
+    {
+      template: null,
+      error: REPEAT_PASSWORD_ERROR,
+    },
+  ],
+  'password': [
+    {
+      template: LENGTH_PASSWORD_TEMPLATE,
+      error: LENGTH_PASSWORD_ERROR,
+    },
+  ],
+  'email': [
+    {
+      template: EMAIL_TEMPLATE,
+      error: EMAIL_ERROR,
+    },
+  ],
+  'name': [
+    {
+      template: LOGIN_TEMPLATE,
+      error: LOGIN_ERROR,
+    },
+    {
+      template: LENGTH_LOGIN_TEMPLATE,
+      error: LENGTH_LOGIN_ERROR,
+    },
+  ]
+};
+
 class SignupForm extends Page {
   constructor(template) {
     super(template);
@@ -60,7 +91,7 @@ class SignupForm extends Page {
         </div>
 
         <div>
-            <p validation-msg class="validation-error"></p>
+            <p error class="validation-error"></p>
         </div>
       </form>
       <div class="form-footer">
@@ -71,149 +102,105 @@ class SignupForm extends Page {
     `);
 
     this.render({});
-    this.inputs = this.node.querySelector("form").elements;
-
-    this.validationMsg = this.node.querySelector("[validation-msg]");
-
+    this.errorMessage = this.node.querySelector("[error]");
     this.node
-      .querySelector("form")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const method = "POST";
-
-        const headers = {
-          "Content-Type": "application/json",
-        };
-
-        const inputsToValidate = [
-          {
-            target: this.inputs["repeat-password"],
-            templates: [
-              {
-                template: new RegExp("^" + this.inputs["password"].value + "$"),
-                error: REPEAT_PASSWORD_ERROR,
-              },
-            ],
-          },
-          {
-            target: this.inputs["password"],
-            templates: [
-              {
-                template: LENGTH_PASSWORD_TEMPLATE,
-                error: LENGTH_PASSWORD_ERROR,
-              },
-            ],
-          },
-          {
-            target: this.inputs["email"],
-            templates: [
-              {
-                template: EMAIL_TEMPLATE,
-                error: EMAIL_ERROR,
-              },
-            ],
-          },
-          {
-            target: this.inputs["name"],
-            templates: [
-              {
-                template: LOGIN_TEMPLATE,
-                error: LOGIN_ERROR,
-              },
-              {
-                template: LENGTH_LOGIN_TEMPLATE,
-                error: LENGTH_LOGIN_ERROR,
-              },
-            ],
-          },
-        ];
-
-        if (!this.validateInputs(inputsToValidate)) {
-          console.error("Some invalid inputs");
-          return;
-        }
-
-        const body = JSON.stringify({
-          login: this.inputs["name"].value,
-          password: this.inputs["password"].value,
-        });
-
-        console.log(body);
-
-        this.signup({
-          method: method,
-          headers: headers,
-          body: body,
-        }).then(response => {
-          if (response.status == 200) {
-            this.validationMsg.innerText = '';
-            inputsToValidate.forEach(input => {
-              input.target.value = "";
-            });
-
-            main.route('list-of-places');
-          } else if (response.status == 401) {
-            this.validationMsg.innerText = USER_ALREADY_EXISTS_ERROR;
-          } else {
-            this.validationMsg.innerText = SIGNUP_SERVER_ERROR;
-            console.error("Signup fatal error");
-          }
-        });
-      });
+    .querySelector('form')
+    .addEventListener('submit', event => {
+      event.preventDefault();
+      this.submit();
+    });
   }
 
-  validate(input) {
-    return input.templates.reduce((accumulator, template) => {
-      if (input.target.value.match(template.template)) {
-        return accumulator && true;
+  submit() {
+    const method = 'POST';
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const inputs = this.node.querySelector('form').elements;
+
+    validationData['repeat-password'].template = new RegExp('^' + inputs['password'].value + '$');
+    if (!this.validateInputs(Array.from(inputs).filter(item => item.type !== 'submit'), validationData)) {
+      console.error("Some invalid inputs");
+      return;
+    }
+
+    const body = JSON.stringify({
+      login: inputs['name'].value,
+      password: inputs['password'].value,
+    });
+
+    this.signup({
+      method: method,
+      headers: headers,
+      body: body,
+    }).then(response => {
+      if (response.status == 200) {
+        this.clear();
+        main.route('list-of-places');
+      } else if (response.status == 401) {
+      } else {
+      }
+    });
+  }
+
+  validate(input, validationData) {
+    return validationData.reduce((accumulator, tmp) => {
+      if (input.value.match(tmp.template)) {
+        return accumulator;
       }
 
       console.error(
         "Target does not match template:",
-        input.target.value,
-        template.template
+        input.value,
+        tmp.template,
       );
-      this.validationMsg.innerText = template.error;
+
+      this.errorMessage.innerText = tmp.error;
+
       return false;
     }, true);
   }
 
-  validateInputs(inputs) {
+  validateInputs(inputs, validationData) {
     return inputs.reduce((acc, input) => {
-      if (!this.validate(input)) {
-        input.target.style["border-width"] = "2px";
-        input.target.style["border-color"] = "red";
-        return acc && false;
+      console.log("INPUT: ", input.name);
+      if (!this.validate(input, validationData[input.name])) {
+        input.style["border-width"] = "2px";
+        input.style["border-color"] = "red";
+        return false;
       }
 
-      input.target.style["border-width"] = null;
-      input.target.style["border-color"] = null;
+      input.style["border-width"] = null;
+      input.style["border-color"] = null;
+
       return acc;
     }, true);
   }
 
   async signup(fetchBody) {
-        return fetch(
-          API_V1_URL + 'signup',
-          fetchBody,
-        ).then(response => {
-          if (main.temporaryContext.authenticated.pending) {
-            return response;
-          }
-
-          main.temporaryContext.authenticated.pending = true;
-
-          if (response.status == 200) {
-            main.temporaryContext.authenticated.status = true;
-          } else if (response.status == 401) {
-            main.temporaryContext.authenticated.status = false;
-          } else {
-            main.temporaryContext.authenticated.status = false;
-          }
-
-          main.temporaryContext.authenticated.pending = false;
-          return response;
-        });
+    if (main.temporaryContext.authenticated.pending) {
+      console.error("[signup] Authentication request already pending");
+      return null;
     }
+
+    main.temporaryContext.authenticated.pending = true;
+
+    return fetch(
+      API_V1_URL + 'signup',
+      fetchBody,
+    ).then(response => {
+      main.temporaryContext.authenticated.pending = false;
+      if (response.status == 200) {
+        main.temporaryContext.authenticated.status = true;
+      } else if (response.status == 401) {
+        main.temporaryContext.authenticated.status = false;
+      } else {
+        main.temporaryContext.authenticated.status = false;
+        console.error('Signup fatal error');
+      }
+
+      return response;
+    });
+  }
 }

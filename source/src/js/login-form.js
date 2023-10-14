@@ -23,7 +23,7 @@ class LoginForm extends Page {
             </div>
 
             <div>
-                <p validation-msg class="validation-error"></p>
+                <p error class="validation-error"></p>
             </div>
         </form>
         <div class="form-footer">
@@ -35,78 +35,78 @@ class LoginForm extends Page {
         </div>
     `);
 
-    this.render({});
-    this.validationMsg = this.node.querySelector("[validation-msg]");
-    this.inputs = this.node.querySelector("form").elements;
-
-    this.arrInputs = [this.inputs["login"], this.inputs["password"]];
+    this.render({}); this.errorMessage = this.node.querySelector("[error]");
 
     this.node
       .querySelector("form")
       .addEventListener("submit", event => {
         event.preventDefault();
-        this.login();
+        this.submit();
       });
   }
 
-  login() {
-    if (main.context.activePage != "login") {
-      console.error("You are not on login page");
-      return null;
-    }
+  submit() {
+    const method = 'POST';
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
+    const inputs = this.node.querySelector('form').elements;
+
+    const body = JSON.stringify({
+      login: inputs['login'].value,
+      password: inputs['password'].value,
+    });
+
+    this.login(
+      {
+        method: method,
+        headers: headers,
+        body: body,
+      }
+    ).then(response => {
+      if (response.status == 200) {
+        this.errorMessage.innerText = "";
+        this.clear();
+        main.route('list-of-places');
+      } else if (response.status == 401) {
+        this.errorMessage.innerText = DATA_ERROR;
+      } else {
+        this.errorMessage.innerText = LOGIN_SERVER_ERROR;
+      }
+    });
+
+  }
+
+  clear() {
+    const inputs = this.node.querySelector('form').elements;
+    [...inputs].forEach(input => input.value = "");
+  }
+
+  login(fetchBody) {
     if (main.temporaryContext.authenticated.pending) {
       console.error("[login()] Authentication request already pending");
       return null;
     }
 
-    const method = "POST";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    const body = JSON.stringify({
-      login: this.inputs["login"].value,
-      password: this.inputs["password"].value,
-    });
-
     main.temporaryContext.authenticated.pending = true;
 
-    return fetch(API_V1_URL + "login", {
-      method: method,
-      headers: headers,
-      body: body,
-    }).then((response) => {
+    return fetch(
+      API_V1_URL + "login",
+      fetchBody,
+    ).then(response => {
+      main.temporaryContext.authenticated.pending = false;
+
       if (response.status == 200) {
-        this.arrInputs.forEach((input) => {
-          input.value = "";
-          input.style["border-width"] = null;
-          input.style["border-color"] = null;
-        });
-        this.validationMsg.innerText = "";
-        main.route('list-of-places');
+        main.temporaryContext.authenticated.status = true;
       } else if (response.status == 401) {
-        this.validationMsg.innerText = DATA_ERROR;
-        this.arrInputs.forEach((input) => {
-          input.style["border-width"] = "2px";
-          input.style["border-color"] = "red";
-        });
         main.temporaryContext.authenticated.status = false;
       } else {
-        this.validationMsg.innerText = LOGIN_SERVER_ERROR;
         main.temporaryContext.authenticated.status = false;
         console.error("Login fatal error");
       }
 
-      main.temporaryContext.authenticated.pending = false;
+      return response;
     });
-  }
-
-  invalidateInputs() {
-
-  }
-
-  clearForm() {
-
   }
 }
