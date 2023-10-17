@@ -9,12 +9,18 @@ header {
   height: var(--header-height);
 }
 
+header > div {
+  box-sizing: border-box;
+  height: var(--header-height);
+}
+
 header .logo {
   width: var(--logo-wight);
   justify-self: center;
   display: inline-block;
   margin: .6rem 2rem .6rem calc(50% - 6.8rem);
   cursor: pointer;
+  padding: 0;
 }
 
 header nav {
