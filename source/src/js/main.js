@@ -1,6 +1,14 @@
 const API_V1_URL = '/api/v1/';
 
+/**
+ * Класс Main представляет собой общий контекст приложения
+ * он отвечает за роутинг между страницами, а также хранит
+ * и обновляет информацию об авторизации пользователя
+ */
 class Main {
+    /**
+     * Конструктор класса Main
+     */
     constructor() {
         this.headerSlot = document.querySelector('header');
         this.header = new Header('');
@@ -39,6 +47,11 @@ class Main {
         this.route(this.context.activePage);
     }
 
+    /**
+     * Функция authenticate отправляет запрос на авторизацию
+     * и возвращает промис запроса
+     * @returns {Promise} промис запроса авторизации
+     */
     async authenticate() {
         if (this.temporaryContext.authenticated.pending) {
             console.error("[authenticate()] Authentication request already pending")
@@ -68,6 +81,11 @@ class Main {
         });
     }
 
+    /**
+     * Данная функция отвечает за перемещение по приложению.
+     * Управляет также отображением хедера и футера
+     * @param {string} название страницы из множества ключей Main.pages 
+     */
     route(pageName) {
         if (this.pages[pageName].renderHeader) {
             this.authenticate().then(() => {
@@ -95,6 +113,10 @@ class Main {
         this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
     }
 
+    /**
+     * Данная функция восстанавливает состояние страницы
+     * используя HistoryApi
+     */
     restoreState() {
         let state = window.history.state;
         if (state !== null) {
@@ -104,6 +126,10 @@ class Main {
         }
     }
 
+    /**
+     * Обработчик события перемещения по истории
+     * @param {Event} event 
+     */
     popState(event) {
         this.restoreState();
         this.route(this.context.activePage);

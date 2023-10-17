@@ -6,6 +6,10 @@ class Page {
         this.template = Handlebars.compile(template);
     }
 
+    /**
+     * 
+     * @param {object} context 
+     */
     render(context) {
         this.node.remove();
         this.node = document.createElement('div');
@@ -17,6 +21,10 @@ class Page {
         .forEach(elem => elem.addEventListener('click', event => this.gateway(event)));
     }
 
+    /**
+     * 
+     * @param {Event} event 
+     */
     gateway(event) {
         event.preventDefault();
         main.route(event.currentTarget.getAttribute('gateway'));

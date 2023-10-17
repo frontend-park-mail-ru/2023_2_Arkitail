@@ -86,6 +86,11 @@ class LoginForm extends Page {
     Array.from(inputs).filter(item => item.type !== 'submit').forEach(input => input.value = "");
   }
 
+  /**
+   * 
+   * @param {object} fetchBody 
+   * @returns {Promise}
+   */
   login(fetchBody) {
     if (main.temporaryContext.authenticated.pending) {
       console.error("[login()] Authentication request already pending");
