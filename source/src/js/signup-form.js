@@ -51,7 +51,7 @@ class SignupForm extends Page {
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
-          <img src="/static/img/logo.svg" alt="GoTo" />
+          <img gateway='list-of-places' src="/static/img/logo.svg" alt="GoTo" />
           <figcaption>
             <p class="title">Начните путешествовать сейчас</p>
             <p>моментальная регистрация</p>
@@ -140,7 +140,9 @@ class SignupForm extends Page {
         this.clear();
         main.route('list-of-places');
       } else if (response.status == 401) {
+        this.errorMessage.innerText = USER_ALREADY_EXISTS_ERROR;
       } else {
+        this.errorMessage.innerText = SIGNUP_SERVER_ERROR;
       }
     });
   }
