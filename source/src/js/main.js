@@ -72,12 +72,17 @@ class Main {
         if (this.pages[pageName].renderHeader) {
             this.authenticate().then(() => {
                 this.header.render(this.header.generateContext());
+                this.headerSlot.style.display = 'block';
                 this.headerSlot.replaceChildren(this.header.node);
                 this.footer.render({});
+                this.footerSlot.style.display = 'block';
                 this.footerSlot.replaceChildren(this.footer.node);
             });
         } else {
+            this.headerSlot.style.display = 'none';
             this.headerSlot.replaceChildren();
+
+            this.footerSlot.style.display = 'none';
             this.footerSlot.replaceChildren();
         }
 
