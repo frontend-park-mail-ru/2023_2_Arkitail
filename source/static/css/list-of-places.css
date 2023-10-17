@@ -1,4 +1,4 @@
-.list-of-places {
+.list-of-places > .list {
     --card-size: 20rem;
     --card-radius: 20px;
     display: grid;
@@ -8,7 +8,7 @@
     justify-content: space-evenly;
 }
 
-.place-card {
+.list-of-places .place-card {
     font-size: 1rem;
     height: var(--card-size);
     display: grid;
@@ -17,14 +17,14 @@
     border: 2px solid var(--dark-gray);
 }
 
-.place-card section:first-child img {
+.list-of-places .place-card section:first-child img {
     display: block;
     min-height: calc(5*var(--card-size)/9);
     max-width: 100%;
     border-radius: var(--card-radius) var(--card-radius) 0 0;
 }
 
-.place-card section:first-child p {
+.list-of-places .place-card section:first-child p {
     text-align: center;
     width: 3rem;
     position: absolute;
@@ -36,19 +36,19 @@
     border: 2px solid var(--transparent-dark-gray);
 }
 
-.place-card section:last-child {
+.list-of-places .place-card section:last-child {
     background-color: var(--white);
     border-radius: 0 0 var(--card-radius) var(--card-radius);
     padding: .5rem .8rem;
 }
 
-.card-header {
+.list-of-places .card-header {
     display: grid;
     grid-template-columns: 1fr 2.5rem 1rem;
     margin-bottom: .5rem;
 }
 
-.card-rating {
+.list-of-places .card-rating {
     color: var(--dark-gray);
     font-weight: 600;
     margin-left: 1rem;

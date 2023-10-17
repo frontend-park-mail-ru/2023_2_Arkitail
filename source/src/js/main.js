@@ -30,7 +30,7 @@ class Main {
             },
             'list-of-places': {
                 renderHeader: true,
-                instance: new ListOfPlaces(''),
+                instance: new MainPage(''),
             },
         };
 
