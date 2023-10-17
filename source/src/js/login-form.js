@@ -2,6 +2,7 @@ const DATA_ERROR = "Неверный логин или пароль";
 const LOGIN_SERVER_ERROR = "Server error";
 
 class LoginForm extends Page {
+  // @param {string} template
   constructor(template) {
     super('login form', template);
     this.template = Handlebars.compile(`
@@ -85,6 +86,7 @@ class LoginForm extends Page {
     [...inputs].forEach(input => input.value = "");
   }
 
+  // @return {{Promise|object}}
   login(fetchBody) {
     if (main.temporaryContext.authenticated.pending) {
       console.error("[login()] Authentication request already pending");

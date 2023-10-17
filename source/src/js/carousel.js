@@ -1,3 +1,6 @@
+// @param {number} number
+// @param {number} mod
+// @return {number} result
 function modulo(number, mod) {
     let result = number % mod;
     if (result < 0) {
@@ -8,6 +11,10 @@ function modulo(number, mod) {
 
 class Carousel {
 
+    // @param {object} parent
+    // @param {number} numberOfVisibleSlides
+    // @param {boolean} switchingButtons
+    // @param {boolean} stopIfHover
     constructor(parent, numberOfVisibleSlides = 3, switchingButtons = true, stopIfHover = true) {
         this.parent = parent
         this.template = Handlebars.compile(`
@@ -121,7 +128,7 @@ class Carousel {
         this.buttonPrevious.style.display = "none";
         this.buttonNext.style.display = "none";
     }
-
+    // @param {object} place
     appendSlide(place) {
         new CarouselSlide(this.slidesContainer, place)
         this.changeSliderCount()

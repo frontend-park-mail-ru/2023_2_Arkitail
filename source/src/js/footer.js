@@ -1,4 +1,5 @@
 class Footer extends Page {
+  // @param {string} template
   constructor(template) {
     super('footer', template);
     this.template = Handlebars.compile(`

@@ -1,5 +1,6 @@
-
 class PlaceCard {
+    // @param {object} parent
+    // @param {object} place
     constructor(parent, place) {
         this.parent = parent
         this.place = place

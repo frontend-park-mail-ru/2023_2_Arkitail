@@ -46,6 +46,7 @@ const validationData = {
 };
 
 class SignupForm extends Page {
+  // @param {string} template
   constructor(template) {
     super('signup form', template);
     this.template = Handlebars.compile(`
@@ -150,6 +151,7 @@ class SignupForm extends Page {
     [...inputs].forEach(input => input.value = "");
   }
 
+  // @return {boolean}
   validate(input, validationData) {
     return validationData.reduce((accumulator, tmp) => {
       if (input.value.match(tmp.template)) {
@@ -168,6 +170,7 @@ class SignupForm extends Page {
     }, true);
   }
 
+  // @return {boolean}
   validateInputs(inputs, validationData) {
     console.log('Validate: ', validationData);
     return inputs.reduce((acc, input) => {
@@ -185,6 +188,7 @@ class SignupForm extends Page {
     }, true);
   }
 
+  // @return {{Promise|object}}
   async signup(fetchBody) {
     if (main.temporaryContext.authenticated.pending) {
       console.error("[signup] Authentication request already pending");
