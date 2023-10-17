@@ -69,7 +69,7 @@ class Main {
     route(pageName) {
         if (this.pages[pageName].renderHeader) {
             this.authenticate().then(() => {
-                this.header.render();
+                this.header.render(this.header.generateContext());
                 this.headerSlot.replaceChildren(this.header.node);
             });
         } else {

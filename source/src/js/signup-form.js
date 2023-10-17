@@ -1,6 +1,5 @@
 const LENGTH_LOGIN_TEMPLATE = /.{4,32}$/;
 const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 4 до 32";
-
 const LOGIN_TEMPLATE = /^\S*$/;
 const LOGIN_ERROR = "Логин не должен содержать пробелы";
 
@@ -119,7 +118,7 @@ class SignupForm extends Page {
 
     const inputs = this.node.querySelector('form').elements;
 
-    validationData['repeat-password'].template = new RegExp('^' + inputs['password'].value + '$');
+    validationData['repeat-password'][0].template = new RegExp('^' + inputs['password'].value + '$');
     if (!this.validateInputs(Array.from(inputs).filter(item => item.type !== 'submit'), validationData)) {
       console.error("Some invalid inputs");
       return;
@@ -144,6 +143,11 @@ class SignupForm extends Page {
     });
   }
 
+  clear() {
+    const inputs = this.node.querySelector('form').elements;
+    [...inputs].forEach(input => input.value = "");
+  }
+
   validate(input, validationData) {
     return validationData.reduce((accumulator, tmp) => {
       if (input.value.match(tmp.template)) {
@@ -163,6 +167,7 @@ class SignupForm extends Page {
   }
 
   validateInputs(inputs, validationData) {
+    console.log('Validate: ', validationData);
     return inputs.reduce((acc, input) => {
       console.log("INPUT: ", input.name);
       if (!this.validate(input, validationData[input.name])) {
