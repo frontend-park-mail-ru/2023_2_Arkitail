@@ -80,7 +80,7 @@ class LoginForm extends Page {
 
   clear() {
     const inputs = this.node.querySelector('form').elements;
-    [...inputs].forEach(input => input.value = "");
+    Array.from(inputs).filter(item => item.type !== 'submit').forEach(input => input.value = "");
   }
 
   login(fetchBody) {

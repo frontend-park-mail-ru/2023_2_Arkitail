@@ -9,6 +9,7 @@ class Page {
     render(context) {
         this.node.remove();
         this.node = document.createElement('div');
+        this.node.className = this.name;
         this.node.innerHTML = this.template(context);
 
         this.node

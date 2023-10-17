@@ -145,7 +145,7 @@ class SignupForm extends Page {
 
   clear() {
     const inputs = this.node.querySelector('form').elements;
-    [...inputs].forEach(input => input.value = "");
+    Array.from(inputs).filter(item => item.type !== 'submit').forEach(input => input.value = "");
   }
 
   validate(input, validationData) {
@@ -167,9 +167,7 @@ class SignupForm extends Page {
   }
 
   validateInputs(inputs, validationData) {
-    console.log('Validate: ', validationData);
     return inputs.reduce((acc, input) => {
-      console.log("INPUT: ", input.name);
       if (!this.validate(input, validationData[input.name])) {
         input.style["border-width"] = "2px";
         input.style["border-color"] = "red";

@@ -6,7 +6,6 @@ class MainPage extends Page {
         <div list-of-places class="list-of-places"></div>
     `);
     super.render();
-    console.log(this.node);
     this.carousel = new Carousel(this.node.querySelector("[carousel]"), 1);
     this.listOfPlaces = new ListOfPlaces(
       this.node.querySelector("[list-of-places]")
