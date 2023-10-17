@@ -49,7 +49,7 @@ class SignupForm extends Page {
   constructor(template) {
     super('signup', template);
     this.template = Handlebars.compile(`
-      <figure class="logo">
+      <figure gateway='list-of-places' class="logo">
         <img src="/static/img/logo.svg" alt="GoTo" />
         <figcaption>
           <p class="title">Начните путешествовать сейчас</p>
