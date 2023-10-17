@@ -5,6 +5,8 @@ class Main {
         this.headerSlot = document.querySelector('header');
         this.header = new Header('');
         this.mainSlot = document.querySelector('main');
+        this.footer = new Footer('');
+        this.footerSlot = document.querySelector('footer');
 
         this.context = {
             activePage: 'list-of-places',
@@ -71,9 +73,12 @@ class Main {
             this.authenticate().then(() => {
                 this.header.render(this.header.generateContext());
                 this.headerSlot.replaceChildren(this.header.node);
+                this.footer.render({});
+                this.footerSlot.replaceChildren(this.footer.node);
             });
         } else {
             this.headerSlot.replaceChildren();
+            this.footerSlot.replaceChildren();
         }
 
         if (pageName != this.context.activePage) {

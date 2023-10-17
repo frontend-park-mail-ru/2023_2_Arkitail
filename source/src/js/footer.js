@@ -1,8 +1,8 @@
-class Footer {
-  constructor(parent) {
-    this.parent = parent
+class Footer extends Page {
+  constructor(template) {
+    super(template);
     this.template = Handlebars.compile(`
-        <img class="logo" src="../../static/img/logo.svg" alt="GoTo" />
+        <img class="logo" src="/static/img/logo.svg" alt="GoTo" />
 
         <hr />
         <a href="https://github.com/frontend-park-mail-ru/2023_2_Arkitail">
@@ -19,8 +19,8 @@ class Footer {
           </svg>
         </a>
         <p>© GoTo, Arkitail 2023. We love our users!</p>
-        `)
+        `);
 
-    this.parent.innerHTML = this.template()
+    this.render();
   }
 }
