@@ -13,7 +13,7 @@ class Header extends Page {
                 <ul class="menu">
                 {{#each menu}}
                 {{#if this.show}}
-                    <li><a {{this.attr}} href="{{this.url}}">{{this.name}}</a></li>
+                    <li><a class="{{this.}}" {{this.attr}} href="{{this.url}}">{{this.name}}</a></li>
                 {{/if}}
                 {{/each}}
                 </ul>
@@ -68,6 +68,7 @@ class Header extends Page {
                     authOnly: false,
                     show: true,
                     attr: '',
+                    styleClass: '',
                 },
                 {
                     name: 'Выйти',
@@ -75,6 +76,7 @@ class Header extends Page {
                     authOnly: true,
                     show: true,
                     attr: 'logout',
+                    styleClass: 'logout',
                 }
             ]
         };

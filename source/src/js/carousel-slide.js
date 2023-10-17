@@ -1,4 +1,6 @@
 class CarouselSlide {
+    // @param {object} parent
+    // @param {object} place
     constructor(parent, place) {
         this.place = place
         this.parent = parent
