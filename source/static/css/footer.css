@@ -16,7 +16,7 @@ main {
     min-height: calc(100vh - var(--footer-height) - var(--header-height));
 }
 
-footer>* {
+footer .footer > * {
     display: block;
     margin: .6rem auto;
 }

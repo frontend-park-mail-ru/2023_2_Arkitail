@@ -3,8 +3,9 @@ const LOGIN_SERVER_ERROR = "Server error";
 
 class LoginForm extends Page {
   constructor(template) {
-    super('login', template);
+    super('login form', template);
     this.template = Handlebars.compile(`
+      <div class="goto-form">
         <figure class="logo">
             <img src="/static/img/logo.svg" alt="GoTo" />
             <figcaption>
@@ -33,6 +34,7 @@ class LoginForm extends Page {
                 <span class="goto-signup-link">Зарегестрироваться</span>
             </p>
         </div>
+      </div>
     `);
 
     this.render({}); this.errorMessage = this.node.querySelector("[error]");
