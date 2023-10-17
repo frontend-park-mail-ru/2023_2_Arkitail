@@ -49,54 +49,56 @@ class SignupForm extends Page {
   constructor(template) {
     super('signup form', template);
     this.template = Handlebars.compile(`
-      <figure gateway='list-of-places' class="logo">
-        <img src="/static/img/logo.svg" alt="GoTo" />
-        <figcaption>
-          <p class="title">Начните путешествовать сейчас</p>
-          <p>моментальная регистрация</p>
-        </figcaption>
-      </figure>
-      <form>
-        <div class="form-item name">
-          <input name="name" type="text" placeholder="Ваше имя" />
-        </div>
-        <div class="form-item email">
-          <input name="email" type="text" placeholder="Ваша почта" />
-        </div>
-        <div class="form-item password">
-          <input name="password" type="password" placeholder="Ваш пароль" />
-        </div>
-        <div class="form-item repeat-password">
-          <input
-            name="repeat-password"
-            type="password"
-            placeholder="Ваш пароль еще раз"
-          />
-        </div>
-        <!-- <div class="input-group-label">Дата рождения</div>
-        <div class="form-item input-group">
-          <div class="input-group-item">
-            <input name="day" type="text" placeholder="День" />
+      <div class="goto-form">
+        <figure class="logo">
+          <img src="/static/img/logo.svg" alt="GoTo" />
+          <figcaption>
+            <p class="title">Начните путешествовать сейчас</p>
+            <p>моментальная регистрация</p>
+          </figcaption>
+        </figure>
+        <form>
+          <div class="form-item name">
+            <input name="name" type="text" placeholder="Ваше имя" />
           </div>
-          <div class="input-group-item">
-            <input name="month" type="text" placeholder="Месяц" />
+          <div class="form-item email">
+            <input name="email" type="text" placeholder="Ваша почта" />
           </div>
-          <div class="input-group-item">
-            <input name="year" type="text" placeholder="Год" />
+          <div class="form-item password">
+            <input name="password" type="password" placeholder="Ваш пароль" />
           </div>
-        </div> -->
-        <div class="form-submit submit">
-          <input name="submit" type="submit" value="Зарегистрироваться" />
-        </div>
+          <div class="form-item repeat-password">
+            <input
+              name="repeat-password"
+              type="password"
+              placeholder="Ваш пароль еще раз"
+            />
+          </div>
+          <!-- <div class="input-group-label">Дата рождения</div>
+          <div class="form-item input-group">
+            <div class="input-group-item">
+              <input name="day" type="text" placeholder="День" />
+            </div>
+            <div class="input-group-item">
+              <input name="month" type="text" placeholder="Месяц" />
+            </div>
+            <div class="input-group-item">
+              <input name="year" type="text" placeholder="Год" />
+            </div>
+          </div> -->
+          <div class="form-submit submit">
+            <input name="submit" type="submit" value="Зарегистрироваться" />
+          </div>
 
-        <div>
-            <p error class="validation-error"></p>
+          <div>
+              <p error class="validation-error"></p>
+          </div>
+        </form>
+        <div class="form-footer">
+          <p gateway="login" class="login">
+            Уже есть аккаунт? <span class="goto-login-link">Войти</span>
+          </p>
         </div>
-      </form>
-      <div class="form-footer">
-        <p gateway="login" class="login">
-          Уже есть аккаунт? <span class="goto-login-link">Войти</span>
-        </p>
       </div>
     `);
 

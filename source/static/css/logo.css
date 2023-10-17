@@ -1,4 +1,4 @@
-.login .logo, .signup .logo {
+.form .logo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,19 +8,19 @@
     padding-bottom: 1rem;
 }
 
-.login .logo img, .signup .logo img {
+.form .logo img {
     display: block;
     width: 10rem;
 }
 
-.login .logo figcaption, .signup .logo figcaption {
+.form .logo figcaption {
     display: flex;
     flex-direction: column;
     justify-content: center;
     justify-items: center;
 }
 
-.login .logo figcaption > *, .signup .logo figcaption > * {
+.form .logo figcaption > * {
     text-align: center;
     margin: auto;
 }

@@ -5,7 +5,8 @@ class LoginForm extends Page {
   constructor(template) {
     super('login form', template);
     this.template = Handlebars.compile(`
-        <figure gateway='list-of-places' class="logo">
+      <div class="goto-form">
+        <figure class="logo">
             <img src="/static/img/logo.svg" alt="GoTo" />
             <figcaption>
                 <p class="title">Время путешествовать</p>
@@ -33,6 +34,7 @@ class LoginForm extends Page {
                 <span class="goto-signup-link">Зарегестрироваться</span>
             </p>
         </div>
+      </div>
     `);
 
     this.render({}); this.errorMessage = this.node.querySelector("[error]");
