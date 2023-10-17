@@ -1,6 +1,6 @@
 class Header extends Page {
     constructor(template) {
-        super(template);
+        super('header', template);
 
         this.template = Handlebars.compile(`
             <input class="side-menu" type="checkbox" id="side-menu" />

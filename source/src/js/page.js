@@ -1,6 +1,8 @@
 class Page {
-    constructor(template) {
+    constructor(name, template) {
+        this.name = name;
         this.node = document.createElement('div');
+        this.node.className = name;
         this.template = Handlebars.compile(template);
     }
 

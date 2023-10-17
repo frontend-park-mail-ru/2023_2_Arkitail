@@ -47,7 +47,7 @@ const validationData = {
 
 class SignupForm extends Page {
   constructor(template) {
-    super(template);
+    super('signup', template);
     this.template = Handlebars.compile(`
       <figure class="logo">
         <img src="/static/img/logo.svg" alt="GoTo" />

@@ -3,7 +3,7 @@ const LOGIN_SERVER_ERROR = "Server error";
 
 class LoginForm extends Page {
   constructor(template) {
-    super(template);
+    super('login', template);
     this.template = Handlebars.compile(`
         <figure class="logo">
             <img src="/static/img/logo.svg" alt="GoTo" />

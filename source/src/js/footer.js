@@ -1,6 +1,6 @@
 class Footer extends Page {
   constructor(template) {
-    super(template);
+    super('footer', template);
     this.template = Handlebars.compile(`
         <img class="logo" src="/static/img/logo.svg" alt="GoTo" />
 
