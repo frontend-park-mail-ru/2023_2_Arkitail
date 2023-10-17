@@ -1,15 +1,15 @@
 class Page {
-    constructor(name, template) {
-        this.name = name;
+    constructor(classes, template) {
+        this.classes = classes;
         this.node = document.createElement('div');
-        this.node.className = name;
+        this.node.className = classes;
         this.template = Handlebars.compile(template);
     }
 
     render(context) {
         this.node.remove();
         this.node = document.createElement('div');
-        this.node.className = this.name;
+        this.node.className = this.classes;
         this.node.innerHTML = this.template(context);
 
         this.node
