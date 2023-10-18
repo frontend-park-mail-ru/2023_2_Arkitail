@@ -84,6 +84,7 @@ class LoginForm extends Page {
   clear() {
     const inputs = this.node.querySelector('form').elements;
     [...inputs].forEach(input => input.value = "");
+    this.errorMessage.innerText = ""
   }
 
   // @return {{Promise|object}}
