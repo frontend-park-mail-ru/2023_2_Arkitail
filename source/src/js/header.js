@@ -13,7 +13,7 @@ class Header extends Page {
                 <ul class="menu">
                 {{#each menu}}
                 {{#if this.show}}
-                    <li><a class="{{this.}}" {{this.attr}} href="{{this.url}}">{{this.name}}</a></li>
+                    <li><a class="{{this.styleClass}}" {{this.attr}} href="{{this.url}}">{{this.name}}</a></li>
                 {{/if}}
                 {{/each}}
                 </ul>
