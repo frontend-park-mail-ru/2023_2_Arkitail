@@ -21,7 +21,7 @@ class Header extends Page {
             {{#if authenticated}}
             <div class="right-menu">
                 <img class="heart" src="../../static/img/heart.svg" alt="GoTo" />
-                <p class="heart hidden-on-mobile">Избранное</p>
+                <p class="heart hidden-on-mobile">{{this.userName}}</p>
             </div>
             {{else}}
             <button gateway="signup" class="right-menu btn-register hidden-on-mobile">
@@ -60,6 +60,7 @@ class Header extends Page {
 
     generateContext() {
         let context = {
+            userName: main.temporaryContext.userName,
             authenticated: main.temporaryContext.authenticated.status,
             menu: [
                 {

@@ -24,7 +24,8 @@ class Main {
             authenticated: {
                 pending: false,
                 status: true,
-            }
+            },
+            userName: '',
         }
 
         this.restoreState();
@@ -87,7 +88,10 @@ class Main {
             {
                 method: 'GET',
             },
-        );
+        ).then(response => response.json()
+        ).then(data => {
+            this.temporaryContext.userName = data['user']['login'];
+        });
     }
 
     /**
@@ -97,10 +101,11 @@ class Main {
      */
     route(pageName) {
         if (this.pages[pageName].renderHeader) {
-            this.authenticate().then(() => {
+            this.authenticate().then(() => main.getUserInfo()).then(() => {
                 this.header.render(this.header.generateContext());
                 this.headerSlot.style.display = 'block';
                 this.headerSlot.replaceChildren(this.header.node);
+
                 this.footer.render({});
                 this.footerSlot.style.display = 'block';
                 this.footerSlot.replaceChildren(this.footer.node);
