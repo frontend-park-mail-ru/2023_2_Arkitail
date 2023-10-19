@@ -27,6 +27,9 @@ class Page {
      */
     gateway(event) {
         event.preventDefault();
+        this.preroute();
         main.route(event.currentTarget.getAttribute('gateway'));
     }
+
+    preroute() {}
 };

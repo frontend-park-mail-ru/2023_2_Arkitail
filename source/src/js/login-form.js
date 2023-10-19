@@ -5,6 +5,7 @@ class LoginForm extends Page {
   // @param {string} template
   constructor(template) {
     super('login form', template);
+    this.preroute = this.clear;
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
@@ -70,7 +71,6 @@ class LoginForm extends Page {
       }
     ).then(response => {
       if (response.status == 200) {
-        this.errorMessage.innerText = "";
         this.clear();
         main.route('list-of-places');
       } else if (response.status == 401) {
@@ -85,6 +85,7 @@ class LoginForm extends Page {
   clear() {
     const inputs = this.node.querySelector('form').elements;
     Array.from(inputs).filter(item => item.type !== 'submit').forEach(input => input.value = "");
+    this.errorMessage.innerText = "";
   }
 
   /**

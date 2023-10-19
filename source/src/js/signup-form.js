@@ -86,6 +86,7 @@ class SignupForm extends Page {
   // @param {string} template
   constructor(template) {
     super('signup form', template);
+    this.preroute = this.clear;
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
@@ -167,6 +168,7 @@ class SignupForm extends Page {
     const body = JSON.stringify({
       login: inputs['name'].value,
       password: inputs['password'].value,
+      email: inputs['email'].value,
     });
 
     this.signup({
@@ -188,6 +190,7 @@ class SignupForm extends Page {
   clear() {
     const inputs = this.node.querySelector('form').elements;
     Array.from(inputs).filter(item => item.type !== 'submit').forEach(input => input.value = "");
+    this.errorMessage.innerText = '';
   }
 
   // @return {boolean}
