@@ -19,13 +19,13 @@ class Header extends Page {
                 </ul>
             </nav>
             {{#if authenticated}}
-            <div class="right-menu">
+            <div class="right-menu authorized">
                 <div class="avatar">
                     <img src=""/>
                 </div>
                 <p class="hidden-on-mobile">{{this.userName}}</p>
             </div>
-            <div class="right-menu">
+            <div class="right-menu authorized">
                 <img class="heart" src="../../static/img/heart.svg" alt="GoTo" />
                 <p class="heart hidden-on-mobile">Избранное</p>
             </div>
