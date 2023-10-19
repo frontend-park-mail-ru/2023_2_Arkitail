@@ -34,6 +34,9 @@ const REPEAT_PASSWORD_ERROR = "Пароли не совпадают";
 const USER_ALREADY_EXISTS_ERROR = "Пользователь уже существует";
 const SIGNUP_SERVER_ERROR = "Server error";
 
+function ecsapeSpecialChars(template) {
+  return template.replace(/\s[!@#$%^&*]/g, "\\$&")
+}
 
 const validationData = {
   'repeat-password': [
@@ -159,7 +162,7 @@ class SignupForm extends Page {
 
     const inputs = this.node.querySelector('form').elements;
 
-    validationData['repeat-password'][0].template = new RegExp('^' + inputs['password'].value + '$');
+    validationData['repeat-password'][0].template = new RegExp('^' + ecsapeSpecialChars(inputs['password'].value) + '$');
     if (!this.validateInputs(Array.from(inputs).filter(item => item.type !== 'submit'), validationData)) {
       console.error("Some invalid inputs");
       return;
