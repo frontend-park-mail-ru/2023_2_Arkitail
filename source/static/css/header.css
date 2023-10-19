@@ -9,7 +9,7 @@ header {
   height: var(--header-height);
 }
 
-header > div {
+header>div {
   box-sizing: border-box;
   height: var(--header-height);
 }
@@ -128,13 +128,21 @@ header nav {
   margin: .7rem 1rem .7rem 0;
 }
 
-.right-menu>.heart {
+.right-menu>* {
   height: 1.6rem;
   font-size: 1.3rem;
   padding: .4rem .2rem;
 }
 
-.right-menu:hover > .heart {
+.right-menu .avatar {
+  height: 2.4rem;
+  width: 2.4rem;
+  background-color: var(--transparent-dark-gray);
+  border-radius: 50%;
+  padding: 0;
+}
+
+.right-menu:hover>.heart {
   color: var(--secondary);
 }
 
@@ -179,6 +187,10 @@ header nav {
   .btn-login svg {
     height: 2rem;
     width: 2rem;
+  }
+
+  header .logo {
+    margin-right: 0;
   }
 }
 

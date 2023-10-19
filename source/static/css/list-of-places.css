@@ -14,7 +14,6 @@
     display: grid;
     grid-template-rows: 5fr 4fr;
     border-radius: var(--card-radius);
-    border: 2px solid var(--dark-gray);
 }
 
 .list-of-places .place-card section:first-child img {
@@ -22,6 +21,9 @@
     min-height: calc(5*var(--card-size)/9);
     max-width: 100%;
     border-radius: var(--card-radius) var(--card-radius) 0 0;
+    border: 2px solid var(--transparent-dark-gray);
+    border-bottom: 0;
+    box-sizing: border-box;
 }
 
 .list-of-places .place-card section:first-child p {
@@ -40,6 +42,7 @@
     background-color: var(--white);
     border-radius: 0 0 var(--card-radius) var(--card-radius);
     padding: .5rem .8rem;
+    border: 2px solid var(--transparent-dark-gray);
 }
 
 .list-of-places .card-header {

@@ -47,7 +47,7 @@
     color: rgba(0, 0, 0, 0.5);
 }
 
-.carousel-button_next {
+.carousel-button-next {
     right: 0;
 }
 
@@ -83,6 +83,8 @@
     color: var(--white);
     font-size: 3rem;
     margin-bottom: 1vw;
+    font-weight: 700;
+    font-family: var(--title);
 }
 
 .slide>.desc>button {

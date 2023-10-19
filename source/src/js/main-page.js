@@ -3,13 +3,13 @@ class MainPage extends Page {
   constructor(template) {
     super('main', template);
     this.template = Handlebars.compile(`
-        <div carousel style="padding: 0"></div>
-        <div list-of-places class="list-of-places"></div>
+        <div data-carousel style="padding: 0"></div>
+        <div data-list-of-places class="list-of-places"></div>
     `);
     super.render();
-    this.carousel = new Carousel(this.node.querySelector("[carousel]"), 1);
+    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), 1);
     this.listOfPlaces = new ListOfPlaces(
-      this.node.querySelector("[list-of-places]")
+      this.node.querySelector("[data-list-of-places]")
     );
 
     this.fillCarousel();

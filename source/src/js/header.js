@@ -20,8 +20,14 @@ class Header extends Page {
             </nav>
             {{#if authenticated}}
             <div class="right-menu">
+                <div class="avatar">
+                    <img src=""/>
+                </div>
+                <p class="hidden-on-mobile">{{this.userName}}</p>
+            </div>
+            <div class="right-menu">
                 <img class="heart" src="../../static/img/heart.svg" alt="GoTo" />
-                <p class="heart hidden-on-mobile">{{this.userName}}</p>
+                <p class="heart hidden-on-mobile">Избранное</p>
             </div>
             {{else}}
             <button gateway="signup" class="right-menu btn-register hidden-on-mobile">
@@ -45,7 +51,7 @@ class Header extends Page {
         super.render(context);
 
         this.node
-        .querySelectorAll('[logout]')
+        .querySelectorAll('[data-logout]')
         .forEach(elem => elem.addEventListener('click', event => {
             event.preventDefault();
             fetch(
@@ -76,7 +82,7 @@ class Header extends Page {
                     url: '#',
                     authOnly: true,
                     show: true,
-                    attr: 'logout',
+                    attr: 'data-logout',
                     styleClass: 'logout',
                 }
             ]
