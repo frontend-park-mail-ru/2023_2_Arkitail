@@ -11,3 +11,8 @@ TripAdvisor "GoTo" от Arkitail
 - [Фарис Набиев](https://t.me/iamnotfaris), ux
 - [Дмитрий Жук](https://t.me/ZhukDO), frontend
 - [Дарья Лабзунова](https://t.me/labzunova), backend
+
+Ссылка на [репозиторий бэкенда](https://github.com/go-park-mail-ru/2023_2_Arkitail)
+
+Ссылка на [деплой](http://87.239.110.198/)
+
