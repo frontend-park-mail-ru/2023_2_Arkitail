@@ -13,17 +13,21 @@ function modulo(number, mod) {
 
 /**
  * Функция предотвращения повторной активации переданной функции в результате быстрой серии событий.
- * @param {Function} func - Function to be debounced
- * @param {number} wait - Time in milliseconds to wait before the function gets called.
+ * @param {Function} func - функция
+ * @param {number} timeout - время пока клики не действуют
  * @returns {Function}
  */
-function debounce(func, wait) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
+function debounce(func, timeout) {
+  let timer = null;
+
+  return function perform(...args) {
+    if (timer) return;
+
+    func(...args);
     timer = setTimeout(() => {
-      func.apply(this, args);
-    }, wait);
+      clearTimeout(timer);
+      timer = null;
+    }, timeout);
   };
 }
 
@@ -55,14 +59,18 @@ class Carousel {
                   aria-label="Previous slide"
                   data-carousel-button-previous
                 >
-                  <p>&#8249;</p>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.7501 18.75L9.00012 12L15.7501 5.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </button>
                 <button
                   class="carousel-button carousel-button-next"
                   aria-label="Next slide"
                   data-carousel-button-next
                 >
-                  <p>&#8250;</p>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 5.25L15.75 12L9 18.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </button>
             </div>
             <div
@@ -109,11 +117,11 @@ class Carousel {
       this.carousel.addEventListener("mouseout", this.hideArrows.bind(this));
       this.buttonPrevious.addEventListener(
         "click",
-        debounce(this.handlePrevious.bind(this), 500).bind(this)
+        debounce(this.handlePrevious.bind(this), 1200)
       );
       this.buttonNext.addEventListener(
         "click",
-        debounce(this.handleNext.bind(this), 500).bind(this)
+        debounce(this.handleNext.bind(this), 1200)
       );
     }
 

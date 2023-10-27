@@ -3,7 +3,7 @@ class MainPage extends Page {
   constructor(template) {
     super('main', template);
     this.template = Handlebars.compile(`
-        <div data-carousel style="padding: 0"></div>
+        <div data-carousel class="list-of-places-carousel"></div>
         <div data-list-of-places class="list-of-places"></div>
     `);
     super.render();

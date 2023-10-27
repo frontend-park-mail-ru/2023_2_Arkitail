@@ -1,7 +1,6 @@
 .carousel {
     --slider-width: 100%;
     --btn-size: 3rem;
-
     --slider-count: 0;
     --current-slide: 0;
     position: relative;
@@ -13,42 +12,25 @@
 .carousel-button {
     display: none;
     position: absolute;
+    top: calc(50% - var(--btn-size));
+
     z-index: 1;
     justify-content: center;
-
-    height: 100%;
-    width: var(--btn-size);
-    background-color: var(--transparent-darkest-gray);
+    border-radius: 50%;
     border: none;
-    font-size: calc(var(--btn-size));
+
+    background-color: var(--transparent-darkest-gray);
     cursor: pointer;
 
     transition: color 0.1s;
 }
 
-.carousel-button>p {
+.carousel-button>* {
     color: var(--white);
-    position: absolute;
-    top: calc(50% - var(--btn-size) / 2);
-}
+    padding: calc(var(--btn-size)/4);
 
-@media screen and (min-width: 768px) {
-    .carousel-button {
-        font-size: calc(var(--btn-size)*2/3);
-        width: calc(var(--btn-size)*2/3);
-    }
-
-    .carousel-button>p {
-        top: calc(50% - var(--btn-size) / 4);
-    }
-}
-
-.carousel-button:hover {
-    color: rgba(0, 0, 0, 0.5);
-}
-
-.carousel-button-next {
-    right: 0;
+    height: calc(var(--btn-size)/2);
+    width: calc(var(--btn-size)/2);
 }
 
 .slides {
@@ -59,17 +41,15 @@
 
 .slide {
     flex: 0 0 calc(100% /var(--slider-count));
-}
-
-
-.slide {
     width: 100%;
     display: flex;
     position: relative;
+    overflow: hidden;
 }
 
 .slide img {
     width: 100%;
+    object-fit: cover;
 }
 
 .slide>.desc {

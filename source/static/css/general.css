@@ -3,6 +3,7 @@
     --dark-gray: #667085;
     --transparent-dark-gray: rgba(102, 112, 133, .5);
     --transparent-darkest-gray: rgba(0, 11, 35, .5);
+    --darkest-gray: rgba(0, 11, 35, 1);
     --primary: #19a3ff;
     --secondary: #1f705c;
     --transparent-white: rgba(255, 255, 255, .8);
@@ -12,14 +13,15 @@
     --extra-red: rgb(210, 8, 18);
     --header-height: 4rem;
     --logo-wight: 6rem;
-    --title: Open Sans ;
+    --title: Open Sans;
+    --card-radius: 4px;
 }
 
 * {
     margin: 0;
     padding: 0;
     font-size: 1rem;
-    font-family: -apple-system,BlinkMacSystemFont,Arial,sans-serif;;
+    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 }
 
 body {
@@ -32,4 +34,9 @@ a {
 
 ul {
     list-style: none;
+}
+
+.card {
+    border-radius: var(--card-radius);
+    box-shadow: 0px 0px 15px 3px var(--transparent-dark-gray);
 }
