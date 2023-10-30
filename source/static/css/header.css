@@ -1,6 +1,6 @@
 header {
   box-sizing: border-box;
-  background-color: var(--footer-color);
+  background-color: var(--light-gray);
   position: sticky;
   top: 0;
   width: 100%;

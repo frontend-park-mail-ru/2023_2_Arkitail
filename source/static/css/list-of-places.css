@@ -29,7 +29,6 @@
     width: 3rem;
     position: absolute;
     padding: .4rem 0 .3rem;
-    background-color: var(--white);
     margin: 1rem;
     border-radius: 8px;
     font-weight: 600;
@@ -51,13 +50,11 @@
 
 .list-of-places .card-header {
     display: grid;
-    grid-template-columns: 1fr 2.5rem 1rem;
+    grid-template-columns: 1fr auto auto;
     margin-bottom: .5rem;
 }
 
-.list-of-places .card-rating {
-    color: var(--dark-gray);
-    font-weight: 600;
+.list-of-places .rating {
     margin-left: 1rem;
 }
 
