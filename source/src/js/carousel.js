@@ -3,13 +3,7 @@
  * @param {number} mod
  * @return {number}
  */
-function modulo(number, mod) {
-  let result = number % mod;
-  if (result < 0) {
-    result += mod;
-  }
-  return result;
-}
+const mathMod = (number, mod) => ((number % mod) + mod) % mod;
 
 /**
  * Функция предотвращения повторной активации переданной функции в результате быстрой серии событий.
@@ -25,7 +19,6 @@ function debounce(func, timeout) {
 
     func(...args);
     timer = setTimeout(() => {
-      clearTimeout(timer);
       timer = null;
     }, timeout);
   };
@@ -159,12 +152,12 @@ class Carousel {
   }
 
   handleNext() {
-    this.currentSlide = modulo(this.currentSlide + 1, this.numSlides);
+    this.currentSlide = mathMod(this.currentSlide + 1, this.numSlides);
     this.carousel.style.setProperty("--current-slide", this.currentSlide);
   }
 
   handlePrevious() {
-    this.currentSlide = modulo(this.currentSlide - 1, this.numSlides);
+    this.currentSlide = mathMod(this.currentSlide - 1, this.numSlides);
     this.carousel.style.setProperty("--current-slide", this.currentSlide);
   }
 

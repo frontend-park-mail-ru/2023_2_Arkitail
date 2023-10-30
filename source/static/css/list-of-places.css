@@ -30,7 +30,6 @@
     position: absolute;
     padding: .4rem 0 .3rem;
     margin: 1rem;
-    border-radius: 8px;
     font-weight: 600;
 }
 
@@ -43,9 +42,22 @@
 .list-of-places .place-card section:last-child .card-description {
     overflow: hidden;
     text-overflow: ellipsis;
+
+    display: -webkit-box;
     -webkit-line-clamp: var(--card-description-size);
     -webkit-box-orient: vertical;
-    display: -webkit-box;
+
+    display: -moz-box;
+    -moz-line-clamp: var(--card-description-size);
+    -moz-box-orient: vertical;
+
+    display: -o-box;
+    -o-line-clamp: var(--card-description-size);
+    -o-box-orient: vertical;
+    
+    display: -ms-box;
+    -ms-line-clamp: var(--card-description-size);
+    -ms-box-orient: vertical;
 }
 
 .list-of-places .card-header {

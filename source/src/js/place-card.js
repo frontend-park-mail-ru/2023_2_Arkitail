@@ -7,7 +7,7 @@ class PlaceCard {
         this.template = Handlebars.compile(`
         <div class="place-card card">
             <section>
-            <p>{{place.cost}}</p>
+            <p class="card">{{place.cost}}</p>
             <img src="{{place.imageUrl}}" />
             </section>
 
@@ -25,7 +25,7 @@ class PlaceCard {
                     />
                 </svg>
             </div>
-            <div class="card-description">
+            <div class="card-description gray-text">
                 <p>
                     {{place.description}}
                 </p>

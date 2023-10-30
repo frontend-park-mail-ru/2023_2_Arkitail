@@ -29,7 +29,6 @@ class PlacePage extends Page {
     </div>
 
     <div class="place-info">
-
         <img src="/static/img/example.jpg" />
 
         <div class="place-body-margin info card">
@@ -77,13 +76,9 @@ class PlacePage extends Page {
                     <p class="gray-underline-text">+71234567890</p>
                 </div>
             </div>
-
-
-
         </div>
-
     </div>
-    
+
     `);
     super.render();
   }
