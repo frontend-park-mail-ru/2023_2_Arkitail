@@ -4,15 +4,6 @@ class PlacePage extends Page {
   constructor(template, context) {
     super("place", template);
 
-    Handlebars.registerHelper("stars", function (n, rating, block) {
-      var accum = "";
-      for (var i = 1; i <= n; ++i) {
-        block.data.active = rating >= i ? "active" : "";
-        accum += block.fn(i);
-      }
-      return accum;
-    });
-
     this.template = Handlebars.compile(`
     <div class="place-body-margin">
         <p class="general-main-title">{{ place.name }}</p>
@@ -103,18 +94,20 @@ class PlacePage extends Page {
 
     super.render({ place: context });
 
-    new Carousel(this.node.querySelector("[data-carousel]"));
+    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"));
   }
 
   async getReviews() {
-    return Array.from({ length: 10 }, (_, i) => {
-      return {
-        id: 0,
-        userId: 0,
-        placeId: 0,
-        text: "Очень нравится <3 ",
-        rating: i * 0.5 + ((i * i) % 5),
-      };
-    });
+    return new Promise(
+      Array.from({ length: 10 }, (_, i) => {
+        return {
+          id: i,
+          userId: i,
+          placeId: 0,
+          text: "Очень нравится <3 ",
+          rating: i * 0.5 + ((i * i) % 5),
+        };
+      })
+    );
   }
 }
