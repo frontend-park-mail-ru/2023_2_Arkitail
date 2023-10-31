@@ -1,7 +1,20 @@
+memorize = (fun) => {
+  let cache = {};
+  return (params) => {
+    if (cache[params] == undefined) {
+      const result = fun(params);
+      cache[params] = result;
+      return result;
+    } else {
+      return cache[params];
+    }
+  };
+};
+
 class MainPage extends Page {
   // @param {string} template
   constructor(template) {
-    super('main', template);
+    super("main", template);
     this.template = Handlebars.compile(`
         <div data-carousel class="list-of-places-carousel"></div>
         <div data-list-of-places class="list-of-places"></div>
@@ -12,34 +25,49 @@ class MainPage extends Page {
       this.node.querySelector("[data-list-of-places]")
     );
 
+    this.templateCarouselSlide = Handlebars.compile(`
+          <img src="{{place.imageUrl}}" />
+          <div class="desc">
+          <p>{{place.name}}</p>
+          <button id="place-{{ place.id }}">
+              <p>Узнать больше</p>
+          </button>
+          </div>
+        `);
+
     this.fillCarousel();
     this.fillListOfPlaces();
+
   }
 
   // Добавляет в div-блок с атрибутом carousel слайды достопримечательностей
   fillCarousel() {
-    this.getPlaces().then((places) => {
-      for (const [_, place] of places.entries()) {
-        this.carousel.appendSlide(place);
-      }
+      this.getPlaces().then((places) => {
+      places.forEach((place) => {
+        this.carousel.appendSlide(this.templateCarouselSlide({ place: place }));
+      });
     });
   }
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
   fillListOfPlaces() {
-    this.getPlaces().then((places) => {
-      for (const [_, place] of places.entries()) {
+      this.getPlaces().then((places) => {
+      places.forEach((place) => {
         this.listOfPlaces.appendPlace(place);
-      }
+      });
     });
   }
 
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей
   // и возвращает мапу достопримечательностей
   // return {Promise} промис запроса мест
-  async getPlaces() {
+  getPlaces = memorize(async function () {
     return fetch("/api/v1/places", {
       method: "GET",
-    }).then((response) => response.json());
-  }
+    })
+      .then((response) => response.json())
+      .then((places) => {
+        return places.sort((place1, place2) => place1.id - place2.id);
+      });
+  });
 }

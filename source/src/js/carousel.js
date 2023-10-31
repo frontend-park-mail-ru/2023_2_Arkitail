@@ -179,10 +179,10 @@ class Carousel {
     this.buttonNext.style.display = "none";
   }
   /**
-   * @param {object} place
+   * @param {object} content
    */
-  appendSlide(place) {
-    new CarouselSlide(this.slidesContainer, place);
+  appendSlide(content) {
+    new CarouselSlide(this.slidesContainer, content);
     this.changeSliderCount();
   }
 }
