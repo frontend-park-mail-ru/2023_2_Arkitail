@@ -22,9 +22,6 @@ footer .footer > * {
 }
 
 footer .footer > hr {
-    height: 0;
-	border: none;
-	border-top: 1px solid var(--transparent-darkest-gray);
     margin: 1rem 0;
 }
 

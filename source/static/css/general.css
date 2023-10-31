@@ -38,6 +38,12 @@ ul {
     list-style: none;
 }
 
+hr {
+    height: 0;
+    border: none;
+    border-bottom: 2px solid var(--transparent-darkest-gray);
+}
+
 .card {
     border-radius: var(--card-radius);
     box-shadow: 0px 0px 15px 3px var(--transparent-dark-gray);
@@ -71,11 +77,29 @@ svg.star {
     height: 1rem;
     width: 1rem;
     fill: var(--dark-gray);
-    padding: 0 .1rem;
+    padding: 0 .2rem;
+}
+
+.medium-size-text svg.star {
+    height: 1.2rem;
+    width: 1.2rem;
+    padding: 0 .4rem;
 }
 
 svg.star.active {
     fill: var(--primary);
+}
+
+.stars svg.star:nth-child(2) {
+    padding-right: 0;
+}
+
+.stars svg.star+svg.star {
+    padding: 0;
+}
+
+.stars {
+    display: flex;
 }
 
 .gray-text {
@@ -88,13 +112,25 @@ svg.star.active {
     cursor: pointer;
 }
 
-.medium-size-text, 
-.medium-size-text *{
+.medium-size-text,
+.medium-size-text * {
     font-size: 1.2rem;
 }
 
-.medium-size-text svg.star {
-    height: 1.2rem;
-    width: 1.2rem;
-    padding: 0 .2rem;
+.btn {
+    cursor: pointer;
+    padding: calc(0.6rem - 2px);
+    border-radius: 8px;
+}
+
+.green-btn {
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
+    color: var(--white);
+}
+
+.blue-btn {
+    background-color: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
 }

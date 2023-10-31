@@ -147,24 +147,6 @@ header nav {
   color: var(--secondary);
 }
 
-.btn-login,
-.btn-register {
-  padding: .6rem;
-}
-
-.btn-login {
-  background-color: var(--white);
-  color: var(--primary);
-  border: 2px solid var(--primary);
-}
-
-.btn-register {
-  border: 0;
-  padding: calc(.6rem + 2px);
-  background-color: var(--secondary);
-  color: var(--white);
-}
-
 @media (max-width: 768px) {
   header nav {
     top: var(--header-height);
