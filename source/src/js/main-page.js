@@ -6,6 +6,7 @@ class MainPage extends Page {
         <div data-carousel class="list-of-places-carousel"></div>
         <div data-list-of-places class="list-of-places"></div>
     `);
+
     super.render();
     this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), 1);
     this.listOfPlaces = new ListOfPlaces(
@@ -27,11 +28,12 @@ class MainPage extends Page {
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
   fillListOfPlaces() {
-    this.getPlaces().then((places) => {
+    this.getPlaces().then(places => {
       for (const [_, place] of places.entries()) {
         this.listOfPlaces.appendPlace(place);
       }
     });
+    
   }
 
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей

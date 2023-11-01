@@ -93,7 +93,7 @@ class SignupForm extends Page {
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
-          <img gateway='list-of-places' src="/static/img/logo.svg" alt="GoTo" />
+          <img gateway='#page=list-of-places;' src="/static/img/logo.svg" alt="GoTo" />
           <figcaption>
             <p class="title">Начните путешествовать сейчас</p>
             <p>моментальная регистрация</p>
@@ -137,21 +137,14 @@ class SignupForm extends Page {
           </div>
         </form>
         <div class="form-footer">
-          <p gateway="login" class="login">
+          <p gateway="#page=login;" class="login">
             Уже есть аккаунт? <span class="goto-login-link">Войти</span>
           </p>
         </div>
       </div>
     `);
 
-    this.render({});
-    this.errorMessage = this.node.querySelector("[error]");
-    this.node
-    .querySelector('form')
-    .addEventListener('submit', event => {
-      event.preventDefault();
-      this.submit();
-    });
+    this.render();
   }
 
   submit() {
@@ -181,7 +174,7 @@ class SignupForm extends Page {
     }).then(response => {
       if (response.status == 200) {
         this.clear();
-        main.route('list-of-places');
+        main.route('#page=list-of-places;');
       } else if (response.status == 401) {
         this.errorMessage.innerText = USER_ALREADY_EXISTS_ERROR;
       } else {
@@ -233,28 +226,33 @@ class SignupForm extends Page {
 
   // @return {{Promise|object}}
   async signup(fetchBody) {
-    if (main.temporaryContext.authenticated.pending) {
-      console.error("[signup] Authentication request already pending");
-      return null;
-    }
-
-    main.temporaryContext.authenticated.pending = true;
-
     return fetch(
       API_V1_URL + 'signup',
       fetchBody,
     ).then(response => {
-      main.temporaryContext.authenticated.pending = false;
       if (response.status == 200) {
-        main.temporaryContext.authenticated.status = true;
+        main.temporaryContext.authenticated = true;
       } else if (response.status == 401) {
-        main.temporaryContext.authenticated.status = false;
+        main.temporaryContext.authenticated = false;
       } else {
-        main.temporaryContext.authenticated.status = false;
+        main.temporaryContext.authenticated = false;
         console.error('Signup fatal error');
       }
 
       return response;
+    });
+  }
+
+  async render() {
+    await super.render();
+
+    this.errorMessage = this.node.querySelector("[error]");
+    
+    this.node
+    .querySelector('form')
+    .addEventListener('submit', event => {
+      event.preventDefault();
+      this.submit();
     });
   }
 }
