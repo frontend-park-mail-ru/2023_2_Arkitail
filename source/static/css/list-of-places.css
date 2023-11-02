@@ -70,6 +70,38 @@
     margin-left: 1rem;
 }
 
+
+.list-of-places-carousel .slide img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.list-of-places-carousel .desc {
+    position: absolute;
+    top: 10%;
+    left: var(--carousel-btn-size);
+}
+
+.list-of-places-carousel .desc>p {
+    -webkit-text-stroke: 1px var(--black);
+    color: var(--white);
+    font-size: 3rem;
+    margin-bottom: 1vw;
+    font-weight: 700;
+    font-family: var(--title);
+}
+
+.list-of-places-carousel .desc>button {
+    font-weight: 600;
+    background-color: var(--transparent-darkest-gray);
+    color: var(--white);
+    border: 2px solid var(--white);
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+
 .list-of-places-carousel {
     background-color: var(--dark-gray);
 }

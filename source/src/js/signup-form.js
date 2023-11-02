@@ -129,7 +129,7 @@ class SignupForm extends Page {
             </div>
           </div> -->
           <div class="form-submit submit">
-            <input class="btn green-btn" name="submit" type="submit" value="Зарегистрироваться" />
+            <input class="btn fill-green-btn" name="submit" type="submit" value="Зарегистрироваться" />
           </div>
 
           <div>

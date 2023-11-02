@@ -33,24 +33,26 @@ class PlacePage extends Page {
     <div class="place-info">
         <img src="{{ place.imageURL }}" />
 
-        <div class="place-body-margin info card">
-            <p class="general-title">Информация</p>
+        <div class="info-container">
+            <div class="place-body-margin info card">
+                <p class="general-title">Информация</p>
 
-            <p class="gray-text description">
-                {{ place.description }}
-            </p>
+                <p class="gray-text description">
+                    {{ place.description }}
+                </p>
 
-            <div>
-                <p class="general-subtitle">Адрес</p>
-                <p class="gray-underline-text">Адрес какой-то</p>
-            </div>
+                <div>
+                    <p class="general-subtitle">Адрес</p>
+                    <p class="gray-underline-text">Адрес какой-то</p>
+                </div>
 
-            <div>
-                <p class="general-subtitle">Контакты</p>
-                <div class="contacts">
-                    <p class="gray-underline-text">Сайт</p>
-                    <p class="gray-underline-text">Эл.почта</p>
-                    <p class="gray-underline-text">+71234567890</p>
+                <div>
+                    <p class="general-subtitle">Контакты</p>
+                    <div class="contacts">
+                        <p class="gray-underline-text">Сайт</p>
+                        <p class="gray-underline-text">Эл.почта</p>
+                        <p class="gray-underline-text">+71234567890</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,8 +62,8 @@ class PlacePage extends Page {
         <div id="reviews" class="place-body-margin">
             <p class="general-title">Отзывы</p>
 
-            <div class="place-reviews grid-bottom medium-size-text">
-                <div class="stars">
+            <div class="place-reviews-header grid-bottom">
+                <div class="stars medium-size-text">
                     <p class="rating">{{ place.rating }}</p>
                     {{#stars 5 place.rating}}
                     <svg
@@ -77,9 +79,9 @@ class PlacePage extends Page {
                     {{/stars}}
                 </div>
 
-                <a href="#reviews" class="gray-underline-text">256 отзывов</a>
+                <a href="#reviews" class="gray-underline-text medium-size-text">256 отзывов</a>
 
-                <div>
+                <div class="write-review">
                     <button class="btn blue-btn">
                         Написать отзыв
                     </button>
@@ -88,26 +90,77 @@ class PlacePage extends Page {
         </div>
     </div>
 
-    <div data-carousel></div>
+    <div data-write-review-card-container class="write-review-card-container place-body-margin">
+    </div>
+
+    <div data-carousel class="place-carousel place-body-margin"></div>
+
+    <button gateway="reviews" class="all-reviews-btn btn green-btn place-body-margin">
+        Все отзывы
+    </button>
 
     `);
 
     super.render({ place: context });
 
-    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"));
+    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
+      autoFlip: false,
+      defaultArrowsVisibility: true,
+    });
+
+    this.fillCarousel();
   }
 
-  async getReviews() {
-    return new Promise(
-      Array.from({ length: 10 }, (_, i) => {
-        return {
-          id: i,
-          userId: i,
-          placeId: 0,
-          text: "Очень нравится <3 ",
-          rating: i * 0.5 + ((i * i) % 5),
+  // Добавляет в div-блок с атрибутом data-carousel карточки отзывов
+  fillCarousel() {
+    this.getReviews().then((reviews) => {
+      reviews.forEach((review) => {
+        review.user = {
+          userId: review.userId,
+          avatarImg: "",
+          name: "User" + review.userId,
         };
-      })
-    );
+        this.carousel.appendSlide({ content: ReviewCard({ review: review }) });
+      });
+    });
   }
+
+  getReviews = memorize(async function () {
+    return Array.from({ length: 10 }, (_, i) => {
+      return {
+        id: i,
+        userId: i,
+        placeId: 0,
+        text: `Очень нравится <3 
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3
+        Очень нравится <3`,
+        rating: i * 0.5 + ((i * i) % 5),
+        createdAt: i + 3 + " октября, 14:36",
+      };
+    });
+  });
 }

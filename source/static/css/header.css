@@ -135,14 +135,6 @@ header nav {
   padding: .4rem .2rem;
 }
 
-.right-menu .avatar {
-  height: 2.4rem;
-  width: 2.4rem;
-  background-color: var(--transparent-dark-gray);
-  border-radius: 50%;
-  padding: 0;
-}
-
 .right-menu:hover>.heart {
   color: var(--secondary);
 }

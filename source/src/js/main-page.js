@@ -20,38 +20,43 @@ class MainPage extends Page {
         <div data-list-of-places class="list-of-places"></div>
     `);
     super.render();
-    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), 1);
+    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
+      numberOfVisibleSlides: 1,
+    });
     this.listOfPlaces = new ListOfPlaces(
       this.node.querySelector("[data-list-of-places]")
     );
 
     this.templateCarouselSlide = Handlebars.compile(`
+        <div>
           <img src="{{place.imageUrl}}" />
           <div class="desc">
-          <p>{{place.name}}</p>
-          <button id="place-{{ place.id }}">
+            <p>{{place.name}}</p>
+            <button id="place-{{ place.id }}">
               <p>Узнать больше</p>
-          </button>
+            </button>
           </div>
+        </div>
         `);
 
     this.fillCarousel();
     this.fillListOfPlaces();
-
   }
 
   // Добавляет в div-блок с атрибутом carousel слайды достопримечательностей
   fillCarousel() {
-      this.getPlaces().then((places) => {
+    this.getPlaces().then((places) => {
       places.forEach((place) => {
-        this.carousel.appendSlide(this.templateCarouselSlide({ place: place }));
+        this.carousel.appendSlide({
+          template: this.templateCarouselSlide({ place: place }),
+        });
       });
     });
   }
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
   fillListOfPlaces() {
-      this.getPlaces().then((places) => {
+    this.getPlaces().then((places) => {
       places.forEach((place) => {
         this.listOfPlaces.appendPlace(place);
       });

@@ -3,10 +3,10 @@
     --info-content-margin: .5rem;
     --body-margin: 3vw;
     --info-padding: 1rem;
+    --review-text-size: 8;
 
     display: grid;
     gap: var(--body-content-margin) 0;
-    justify-content: center;
     width: 100%;
     padding: var(--page-padding) 0;
 }
@@ -35,6 +35,22 @@
     .place-info .info .description {
         max-height: 12rem;
     }
+
+    .place-reviews-header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        text-align: end;
+    }
+
+    .write-review {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    .write-review .btn {
+        width: 100%;
+        margin-top: var(--body-content-margin);
+    }
 }
 
 @media (min-width: 1000px) {
@@ -47,10 +63,30 @@
         grid-template-columns: 2fr 1fr;
         padding-left: var(--body-margin);
         margin-top: var(--body-content-margin);
+        position: relative;
+    }
+
+    .place-info .info {
+        position: absolute;
+        height: 100%;
     }
 
     .place-info .info .description {
-        max-height: calc(-11rem + 5/9*(2*(100vw / 3) - var(--body-margin)));
+        max-height: calc(100%);
+    }
+
+    .place-reviews-header {
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        gap: var(--body-content-margin);
+    }
+
+    .place-reviews-header .btn {
+        margin-left: var(--body-margin);
+    }
+
+    .place .all-reviews-btn {
+        width: fit-content;
     }
 }
 
@@ -60,16 +96,12 @@
     margin-top: calc(var(--body-content-margin)/3);
 }
 
-.grid-bottom {
-    align-items: end;
-}
-
 .place-reviews a {
     margin-left: var(--body-content-margin);
 }
 
-.place-reviews .btn {
-    margin-left: var(--body-margin);
+.grid-bottom {
+    align-items: end;
 }
 
 .place-work-schedule {
@@ -80,8 +112,13 @@
     width: 100%;
 }
 
+.place-info .info-container {
+    height: 100%;
+}
+
 .place-info .info {
-    padding: 1rem;
+    box-sizing: border-box;
+    padding: var(--info-padding);
     display: grid;
     grid-template-rows: auto auto auto 1fr;
     gap: var(--info-content-margin);
@@ -99,4 +136,50 @@
 .place-info .contacts p+p {
     width: max-content;
     padding-left: var(--body-content-margin);
+}
+
+.place .place-carousel .carousel-button-previous {
+    left: 0;
+}
+
+.place .place-carousel .carousel-button-next {
+    right: 0;
+}
+
+.place .slide {
+    padding: var(--body-content-margin) 0;
+}
+
+.place .slide {
+    height: 15rem;
+}
+
+.place .review-card {
+    height: 15rem;
+    box-sizing: border-box;
+    padding: var(--body-content-margin);
+    position: absolute;
+    width: calc(100% - 2*var(--body-content-margin));
+    left: var(--body-content-margin);
+}
+
+.place .review-card p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: var(--review-text-size);
+    -webkit-box-orient: vertical;
+
+    display: -moz-box;
+    -moz-line-clamp: var(--review-text-size);
+    -moz-box-orient: vertical;
+
+    display: -o-box;
+    -o-line-clamp: var(--review-text-size);
+    -o-box-orient: vertical;
+
+    display: -ms-box;
+    -ms-line-clamp: var(--review-text-size);
+    -ms-box-orient: vertical;
 }

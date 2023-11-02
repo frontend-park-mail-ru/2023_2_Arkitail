@@ -22,7 +22,7 @@ class LoginForm extends Page {
                 <input name="password" type="password" placeholder="Ваш пароль" />
             </div>
             <div class="form-submit submit">
-                <input class="btn green-btn" type="submit" value="Войти" />
+                <input class="btn fill-green-btn" type="submit" value="Войти" />
             </div>
 
             <div>

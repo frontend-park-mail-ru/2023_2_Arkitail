@@ -1,3 +1,5 @@
+const maxSlides = 10;
+
 /**
  * @param {number} number
  * @param {number} mod
@@ -31,11 +33,16 @@ class Carousel {
    * @param {boolean} switchingButtons
    * @param {boolean} stopIfHover
    */
+
   constructor(
     parent,
-    numberOfVisibleSlides = 3,
-    switchingButtons = true,
-    stopIfHover = true
+    {
+      numberOfVisibleSlides = maxSlides,
+      switchingButtons = true,
+      autoFlip = true,
+      stopIfHover = true,
+      defaultArrowsVisibility = false,
+    } = {}
   ) {
     this.parent = parent;
     this.template = Handlebars.compile(`
@@ -83,7 +90,7 @@ class Carousel {
     );
 
     this.currentSlide = 0;
-    if (this.numberOfVisibleSlides == 3) {
+    if (this.numberOfVisibleSlides > 1) {
       this.changeSliderCount();
       window.addEventListener(
         "resize",
@@ -106,8 +113,12 @@ class Carousel {
       this.buttonNext = this.carousel.querySelector(
         "[data-carousel-button-next]"
       );
-      this.carousel.addEventListener("mouseover", this.showArrows.bind(this));
-      this.carousel.addEventListener("mouseout", this.hideArrows.bind(this));
+      if (defaultArrowsVisibility) {
+        this.showArrows();
+      } else {
+        this.carousel.addEventListener("mouseover", this.showArrows.bind(this));
+        this.carousel.addEventListener("mouseout", this.hideArrows.bind(this));
+      }
       this.buttonPrevious.addEventListener(
         "click",
         debounce(this.handlePrevious.bind(this), 1200)
@@ -118,36 +129,31 @@ class Carousel {
       );
     }
 
-    this.startSlideShow();
+    if (autoFlip) {
+      this.startSlideShow();
 
-    if (stopIfHover) {
-      this.carousel.addEventListener(
-        "mouseover",
-        this.stopSlideShow.bind(this)
-      );
-      this.carousel.addEventListener(
-        "mouseout",
-        this.startSlideShow.bind(this)
-      );
+      if (stopIfHover) {
+        this.carousel.addEventListener(
+          "mouseover",
+          this.stopSlideShow.bind(this)
+        );
+        this.carousel.addEventListener(
+          "mouseout",
+          this.startSlideShow.bind(this)
+        );
+      }
     }
   }
 
   changeSliderCount() {
-    if (this.numberOfVisibleSlides == 3) {
-      const screenWidth = window.screen.width;
-      if (screenWidth < 768) {
-        this.carousel.style.setProperty("--slider-count", 1);
-        this.numSlides = this.slidesContainer.children.length;
-      } else if (screenWidth < 1500) {
-        this.carousel.style.setProperty("--slider-count", 2);
-        this.numSlides = this.slidesContainer.children.length - 1;
-      } else {
-        this.carousel.style.setProperty("--slider-count", 3);
-        this.numSlides = this.slidesContainer.children.length - 2;
+    const screenWidth = window.screen.width;
+    for (let i = 1; i <= this.numberOfVisibleSlides; i++) {
+      if (screenWidth < 768 * i || i == this.numberOfVisibleSlides) {
+        this.currentNumberOfVisibleSlides = i;
+        this.carousel.style.setProperty("--slider-count", i);
+        this.numSlides = this.slidesContainer.children.length - i + 1;
+        break;
       }
-    } else {
-      this.numSlides =
-        this.slidesContainer.children.length - this.numberOfVisibleSlides + 1;
     }
   }
 
@@ -181,8 +187,16 @@ class Carousel {
   /**
    * @param {object} content
    */
-  appendSlide(content) {
-    new CarouselSlide(this.slidesContainer, content);
+  appendSlide({ content, template }) {
+    const slide = document.createElement("div");
+    slide.setAttribute("data-slide", "");
+    slide.classList.add("slide");
+    if (content) {
+      slide.appendChild(content);
+    } else {
+      slide.innerHTML = template;
+    }
+    this.slidesContainer.appendChild(slide);
     this.changeSliderCount();
   }
 }
