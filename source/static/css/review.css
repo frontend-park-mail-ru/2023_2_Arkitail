@@ -1,11 +1,11 @@
 .review-card {
-    --small-margin: .4rem;
-    --margin: .8rem;
+    box-sizing: border-box;
+    padding: var(--page-body-content-margin);
 }
 
 .review-card .review-card-header {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: var(--small-margin);
-    margin-bottom: var(--margin);
+    gap: var(--page-body-content-margin);
+    margin-bottom: var(--page-gap);
 }

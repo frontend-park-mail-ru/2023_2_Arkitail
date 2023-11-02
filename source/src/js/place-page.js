@@ -5,9 +5,9 @@ class PlacePage extends Page {
     super("place", template);
 
     this.template = Handlebars.compile(`
-    <div class="place-body-margin">
+    <div class="page-body-margin page-padding">
         <p class="general-main-title">{{ place.name }}</p>
-        <div class="place-reviews medium-size-text">
+        <div class="reviews md-size-text">
             <svg
                 class="star active"
                 viewBox="0 0 184 184"
@@ -26,15 +26,15 @@ class PlacePage extends Page {
 
     <div class="line">
         <hr>
-        <p class="place-work-schedule medium-size-text">Открыто сейчас <span class="gray-text"> 11:00-12:00 </span></p>
+        <p class="work-schedule md-size-text">Открыто сейчас <span class="gray-text"> 11:00-12:00 </span></p>
         <hr>
     </div>
 
-    <div class="place-info">
+    <div class="info-card">
         <img src="{{ place.imageURL }}" />
 
         <div class="info-container">
-            <div class="place-body-margin info card">
+            <div class="page-body-margin info card">
                 <p class="general-title">Информация</p>
 
                 <p class="gray-text description">
@@ -59,11 +59,11 @@ class PlacePage extends Page {
     </div>
 
     <div>
-        <div id="reviews" class="place-body-margin">
+        <div id="reviews" class="page-body-margin">
             <p class="general-title">Отзывы</p>
 
-            <div class="place-reviews-header grid-bottom">
-                <div class="stars medium-size-text">
+            <div class="reviews-header grid-bottom">
+                <div class="stars md-size-text">
                     <p class="rating">{{ place.rating }}</p>
                     {{#stars 5 place.rating}}
                     <svg
@@ -79,7 +79,7 @@ class PlacePage extends Page {
                     {{/stars}}
                 </div>
 
-                <a href="#reviews" class="gray-underline-text medium-size-text">256 отзывов</a>
+                <a href="#reviews" class="gray-underline-text md-size-text">256 отзывов</a>
 
                 <div class="write-review">
                     <button class="btn blue-btn">
@@ -90,12 +90,12 @@ class PlacePage extends Page {
         </div>
     </div>
 
-    <div data-write-review-card-container class="write-review-card-container place-body-margin">
+    <div data-write-review-card-container class="write-review-card-container page-body-margin">
     </div>
 
-    <div data-carousel class="place-carousel place-body-margin"></div>
+    <div data-carousel class="place-carousel page-body-margin"></div>
 
-    <button gateway="reviews" class="all-reviews-btn btn green-btn place-body-margin">
+    <button gateway="reviews" class="all-reviews-btn btn green-btn page-body-margin">
         Все отзывы
     </button>
 
@@ -137,27 +137,7 @@ class PlacePage extends Page {
         Очень нравится <3
         Очень нравится <3
         Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3`,
+        Очень нравится <3`.repeat(i+1),
         rating: i * 0.5 + ((i * i) % 5),
         createdAt: i + 3 + " октября, 14:36",
       };

@@ -16,7 +16,7 @@ function ReviewCard(review) {
 
     <div>
       <p>{{ review.user.name }}</p>
-      <p class="gray-text small-text">{{ review.createdAt }}</p>
+      <p class="gray-text sm-text">{{ review.createdAt }}</p>
     </div>
 
     <div class="stars">

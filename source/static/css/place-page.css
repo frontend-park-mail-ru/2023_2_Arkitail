@@ -1,88 +1,81 @@
 .place {
-    --body-content-margin: 1rem;
     --info-content-margin: .5rem;
-    --body-margin: 3vw;
     --info-padding: 1rem;
     --review-text-size: 8;
 
     display: grid;
-    gap: var(--body-content-margin) 0;
+    gap: var(--page-body-content-margin) 0;
     width: 100%;
-    padding: var(--page-padding) 0;
 }
 
-.place-body-margin {
-    margin: 0 var(--body-margin);
-}
-
-@media (max-width: 1000px) {
-    .place-reviews a {
+@media (max-width: 992px) {
+    .place .reviews a {
         text-align: end;
     }
 
-    .place-work-schedule {
-        padding: .5rem var(--body-margin);
+    .place .work-schedule {
+        padding: .5rem var(--page-body-margin);
     }
 
-    .place-info {
+    .place .info-card {
         width: 100%;
     }
 
-    .place-info img {
-        margin-bottom: var(--body-content-margin);
+    .place .info-card img {
+        margin-bottom: var(--page-body-content-margin);
     }
 
-    .place-info .info .description {
+    .place .info-card .info .description {
         max-height: 12rem;
     }
 
-    .place-reviews-header {
+    .place .reviews-header {
         display: grid;
         grid-template-columns: auto 1fr;
         text-align: end;
     }
 
-    .write-review {
+    .place .write-review {
         grid-column-start: 1;
         grid-column-end: 3;
     }
 
-    .write-review .btn {
+    .place .write-review .btn {
         width: 100%;
-        margin-top: var(--body-content-margin);
+        margin-top: var(--page-body-content-margin);
     }
 }
 
-@media (min-width: 1000px) {
-    .place-work-schedule {
-        padding: .5rem calc(2*var(--body-margin));
+@media (min-width: 992px) {
+    .place .work-schedule {
+        padding: .5rem calc(2*var(--page-body-margin));
     }
 
-    .place-info {
+    .place .info-card {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        padding-left: var(--body-margin);
-        margin-top: var(--body-content-margin);
+        padding-left: var(--page-body-margin);
+        margin-top: var(--page-body-content-margin);
         position: relative;
     }
 
-    .place-info .info {
+    .place .info-card .info {
         position: absolute;
         height: 100%;
     }
 
-    .place-info .info .description {
+    .place .info-card .info .description {
         max-height: calc(100%);
     }
 
-    .place-reviews-header {
+    .place .reviews-header {
         display: grid;
         grid-template-columns: auto auto 1fr;
-        gap: var(--body-content-margin);
+        gap: var(--page-body-content-margin);
     }
 
-    .place-reviews-header .btn {
-        margin-left: var(--body-margin);
+    .place .reviews-header .btn {
+        margin-left: var(--page-body-margin);
     }
 
     .place .all-reviews-btn {
@@ -90,33 +83,29 @@
     }
 }
 
-.place-reviews {
+.place .reviews {
     display: grid;
     grid-template-columns: auto auto 1fr;
-    margin-top: calc(var(--body-content-margin)/3);
+    margin-top: calc(var(--page-body-content-margin)/3);
 }
 
-.place-reviews a {
-    margin-left: var(--body-content-margin);
+.place .reviews a {
+    margin-left: var(--page-body-content-margin);
 }
 
-.grid-bottom {
-    align-items: end;
-}
-
-.place-work-schedule {
+.place .work-schedule {
     background-color: var(--white);
 }
 
-.place-info img {
+.place .info-card img {
     width: 100%;
 }
 
-.place-info .info-container {
+.place .info-card .info-container {
     height: 100%;
 }
 
-.place-info .info {
+.place .info-card .info {
     box-sizing: border-box;
     padding: var(--info-padding);
     display: grid;
@@ -125,17 +114,17 @@
     align-items: start;
 }
 
-.place-info .info .description {
+.place .info-card .info .description {
     overflow-y: auto;
 }
 
-.place-info .contacts {
+.place .info-card .contacts {
     display: flex;
 }
 
-.place-info .contacts p+p {
+.place .info-card .contacts p+p {
     width: max-content;
-    padding-left: var(--body-content-margin);
+    padding-left: var(--page-body-content-margin);
 }
 
 .place .place-carousel .carousel-button-previous {
@@ -147,7 +136,7 @@
 }
 
 .place .slide {
-    padding: var(--body-content-margin) 0;
+    padding: var(--page-body-content-margin) 0;
 }
 
 .place .slide {
@@ -156,11 +145,9 @@
 
 .place .review-card {
     height: 15rem;
-    box-sizing: border-box;
-    padding: var(--body-content-margin);
     position: absolute;
-    width: calc(100% - 2*var(--body-content-margin));
-    left: var(--body-content-margin);
+    width: calc(100% - 2*var(--page-body-content-margin));
+    left: var(--page-body-content-margin);
 }
 
 .place .review-card p {

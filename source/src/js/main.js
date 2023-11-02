@@ -58,8 +58,12 @@ class Main {
                     ",
                     rating:      4.5,
                     cost:        "$$",
-                    imageURL:    "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1fmKP5.img",
+                    imageURL:    "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
                 }),
+            },
+            'reviews' : {
+                renderHeader: true,
+                instance: new ReviewsPage(''),
             },
         };
 
