@@ -1,0 +1,33 @@
+:root {
+    --footer-height: 15rem;
+    --footer-color: #AFBFD1;
+}
+
+footer {
+    box-sizing: border-box;
+    background-color: var(--footer-color);
+    width: 100%;
+    height: var(--footer-height);
+    text-align: center;
+    padding: 1rem 3rem 2rem;
+}
+
+main {
+    min-height: calc(100vh - var(--footer-height) - var(--header-height));
+}
+
+footer .footer > * {
+    display: block;
+    margin: 1rem auto;
+}
+
+footer .footer > hr {
+    height: 0;
+	border: none;
+	border-top: 1px solid var(--transparent-darkest-gray);
+    margin: 1rem 0;
+}
+
+footer .logo {
+    width: var(--logo-wight);
+}

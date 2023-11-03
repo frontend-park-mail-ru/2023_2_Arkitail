@@ -1,0 +1,78 @@
+.list-of-places>.list {
+    --card-size: 22rem;
+    --card-description-size: 5;
+    display: grid;
+    padding: 2rem 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
+    gap: 2rem;
+    justify-content: space-evenly;
+}
+
+.list-of-places .place-card {
+    font-size: 1rem;
+    height: var(--card-size);
+    display: grid;
+    grid-template-rows: 5fr 4fr;
+}
+
+.list-of-places .place-card section:first-child img {
+    display: block;
+    height: auto;
+    width: 100%;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    border-bottom: 0;
+    box-sizing: border-box;
+}
+
+.list-of-places .place-card section:first-child p {
+    text-align: center;
+    width: 3rem;
+    position: absolute;
+    padding: .4rem 0 .3rem;
+    background-color: var(--white);
+    margin: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.list-of-places .place-card section:last-child {
+    background-color: var(--white);
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+    padding: .5rem .8rem;
+}
+
+.list-of-places .place-card section:last-child .card-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: var(--card-description-size);
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+
+.list-of-places .card-header {
+    display: grid;
+    grid-template-columns: 1fr 2.5rem 1rem;
+    margin-bottom: .5rem;
+}
+
+.list-of-places .card-rating {
+    color: var(--dark-gray);
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.list-of-places-carousel {
+    background-color: var(--dark-gray);
+}
+
+.list-of-places-carousel .slide {
+    max-height: calc(80vh - var(--header-height));
+}
+
+.list-of-places-carousel .carousel-button-previous {
+    left: .2rem;
+}
+
+.list-of-places-carousel .carousel-button-next {
+    right: .2rem;
+}
