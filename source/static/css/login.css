@@ -31,12 +31,7 @@
 .form .login:hover,
 .form .register:hover,
 .form .forgot-password:hover{
-    cursor: pointer;
     color: var(--primary);
-}
-
-.form-submit input:hover {
-    cursor: pointer;
 }
 
 .validation-error {

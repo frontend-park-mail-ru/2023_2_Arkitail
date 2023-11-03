@@ -6,7 +6,11 @@ class SearchPage extends Page {
         <div data-filters class="list-of-places-filters"></div>
         <div data-list-of-places class="list-of-places"></div>
     `);
-    super.render();
+  }
+
+  async renderTemplate() {
+    super.renderTemplate();
+    
     this.carousel = new ListFilters(this.node.querySelector("[data-filters]"));
     this.listOfPlaces = new ListOfPlaces(
       this.node.querySelector("[data-list-of-places]")

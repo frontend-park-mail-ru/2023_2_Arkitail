@@ -93,7 +93,7 @@ class SignupForm extends Page {
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
-          <img gateway='#page=list-of-places;' src="/static/img/logo.svg" alt="GoTo" />
+          <img gateway='#page=main;' src="/static/img/logo.svg" alt="GoTo" />
           <figcaption>
             <p class="title">Начните путешествовать сейчас</p>
             <p>моментальная регистрация</p>
@@ -143,8 +143,6 @@ class SignupForm extends Page {
         </div>
       </div>
     `);
-
-    this.render();
   }
 
   submit() {
@@ -174,7 +172,7 @@ class SignupForm extends Page {
     }).then(response => {
       if (response.status == 200) {
         this.clear();
-        main.route('#page=list-of-places;');
+        main.route('#page=main;');
       } else if (response.status == 401) {
         this.errorMessage.innerText = USER_ALREADY_EXISTS_ERROR;
       } else {
@@ -243,8 +241,8 @@ class SignupForm extends Page {
     });
   }
 
-  async render() {
-    await super.render();
+  async renderTemplate() {
+    await super.renderTemplate();
 
     this.errorMessage = this.node.querySelector("[error]");
     

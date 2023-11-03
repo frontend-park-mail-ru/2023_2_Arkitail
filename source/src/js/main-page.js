@@ -17,10 +17,25 @@ class MainPage extends Page {
     super("main", template);
     this.template = Handlebars.compile(`
         <div data-carousel class="list-of-places-carousel"></div>
-        <div data-list-of-places class="list-of-places"></div>
+        <div data-list-of-places class="list-of-places page-padding-vertical"></div>
     `);
 
-    super.render();
+    this.templateCarouselSlide = Handlebars.compile(`
+        <div>
+          <img src="{{place.imageUrl}}" />
+          <div class="desc">
+            <p>{{place.name}}</p>
+            <button gateway="#page=trip;id={{place.id}};">
+              <p>Узнать больше</p>
+            </button>
+          </div>
+        </div>
+        `);
+  }
+
+  async renderTemplate() {
+    await super.renderTemplate();
+
     this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
       numberOfVisibleSlides: 1,
     });
@@ -28,25 +43,13 @@ class MainPage extends Page {
       this.node.querySelector("[data-list-of-places]")
     );
 
-    this.templateCarouselSlide = Handlebars.compile(`
-        <div>
-          <img src="{{place.imageUrl}}" />
-          <div class="desc">
-            <p>{{place.name}}</p>
-            <button id="place-{{ place.id }}">
-              <p>Узнать больше</p>
-            </button>
-          </div>
-        </div>
-        `);
-
-    this.fillCarousel();
-    this.fillListOfPlaces();
+    await this.fillCarousel();
+    await this.fillListOfPlaces();
   }
 
   // Добавляет в div-блок с атрибутом carousel слайды достопримечательностей
-  fillCarousel() {
-    this.getPlaces().then((places) => {
+  async fillCarousel() {
+    await this.getPlaces().then((places) => {
       places.forEach((place) => {
         this.carousel.appendSlide({
           template: this.templateCarouselSlide({ place: place }),
@@ -56,13 +59,12 @@ class MainPage extends Page {
   }
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
-  fillListOfPlaces() {
-    this.getPlaces().then((places) => {
+  async fillListOfPlaces() {
+    await this.getPlaces().then((places) => {
       places.forEach((place) => {
         this.listOfPlaces.appendPlace(place);
       });
     });
-    
   }
 
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей

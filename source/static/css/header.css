@@ -20,7 +20,6 @@ header .logo {
   justify-self: center;
   display: inline-block;
   margin: .6rem 2rem .6rem calc(50% - 6.8rem);
-  cursor: pointer;
   padding: 0;
 }
 
@@ -121,7 +120,6 @@ header nav {
 
 .right-menu {
   display: flex;
-  cursor: pointer;
   top: 0;
   position: relative;
   float: right;

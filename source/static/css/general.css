@@ -55,12 +55,22 @@ hr {
     border-bottom: 2px solid var(--transparent-darkest-gray);
 }
 
+[gateway] {
+    cursor: pointer;
+}
+
 .page-body-margin {
     margin: 0 var(--page-body-margin);
 }
 
-.page-padding {
-    padding: var(--page-padding) 0;
+.page-padding-vertical {
+    padding-top: var(--page-padding);
+    padding-bottom: var(--page-padding);
+}
+
+.page-padding-horizontal {
+    padding-left: var(--page-body-margin);
+    padding-right: var(--page-body-margin);
 }
 
 .card {

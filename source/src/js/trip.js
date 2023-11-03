@@ -29,14 +29,14 @@ class TripsPage extends Page {
   constructor() {
     let template = `
       {{#each trips}}
-      <div class='trip-card' gateway='#page=trip;id={{this.id}};'>
+      <div class='trip-card card' gateway='#page=trip;id={{this.id}};'>
         <div class='trip-card-caption'><h1>{{this.caption}}</h1></div>
         <div class='trip-card-date'><span>{{this.begin}} - {{this.end}}</span></div>
         <div class='trip-card-description'>{{this.description}}</div>
       </div>
       {{/each}}`;
 
-    super('trips', template);
+    super('trips page-padding-vertical', template);
   }
 
   async getTrips() {
@@ -50,9 +50,9 @@ class TripsPage extends Page {
     ];
   }
 
-  async render() {
+  async renderTemplate() {
     await this.generateContext();
-    await super.render();
+    await super.renderTemplate();
   }
 
   async generateContext() {
@@ -74,7 +74,7 @@ class TripPage extends Page {
         <div class ='trip-plan'></div>
       </div>
     `;
-    super('trip', template);
+    super("trip", template);
   }
 
 

@@ -40,7 +40,7 @@ class Main {
         renderHeader: false,
         instance: new SignupForm(''),
       },
-      'list-of-places': {
+      'main': {
         renderHeader: true,
         instance: new MainPage(''),
       },
@@ -70,9 +70,9 @@ class Main {
           imageURL:    "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
         }),
       },
-        'reviews' : {
-          renderHeader: true,
-          instance: new ReviewsPage(''),
+      'reviews' : {
+        renderHeader: true,
+        instance: new ReviewsPage(''),
         },
     };
 
@@ -188,7 +188,7 @@ class Main {
     }
 
     this.context.activePage = pageName;
-  
+
     this.pages[pageName].instance.render().then(() => {
       this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
     });
@@ -203,20 +203,6 @@ class Main {
       window.history.pushState(this.context, '', '#page=trips;');
       return;
     }
-
-<<<<<<< HEAD
-    /**
-     * Данная функция восстанавливает состояние страницы
-     * используя HistoryApi
-     */
-    restoreState() {
-        let state = window.history.state;
-        if (state !== null) {
-            this.context = state;
-        } else {
-            this.context.activePage = 'place';
-        }
-=======
     let state = window.history.state;
   
     if (state !== null) {
@@ -226,7 +212,6 @@ class Main {
         activePage: 'trips',
         location: '#page=trips;',
       }
->>>>>>> trip
     }
   }
 

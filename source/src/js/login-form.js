@@ -9,7 +9,7 @@ class LoginForm extends Page {
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
-            <img gateway='#page=list-of-places;' src="/static/img/logo.svg" alt="GoTo" />
+            <img gateway='#page=main;' src="/static/img/logo.svg" alt="GoTo" />
             <figcaption>
                 <p class="title">Время путешествовать</p>
             </figcaption>
@@ -38,8 +38,6 @@ class LoginForm extends Page {
         </div>
       </div>
     `);
-
-    this.render();
   }
 
   submit() {
@@ -64,7 +62,7 @@ class LoginForm extends Page {
     ).then(response => {
       if (response.status == 200) {
         this.clear();
-        main.route('#page=list-of-places;');
+        main.route('#page=main;');
       } else if (response.status == 401) {
         this.errorMessage.innerText = DATA_ERROR;
       } else {
@@ -103,8 +101,8 @@ class LoginForm extends Page {
     });
   }
 
-  async render() {
-    await super.render();
+  async renderTemplate() {
+    await super.renderTemplate();
 
     this.errorMessage = this.node.querySelector("[error]");
 

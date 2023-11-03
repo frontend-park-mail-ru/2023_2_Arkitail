@@ -2,10 +2,10 @@ class PlacePage extends Page {
   // @param {string} template
   // @param {object} context
   constructor(template, context) {
-    super("place", template);
+    super("place page-padding-vertical", template);
 
     this.template = Handlebars.compile(`
-    <div class="page-body-margin page-padding">
+    <div class="page-body-margin">
         <p class="general-main-title">{{ place.name }}</p>
         <div class="reviews md-size-text">
             <svg
@@ -95,25 +95,28 @@ class PlacePage extends Page {
 
     <div data-carousel class="place-carousel page-body-margin"></div>
 
-    <button gateway="reviews" class="all-reviews-btn btn green-btn page-body-margin">
+    <button gateway="#page=reviews;" class="all-reviews-btn btn green-btn page-body-margin">
         Все отзывы
     </button>
 
     `);
+    this.context = { place: context }
+  }
 
-    super.render({ place: context });
+  async renderTemplate () {
+    await super.renderTemplate();
 
     this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
       autoFlip: false,
       defaultArrowsVisibility: true,
     });
 
-    this.fillCarousel();
+    await this.fillCarousel();
   }
 
   // Добавляет в div-блок с атрибутом data-carousel карточки отзывов
-  fillCarousel() {
-    this.getReviews().then((reviews) => {
+  async fillCarousel() {
+    await this.getReviews().then((reviews) => {
       reviews.forEach((review) => {
         review.user = {
           userId: review.userId,

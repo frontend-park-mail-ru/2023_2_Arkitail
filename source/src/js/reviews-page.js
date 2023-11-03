@@ -1,7 +1,7 @@
 class ReviewsPage extends Page {
   // @param {string} template
   constructor(template) {
-    super("reviews page-padding", template);
+    super("reviews page-padding-vertical", template);
     this.template = Handlebars.compile(`
     <div class="reviews-header page-body-margin grid-bottom">
         <p class="general-main-title">
@@ -17,7 +17,10 @@ class ReviewsPage extends Page {
     <div data-list-of-reviews class="list-of-reviews page-body-margin">
     </div>
    `);
-    super.render();
+  }
+
+  async renderTemplate() {
+    await super.renderTemplate();
 
     this.list = this.node.querySelector("[data-list-of-reviews]")
     this.fill();
