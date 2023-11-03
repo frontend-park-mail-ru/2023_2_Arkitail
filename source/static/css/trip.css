@@ -1,0 +1,24 @@
+.trips {
+  width: 100%;
+  margin: 20px 0px;
+
+  --card-size: 20rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
+  gap: 2rem;
+  justify-content: space-evenly;
+}
+
+.trip-card {
+  width: var(--card-size);
+  padding: .4rem 0 .3rem 0;
+  background-color: var(--white);
+  border-radius: 4px;
+  box-shadow: 0px 0px 7px 0px var(--transparent-darkest-gray);
+}
+
+.trip-card-date {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+

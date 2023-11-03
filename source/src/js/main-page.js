@@ -19,6 +19,7 @@ class MainPage extends Page {
         <div data-carousel class="list-of-places-carousel"></div>
         <div data-list-of-places class="list-of-places"></div>
     `);
+
     super.render();
     this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
       numberOfVisibleSlides: 1,
@@ -61,6 +62,7 @@ class MainPage extends Page {
         this.listOfPlaces.appendPlace(place);
       });
     });
+    
   }
 
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей

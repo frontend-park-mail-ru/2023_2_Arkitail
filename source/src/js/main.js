@@ -9,146 +9,202 @@ class Main {
     /**
      * Конструктор класса Main
      */
-    constructor() {
-        this.headerSlot = document.querySelector('header');
-        this.header = new Header('');
-        this.mainSlot = document.querySelector('main');
-        this.footer = new Footer('');
-        this.footerSlot = document.querySelector('footer');
+  constructor() {
+    this.context = {
+      activePage: 'trips',
+      location: '#page=trips;',
+    };
 
-        this.context = {
-            activePage: 'place',
-        };
-
-        this.temporaryContext = {
-            authenticated: {
-                pending: false,
-                status: true,
-            },
-            userName: '',
-        }
-
-        this.restoreState();
-
-        this.pages = {
-            'login': {
-                renderHeader: false,
-                instance: new LoginForm(''),
-            },
-            'signup': {
-                renderHeader: false,
-                instance: new SignupForm(''),
-            },
-            'list-of-places': {
-                renderHeader: true,
-                instance: new MainPage(''),
-            },
-            'place': {
-                renderHeader: true,
-                instance: new PlacePage('', {
-                    id:          "0",
-                    name:        "Эфелева башня",
-                    description: "Это знаменитое архитектурное сооружение, которое находится в центре Парижа, Франция. Эта башня является одной из самых узнаваемых и посещаемых достопримечательностей мира, а также символом как самого Парижа, так и Франции в целом.\
-                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                    ",
-                    rating:      4.5,
-                    cost:        "$$",
-                    imageURL:    "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
-                }),
-            },
-            'reviews' : {
-                renderHeader: true,
-                instance: new ReviewsPage(''),
-            },
-        };
-
-        this.route(this.context.activePage);
+    this.temporaryContext = {
+      authenticated: false,
+      userName: '',
+      userId: -1,
     }
 
-    /**
-     * Функция authenticate отправляет запрос на авторизацию
-     * и возвращает промис запроса
-     * @returns {Promise} промис запроса авторизации
-     */
-    async authenticate() {
-        if (this.temporaryContext.authenticated.pending) {
-            console.error("[authenticate()] Authentication request already pending")
-        }
+    this.restoreState();
+  }
 
-        const requestMethod = 'GET';
+  init() {
+    this.headerSlot = document.querySelector('header');
+    this.header = new Header('');
+    this.mainSlot = document.querySelector('main');
+    this.footer = new Footer('');
+    this.footerSlot = document.querySelector('footer');
 
-        this.temporaryContext.authenticated.pending = true;
+    this.pages = {
+      'login': {
+        renderHeader: false,
+        instance: new LoginForm(''),
+      },
+      'signup': {
+        renderHeader: false,
+        instance: new SignupForm(''),
+      },
+      'list-of-places': {
+        renderHeader: true,
+        instance: new MainPage(''),
+      },
+      'trips': {
+        renderHeader: true,
+        instance: new TripsPage(),
+      },
+      'trip': {
+        renderHeader: true,
+        instance: new TripPage(),
+      },
+      'place': {
+        renderHeader: true,
+        instance: new PlacePage('', {
+          id:          "0",
+          name:        "Эфелева башня",
+          description: "Это знаменитое архитектурное сооружение, которое находится в центре Парижа, Франция. Эта башня является одной из самых узнаваемых и посещаемых достопримечательностей мира, а также символом как самого Парижа, так и Франции в целом.\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+          ",
+          rating:      4.5,
+          cost:        "$$",
+          imageURL:    "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
+        }),
+      },
+        'reviews' : {
+          renderHeader: true,
+          instance: new ReviewsPage(''),
+        },
+    };
 
-        return fetch(
-            API_V1_URL + 'auth',
-            {
-                credentials: 'include',
-                method: requestMethod,
-            }
-        ).then(response => {
-            this.temporaryContext.authenticated.pending = false;
+    this.route(this.context.location);
+  }
 
-            if (response.status == 200) {
-                this.temporaryContext.authenticated.status = true;
-            } else if (response.status == 401) {
-                this.temporaryContext.authenticated.status = false;
-            } else {
-                this.temporaryContext.authenticated.status = false;
-                console.error('Authentication fatal error');
-            }
+  /**
+   * Функция authenticate отправляет запрос на авторизацию
+   * и возвращает промис запроса
+   * @returns {Promise} промис запроса авторизации
+   */
+  async authenticate() {
+    return fetch(
+      API_V1_URL + 'auth',
+      {
+        credentials: 'include',
+        method: 'GET',
+      }
+    ).then(response => {
+      if (response.status == 200) {
+        this.temporaryContext.authenticated = true;
+      } else {
+        this.temporaryContext.authenticated = false;
+        throw new Error('authenticate failed');
+      }
+    }).catch(_ => {});
+  }
+
+  async getUserInfo() {
+    return fetch(
+      API_V1_URL + 'user',
+      {
+        method: 'GET',
+      },
+    ).then(response => {
+      if (response.status == 200) {
+        this.temporaryContext.authenticated = true;
+      } else {
+        this.temporaryContext.authenticated = false;
+        throw new Error('user failed');
+      }
+
+      return response.json();
+    }).then(data => {
+      this.temporaryContext.userName = data['user']['login'];
+      this.temporaryContext.userId = data['user']['id'];
+    }).catch(_ => {});
+  }
+
+  unserializeLocationHash(parameters) {
+    let hash = '#';
+    for (const [k, v] of parameters) {
+      hash += `${k}=${v};`;
+    }
+    return hash;
+  }
+
+  serializeLocationHash(hash) {
+    const hashTemplate = /^#(\S+=\S*;)*$/;
+    if (!hash.match(hashTemplate)) {
+      throw new Error('Wrong location');
+    }
+
+    // discarding hash symbol and last end of element
+    hash = hash.substring(1, hash.length - 1);
+    let parameters = {};
+
+    hash.split(';').forEach(elem => {
+      elem = elem.split('=');
+      let k = elem[0], v = elem[1];     
+
+      parameters[k] = v;
+    });
+    
+    return parameters;
+  }
+
+  /**
+   * Данная функция отвечает за перемещение по приложению.
+   * Управляет также отображением хедера и футера
+   * @param {string} название страницы из множества ключей Main.pages 
+   */
+  route(location) {
+    let parameters = this.serializeLocationHash(location);
+    let pageName = parameters['page'];
+    this.context.location = location;
+
+    if (this.pages[pageName].renderHeader) {
+        this.getUserInfo()
+        .then(() => {
+          this.header.generateContext();
+          this.header.render();
+          this.headerSlot.style.display = 'block';
+          this.headerSlot.replaceChildren(this.header.node);
+
+          this.footer.render();
+          this.footerSlot.style.display = 'block';
+          this.footerSlot.replaceChildren(this.footer.node);
         });
+    } else {
+      this.headerSlot.style.display = 'none';
+      this.headerSlot.replaceChildren();
+
+      this.footerSlot.style.display = 'none';
+      this.footerSlot.replaceChildren();
     }
 
-    async getUserInfo() {
-        return fetch(
-            API_V1_URL + 'user',
-            {
-                method: 'GET',
-            },
-        ).then(response => response.json()
-        ).then(data => {
-            this.temporaryContext.userName = data['user']['login'];
-        });
+    if (pageName != this.context.activePage) {
+      this.context.activePage = pageName;
+
+      // at the moment, context is not needed
+      window.history.pushState(this.context, '', this.context.location);
     }
 
-    /**
-     * Данная функция отвечает за перемещение по приложению.
-     * Управляет также отображением хедера и футера
-     * @param {string} название страницы из множества ключей Main.pages 
-     */
-    route(pageName) {
-        if (this.pages[pageName].renderHeader) {
-            this.authenticate().then(() => main.getUserInfo()).then(() => {
-                this.header.render(this.header.generateContext());
-                this.headerSlot.style.display = 'block';
-                this.headerSlot.replaceChildren(this.header.node);
+    this.context.activePage = pageName;
+  
+    this.pages[pageName].instance.render().then(() => {
+      this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+    });
+  }
 
-                this.footer.render({});
-                this.footerSlot.style.display = 'block';
-                this.footerSlot.replaceChildren(this.footer.node);
-            });
-        } else {
-            this.headerSlot.style.display = 'none';
-            this.headerSlot.replaceChildren();
-
-            this.footerSlot.style.display = 'none';
-            this.footerSlot.replaceChildren();
-        }
-
-        if (pageName != this.context.activePage) {
-            this.context.activePage = pageName;
-            window.history.pushState(this.context, '');
-        }
-
-        this.context.activePage = pageName;
-        this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+  /**
+   * Данная функция восстанавливает состояние страницы
+   * используя HistoryApi
+   */
+  restoreState() {
+    if (window.location.hash == '') {
+      window.history.pushState(this.context, '', '#page=trips;');
+      return;
     }
 
+<<<<<<< HEAD
     /**
      * Данная функция восстанавливает состояние страницы
      * используя HistoryApi
@@ -160,17 +216,30 @@ class Main {
         } else {
             this.context.activePage = 'place';
         }
+=======
+    let state = window.history.state;
+  
+    if (state !== null) {
+      this.context = state;
+    } else {
+      this.context = {
+        activePage: 'trips',
+        location: '#page=trips;',
+      }
+>>>>>>> trip
     }
+  }
 
-    /**
-     * Обработчик события перемещения по истории
-     * @param {Event} event 
-     */
-    popState(event) {
-        this.restoreState();
-        this.route(this.context.activePage);
-    }
+  /**
+   * Обработчик события перемещения по истории
+   * @param {Event} event 
+   */
+  popState(_) {
+    this.restoreState();
+    this.route(this.context.location);
+  }
 }
 
 let main = new Main();
+main.init();
 window.addEventListener('popstate', event => main.popState(event));

@@ -9,7 +9,7 @@ class LoginForm extends Page {
     this.template = Handlebars.compile(`
       <div class="goto-form">
         <figure class="logo">
-            <img gateway='list-of-places' src="/static/img/logo.svg" alt="GoTo" />
+            <img gateway='#page=list-of-places;' src="/static/img/logo.svg" alt="GoTo" />
             <figcaption>
                 <p class="title">Время путешествовать</p>
             </figcaption>
@@ -32,22 +32,14 @@ class LoginForm extends Page {
         <div class="form-footer">
             <p class="forgot-password">Забыли пароль?</p>
             <p class="non-registered">Ещё не зарегестрированы?</p>
-            <p gateway="signup" class="register">
+            <p gateway="#page=signup;" class="register">
                 <span class="goto-signup-link">Зарегестрироваться</span>
             </p>
         </div>
       </div>
     `);
 
-    this.render({});
-    this.errorMessage = this.node.querySelector("[error]");
-
-    this.node
-      .querySelector("form")
-      .addEventListener("submit", event => {
-        event.preventDefault();
-        this.submit();
-      });
+    this.render();
   }
 
   submit() {
@@ -72,7 +64,7 @@ class LoginForm extends Page {
     ).then(response => {
       if (response.status == 200) {
         this.clear();
-        main.route('list-of-places');
+        main.route('#page=list-of-places;');
       } else if (response.status == 401) {
         this.errorMessage.innerText = DATA_ERROR;
       } else {
@@ -93,30 +85,34 @@ class LoginForm extends Page {
    * @param {object} fetchBody 
    * @returns {Promise}
    */
-  login(fetchBody) {
-    if (main.temporaryContext.authenticated.pending) {
-      console.error("[login()] Authentication request already pending");
-      return null;
-    }
-
-    main.temporaryContext.authenticated.pending = true;
-
+  async login(fetchBody) {
     return fetch(
       API_V1_URL + "login",
       fetchBody,
     ).then(response => {
-      main.temporaryContext.authenticated.pending = false;
-
       if (response.status == 200) {
-        main.temporaryContext.authenticated.status = true;
+        main.temporaryContext.authenticated = true;
       } else if (response.status == 401) {
-        main.temporaryContext.authenticated.status = false;
+        main.temporaryContext.authenticated = false;
       } else {
-        main.temporaryContext.authenticated.status = false;
+        main.temporaryContext.authenticated = false;
         console.error("Login fatal error");
       }
 
       return response;
+    });
+  }
+
+  async render() {
+    await super.render();
+
+    this.errorMessage = this.node.querySelector("[error]");
+
+    this.node
+    .querySelector("form")
+    .addEventListener("submit", event => {
+      event.preventDefault();
+      this.submit();
     });
   }
 }
