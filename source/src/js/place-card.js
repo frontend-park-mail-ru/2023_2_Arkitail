@@ -1,10 +1,11 @@
 class PlaceCard {
-    // @param {object} parent
-    // @param {object} place
-    constructor(parent, place) {
-        this.parent = parent
-        this.place = place
-        this.template = Handlebars.compile(`
+  // @param {object} parent
+  // @param {object} place
+  constructor(place) {
+    this.place = place;
+    this.block = document.createElement("div");
+    this.block.className = "place-card card";
+    this.template = Handlebars.compile(`
         <div class="place-card card">
             <section>
             <p class="card">{{place.cost}}</p>
@@ -32,8 +33,12 @@ class PlaceCard {
             </div>
             </section>
         </div>
-        `)
+        `);
 
-        this.parent.innerHTML += this.template({ place: this.place })
-    }
+    this.block.innerHTML += this.template({ place: this.place });
+  }
+
+  getHtml() {
+    return this.block;
+  }
 }

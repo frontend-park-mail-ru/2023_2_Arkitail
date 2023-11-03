@@ -1,7 +1,7 @@
 class SearchPage extends Page {
   // @param {string} template
   constructor(template) {
-    super('searh page-padding-vertical', template);
+    super("searh page-padding-vertical", template);
     this.template = Handlebars.compile(`
         <div data-filters class="list-of-places-filters page-padding-horizontal"></div>
         <div data-list-of-places class="list-of-places"></div>
@@ -11,10 +11,14 @@ class SearchPage extends Page {
   async renderTemplate() {
     super.renderTemplate();
 
-    this.carousel = new ListFilters(this.node.querySelector("[data-filters]"));
-    this.listOfPlaces = new ListOfPlaces(
-      this.node.querySelector("[data-list-of-places]")
-    );
+    this.filters = new ListFilters();
+    this.node
+      .querySelector("[data-filters]")
+      .appendChild(this.filters.getHtml());
+    this.listOfPlaces = new ListOfPlaces();
+    this.node
+      .querySelector("[data-list-of-places]")
+      .appendChild(this.listOfPlaces.getHtml());
 
     this.fillListOfPlaces();
   }

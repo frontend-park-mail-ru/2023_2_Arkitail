@@ -42,9 +42,10 @@ class MainPage extends Page {
     this.node
       .querySelector("[data-carousel]")
       .appendChild(this.carousel.getHtml());
-    this.listOfPlaces = new ListOfPlaces(
-      this.node.querySelector("[data-list-of-places]")
-    );
+    this.listOfPlaces = new ListOfPlaces();
+    this.node
+      .querySelector("[data-list-of-places]")
+      .appendChild(this.listOfPlaces.getHtml());
 
     await this.fillCarousel();
     await this.fillListOfPlaces();

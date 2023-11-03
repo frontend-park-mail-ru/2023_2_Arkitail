@@ -22,7 +22,7 @@ class ReviewsPage extends Page {
   async renderTemplate() {
     await super.renderTemplate();
 
-    this.list = this.node.querySelector("[data-list-of-reviews]")
+    this.list = this.node.querySelector("[data-list-of-reviews]");
     this.fill();
   }
 
@@ -34,7 +34,8 @@ class ReviewsPage extends Page {
           avatarImg: "",
           name: "User" + review.userId,
         };
-        this.list.appendChild(ReviewCard({ review: review }));
+        const reviewCard = new ReviewCard({ review: review });
+        this.list.appendChild(reviewCard.getHtml());
       });
     });
   }
