@@ -1,11 +1,11 @@
 // HTMLDivElement
 
-function ReviewCard(review) {
-  this.review = review;
-  this.block = document.createElement("div");
-  this.block.classList.add("review-card");
-  this.block.classList.add("card");
-  this.template = Handlebars.compile(`
+class ReviewCard {
+  constructor(review) {
+    this.review = review;
+    this.block = document.createElement("div");
+    this.block.className = "review-card card";
+    this.template = Handlebars.compile(`
 
   <div class="review-card-header">
     <div class="mini-avatar">
@@ -39,6 +39,10 @@ function ReviewCard(review) {
 
     `);
 
-  this.block.innerHTML += this.template(review);
-  return this.block;
+    this.block.innerHTML += this.template(review);
+  }
+
+  getHtml() {
+    return this.block;
+  }
 }

@@ -100,16 +100,19 @@ class PlacePage extends Page {
     </button>
 
     `);
-    this.context = { place: context }
+    this.context = { place: context };
   }
 
-  async renderTemplate () {
+  async renderTemplate() {
     await super.renderTemplate();
 
-    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
+    this.carousel = new Carousel({
       autoFlip: false,
       defaultArrowsVisibility: true,
     });
+    this.node
+      .querySelector("[data-carousel]")
+      .appendChild(this.carousel.getHtml());
 
     await this.fillCarousel();
   }
@@ -123,7 +126,8 @@ class PlacePage extends Page {
           avatarImg: "",
           name: "User" + review.userId,
         };
-        this.carousel.appendSlide({ content: ReviewCard({ review: review }) });
+        const reviewCard = new ReviewCard({ review: review });
+        this.carousel.appendSlide({ content: reviewCard.getHtml() });
       });
     });
   }
@@ -140,7 +144,7 @@ class PlacePage extends Page {
         Очень нравится <3
         Очень нравится <3
         Очень нравится <3
-        Очень нравится <3`.repeat(i+1),
+        Очень нравится <3`.repeat(i + 1),
         rating: i * 0.5 + ((i * i) % 5),
         createdAt: i + 3 + " октября, 14:36",
       };

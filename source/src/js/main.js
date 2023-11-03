@@ -73,7 +73,11 @@ class Main {
       'reviews' : {
         renderHeader: true,
         instance: new ReviewsPage(''),
-        },
+      },
+      'search' : {
+        renderHeader: true,
+        instance: new SearchPage(''),
+      },
     };
 
     this.route(this.context.location);

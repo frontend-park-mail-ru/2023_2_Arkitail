@@ -28,64 +28,54 @@ function debounce(func, timeout) {
 
 class Carousel {
   /**
-   * @param {object} parent
+   * @param {object} block
    * @param {number} numberOfVisibleSlides
    * @param {boolean} switchingButtons
    * @param {boolean} stopIfHover
    */
 
-  constructor(
-    parent,
-    {
-      numberOfVisibleSlides = maxSlides,
-      switchingButtons = true,
-      autoFlip = true,
-      stopIfHover = true,
-      defaultArrowsVisibility = false,
-    } = {}
-  ) {
-    this.parent = parent;
+  constructor({
+    numberOfVisibleSlides = maxSlides,
+    switchingButtons = true,
+    autoFlip = true,
+    stopIfHover = true,
+    defaultArrowsVisibility = false,
+  } = {}) {
+    this.block = document.createElement("div");
+    this.block.className = "carousel";
+    this.block.setAttribute("data-carousel", "");
     this.template = Handlebars.compile(`
-        <div
-              class="carousel"
-              role="group"
-              aria-roledescription="carousel"
-              aria-label="Popular places list"
-              data-carousel
-            >
-            <div class="carousel-buttons">
-                <button
-                  class="carousel-button carousel-button-previous"
-                  aria-label="Previous slide"
-                  data-carousel-button-previous
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15.7501 18.75L9.00012 12L15.7501 5.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <button
-                  class="carousel-button carousel-button-next"
-                  aria-label="Next slide"
-                  data-carousel-button-next
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 5.25L15.75 12L9 18.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-            </div>
-            <div
-                class="slides"
-                aria-live="polite"
-                data-carousel-slides-container
-            >                
-            </div>
-        </div>
+          <div class="carousel-buttons">
+              <button
+                class="carousel-button carousel-button-previous"
+                aria-label="Previous slide"
+                data-carousel-button-previous
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.7501 18.75L9.00012 12L15.7501 5.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button
+                class="carousel-button carousel-button-next"
+                aria-label="Next slide"
+                data-carousel-button-next
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 5.25L15.75 12L9 18.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+          </div>
+          <div
+              class="slides"
+              aria-live="polite"
+              data-carousel-slides-container
+          >                
+          </div>
         `);
-    this.parent.innerHTML = this.template({ places: this.places });
+    this.block.innerHTML = this.template({ places: this.places });
 
     this.numberOfVisibleSlides = numberOfVisibleSlides;
-    this.carousel = this.parent.querySelector("[data-carousel]");
-    this.slidesContainer = this.carousel.querySelector(
+    this.slidesContainer = this.block.querySelector(
       "[data-carousel-slides-container]"
     );
 
@@ -98,7 +88,7 @@ class Carousel {
         true
       );
     } else {
-      this.carousel.style.setProperty(
+      this.block.style.setProperty(
         "--slider-count",
         this.numberOfVisibleSlides
       );
@@ -107,17 +97,17 @@ class Carousel {
       this.slidesContainer.children.length - this.numberOfVisibleSlides + 1;
 
     if (switchingButtons) {
-      this.buttonPrevious = this.carousel.querySelector(
+      this.buttonPrevious = this.block.querySelector(
         "[data-carousel-button-previous]"
       );
-      this.buttonNext = this.carousel.querySelector(
+      this.buttonNext = this.block.querySelector(
         "[data-carousel-button-next]"
       );
       if (defaultArrowsVisibility) {
         this.showArrows();
       } else {
-        this.carousel.addEventListener("mouseover", this.showArrows.bind(this));
-        this.carousel.addEventListener("mouseout", this.hideArrows.bind(this));
+        this.block.addEventListener("mouseover", this.showArrows.bind(this));
+        this.block.addEventListener("mouseout", this.hideArrows.bind(this));
       }
       this.buttonPrevious.addEventListener(
         "click",
@@ -133,11 +123,11 @@ class Carousel {
       this.startSlideShow();
 
       if (stopIfHover) {
-        this.carousel.addEventListener(
+        this.block.addEventListener(
           "mouseover",
           this.stopSlideShow.bind(this)
         );
-        this.carousel.addEventListener(
+        this.block.addEventListener(
           "mouseout",
           this.startSlideShow.bind(this)
         );
@@ -150,7 +140,7 @@ class Carousel {
     for (let i = 1; i <= this.numberOfVisibleSlides; i++) {
       if (screenWidth < 768 * i || i == this.numberOfVisibleSlides) {
         this.currentNumberOfVisibleSlides = i;
-        this.carousel.style.setProperty("--slider-count", i);
+        this.block.style.setProperty("--slider-count", i);
         this.numSlides = this.slidesContainer.children.length - i + 1;
         break;
       }
@@ -159,12 +149,12 @@ class Carousel {
 
   handleNext() {
     this.currentSlide = mathMod(this.currentSlide + 1, this.numSlides);
-    this.carousel.style.setProperty("--current-slide", this.currentSlide);
+    this.block.style.setProperty("--current-slide", this.currentSlide);
   }
 
   handlePrevious() {
     this.currentSlide = mathMod(this.currentSlide - 1, this.numSlides);
-    this.carousel.style.setProperty("--current-slide", this.currentSlide);
+    this.block.style.setProperty("--current-slide", this.currentSlide);
   }
 
   startSlideShow() {
@@ -198,5 +188,9 @@ class Carousel {
     }
     this.slidesContainer.appendChild(slide);
     this.changeSliderCount();
+  }
+
+  getHtml() {
+    return this.block;
   }
 }

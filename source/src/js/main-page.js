@@ -36,9 +36,12 @@ class MainPage extends Page {
   async renderTemplate() {
     await super.renderTemplate();
 
-    this.carousel = new Carousel(this.node.querySelector("[data-carousel]"), {
+    this.carousel = new Carousel({
       numberOfVisibleSlides: 1,
     });
+    this.node
+      .querySelector("[data-carousel]")
+      .appendChild(this.carousel.getHtml());
     this.listOfPlaces = new ListOfPlaces(
       this.node.querySelector("[data-list-of-places]")
     );
