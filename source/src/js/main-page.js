@@ -25,7 +25,7 @@ class MainPage extends Page {
           <img src="{{place.imageUrl}}" />
           <div class="desc">
             <p>{{place.name}}</p>
-            <button gateway="#page=trip;id={{place.id}};">
+            <button gateway="#page=place;id={{place.id}};">
               <p>Узнать больше</p>
             </button>
           </div>

@@ -19,7 +19,8 @@
 
     --header-height: 4rem;
     --logo-wight: 6rem;
-    --card-radius: 8px;
+    --field-radius: 8px;
+    --card-radius: var(--field-radius);
     --carousel-btn-size: 50px;
 
     --title-font-family: Open Sans;
@@ -109,17 +110,26 @@ svg.star {
     padding: 0 .2rem;
 }
 
-.md-size-text svg.star {
+.md-size-text svg, svg.md-size-text {
     height: var(--md-font-size);
     width: var(--md-font-size);
     padding: 0 .4rem;
 }
 
+
+@media (max-width: 768px) {
+    svg.clickable {
+         height: var(--lg-font-size) !important;
+         width: var(--lg-font-size) !important;
+     }
+ }
+
 svg.star.active {
     fill: var(--primary);
 }
 
-.stars svg.star:nth-child(2) {
+.stars svg.star:nth-child(1),
+svg.star:nth-child(2) {
     padding-right: 0;
 }
 
@@ -150,6 +160,21 @@ svg.star.active {
     font-size: var(--md-font-size);
 }
 
+svg.close {
+    fill: var(--dark-gray);
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+}
+
+svg.trash {
+    fill: var(--red);
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+}
+
+svg.trash:hover {
+    fill: var(--extra-red);
+}
 
 .btn {
     cursor: pointer;
@@ -177,19 +202,32 @@ svg.star.active {
 
 .gray-btn {
     background-color: var(--white);
-    border: 2px solid var(--dark-gray);
+    border: 2px solid var(--transparent-dark-gray);
     color: var(--dark-gray);
 }
 
 
 .mini-avatar {
-    height: 2.4rem;
-    width: 2.4rem;
+    height: 2.4rem !important;
+    width: 2.4rem !important;
     background-color: var(--transparent-dark-gray);
     border-radius: 50%;
-    padding: 0;
+    padding: 0 !important;
 }
 
 .grid-bottom {
     align-items: end;
+}
+
+.input-field {
+    padding: var(--field-radius);
+    outline: 0;
+    outline-offset: 0;
+    border-radius: var(--field-radius);
+    border: 1px solid var(--light-gray);
+    height: fit-content;
+}
+
+.input-field:focus {
+    border: 1px solid var(--primary);
 }

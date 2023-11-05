@@ -8,7 +8,7 @@ class ReviewsPage extends Page {
             Все отзывы
         </p>
         <div class="write-review">
-            <button class="btn blue-btn">
+            <button data-add-review-btn class="btn blue-btn">
                 Написать отзыв
             </button>
         </div>
@@ -20,27 +20,45 @@ class ReviewsPage extends Page {
   }
 
   async renderTemplate() {
+    this.memGetReviews = memorize(this.getReviews);
     await super.renderTemplate();
 
     this.list = this.node.querySelector("[data-list-of-reviews]");
-    this.fill();
+
+    const addReviewCard = new AddRevieCard(
+      this.node.querySelector("[data-add-review-btn]"),
+      this.appendReview.bind(this)
+    );
+    this.list.appendChild(addReviewCard.getHtml());
+
+    await this.fill();
   }
 
-  fill() {
-    this.getReviews().then((reviews) => {
+  appendReview(review) {
+    const reviewCard = new ReviewCard(review);
+    this.list.appendChild(reviewCard.getHtml());
+  }
+
+  async fill() {
+    await this.memGetReviews().then((reviews) => {
       reviews.forEach((review) => {
         review.user = {
           userId: review.userId,
           avatarImg: "",
           name: "User" + review.userId,
         };
-        const reviewCard = new ReviewCard({ review: review });
-        this.list.appendChild(reviewCard.getHtml());
+        // review.abilityToRemove = review.user.name == main.temporaryContext.userName
+        review.abilityToRemove = review.user.name == "User7";
+        this.appendReview(review);
       });
     });
   }
 
-  getReviews = memorize(async function () {
+  async getReviews() {
+    console.log(
+      "ID достопримечательности",
+      main.serializeLocationHash(main.context.location).id
+    );
     return Array.from({ length: 10 }, (_, i) => {
       return {
         id: i,
@@ -57,5 +75,5 @@ class ReviewsPage extends Page {
         createdAt: i + 3 + " октября, 14:36",
       };
     });
-  });
+  }
 }

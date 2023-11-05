@@ -79,10 +79,10 @@ class PlacePage extends Page {
                     {{/stars}}
                 </div>
 
-                <a href="#reviews" class="gray-underline-text md-size-text">256 отзывов</a>
+                <p gateway="#page=reviews;" class="gray-underline-text md-size-text">256 отзывов</p>
 
                 <div class="write-review">
-                    <button class="btn blue-btn">
+                    <button data-add-review-btn class="btn blue-btn">
                         Написать отзыв
                     </button>
                 </div>
@@ -95,7 +95,7 @@ class PlacePage extends Page {
 
     <div data-carousel class="place-carousel page-body-margin"></div>
 
-    <button gateway="#page=reviews;" class="all-reviews-btn btn green-btn page-body-margin">
+    <button gateway="#page=reviews;id={{ place.id }};" class="all-reviews-btn btn green-btn page-body-margin">
         Все отзывы
     </button>
 
@@ -104,7 +104,16 @@ class PlacePage extends Page {
   }
 
   async renderTemplate() {
+    this.memGetReviews = memorize(this.getReviews);
     await super.renderTemplate();
+
+    const addReviewCard = new AddRevieCard(
+      this.node.querySelector("[data-add-review-btn]"),
+      this.appendReview.bind(this)
+    );
+    this.node
+      .querySelector("[data-write-review-card-container]")
+      .appendChild(addReviewCard.getHtml());
 
     this.carousel = new Carousel({
       autoFlip: false,
@@ -119,20 +128,28 @@ class PlacePage extends Page {
 
   // Добавляет в div-блок с атрибутом data-carousel карточки отзывов
   async fillCarousel() {
-    await this.getReviews().then((reviews) => {
+    await this.memGetReviews().then((reviews) => {
       reviews.forEach((review) => {
         review.user = {
           userId: review.userId,
           avatarImg: "",
           name: "User" + review.userId,
         };
-        const reviewCard = new ReviewCard({ review: review });
-        this.carousel.appendSlide({ content: reviewCard.getHtml() });
+        this.appendReview(review);
       });
     });
   }
 
-  getReviews = memorize(async function () {
+  appendReview(review) {
+    const reviewCard = new ReviewCard(review);
+    this.carousel.appendSlide({ content: reviewCard.getHtml() });
+  }
+
+  async getReviews() {
+    console.log(
+      "ID достопримечательности",
+      main.serializeLocationHash(main.context.location).id
+    );
     return Array.from({ length: 10 }, (_, i) => {
       return {
         id: i,
@@ -149,5 +166,5 @@ class PlacePage extends Page {
         createdAt: i + 3 + " октября, 14:36",
       };
     });
-  });
+  }
 }
