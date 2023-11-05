@@ -227,7 +227,7 @@ class SignupForm extends Page {
   // @return {{Promise|object}}
   async signup(fetchBody) {
     return fetch(
-      API_V1_URL + 'signup',
+      API_V1_URL + '/signup',
       fetchBody,
     ).then(response => {
       if (response.status == 200) {

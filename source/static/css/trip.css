@@ -1,4 +1,4 @@
-.trips {
+.trips-grid {
   width: 100%;
   margin: 20px 0px;
 
@@ -20,5 +20,75 @@
 .trip-card-date {
   background-color: var(--secondary);
   color: var(--white);
+}
+
+.trip-card-caption {
+  display: flex;
+}
+.trip-card-edit {
+  background-color: gray;
+}
+
+.trip-card-remove {
+  background-color: red;
+}
+
+.trip {
+  width: 100%;
+  margin: 20px 0px;
+  display: block;
+}
+
+.trip-name {
+  margin: 0px;
+}
+
+.trip-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+
+  margin: 1rem;
+}
+
+.trip-grid-col {
+  margin: 0rem 2rem;
+}
+
+.trip-grid-col:first-child {
+  margin: 0rem 1rem 0rem 0rem;
+}
+
+.trip-grid-col:last-child {
+  margin: 0rem 0rem 0rem 1rem;
+}
+
+.trip-grid-row {
+  margin: 1rem 0rem;
+}
+
+.trip-grid-row:first-child {
+  margin: 0rem 0rem 1rem 0rem;
+}
+
+.trip-grid-row:last-child {
+  margin: 1rem 0rem 0rem 0rem;
+}
+
+.trip-grid-col:not(:has(.trip-grid-col), :has(.trip-grid-row)) {
+  background-color: var(--white);
+}
+
+.trip-grid-row:not(:has(.trip-grid-col), :has(.trip-grid-row)) {
+  background-color: var(--white);
+}
+
+.trip-plan-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.trip-header, .trip-manage {
+  display: flex;
+  justify-content: space-between;
 }
 

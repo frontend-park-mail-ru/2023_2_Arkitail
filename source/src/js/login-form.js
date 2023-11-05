@@ -87,7 +87,7 @@ class LoginForm extends Page {
    */
   async login(fetchBody) {
     return fetch(
-      API_V1_URL + "login",
+      API_V1_URL + "/login",
       fetchBody,
     ).then(response => {
       if (response.status == 200) {
