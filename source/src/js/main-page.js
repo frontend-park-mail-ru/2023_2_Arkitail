@@ -63,11 +63,14 @@ class MainPage extends Page {
   }
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
-  async fillListOfPlaces() {
-    await this.getPlaces().then((places) => {
-      places.forEach((place) => {
+  // async fillListOfPlaces() {
+  //   await this.getPlaces().then((places) => {
+  //     places.forEach((place) => {
+  fillListOfPlaces() {
+    this.getPlaces().then(places => {
+      for (const [_, place] of Object.entries(places)) {
         this.listOfPlaces.appendPlace(place);
-      });
+      };
     });
   }
 

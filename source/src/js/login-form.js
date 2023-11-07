@@ -16,7 +16,7 @@ class LoginForm extends Page {
         </figure>
         <form>
             <div class="form-item email">
-                <input name="login" type="text" placeholder="Ваш логин" />
+                <input name="email" type="email" placeholder="Ваша почта" />
             </div>
             <div class="form-item password">
                 <input name="password" type="password" placeholder="Ваш пароль" />
@@ -50,7 +50,7 @@ class LoginForm extends Page {
     const inputs = this.node.querySelector('form').elements;
 
     const body = JSON.stringify({
-      login: inputs['login'].value,
+      email: inputs['email'].value,
       password: inputs['password'].value,
     });
 
@@ -61,7 +61,7 @@ class LoginForm extends Page {
         body: body,
       }
     ).then(response => {
-      if (response.status == 200) {
+      if (response.status == 204) {
         this.clear();
         main.route('#page=main;');
       } else if (response.status == 401) {
@@ -70,7 +70,6 @@ class LoginForm extends Page {
         this.errorMessage.innerText = LOGIN_SERVER_ERROR;
       }
     });
-
   }
 
   clear() {
@@ -86,10 +85,10 @@ class LoginForm extends Page {
    */
   async login(fetchBody) {
     return fetch(
-      API_V1_URL + "login",
+      API_V1_URL + "/login",
       fetchBody,
     ).then(response => {
-      if (response.status == 200) {
+      if (response.status == 204) {
         main.temporaryContext.authenticated = true;
       } else if (response.status == 401) {
         main.temporaryContext.authenticated = false;

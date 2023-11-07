@@ -1,4 +1,4 @@
-const API_V1_URL = '/api/v1/';
+const API_V1_URL = '/api/v1';
 
 /**
  * Класс Main представляет собой общий контекст приложения
@@ -94,7 +94,7 @@ class Main {
    */
   async authenticate() {
     return fetch(
-      API_V1_URL + 'auth',
+      API_V1_URL + '/auth',
       {
         credentials: 'include',
         method: 'GET',
@@ -111,7 +111,7 @@ class Main {
 
   async getUserInfo() {
     return fetch(
-      API_V1_URL + 'user',
+      API_V1_URL + '/user',
       {
         method: 'GET',
       },

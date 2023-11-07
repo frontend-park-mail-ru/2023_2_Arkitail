@@ -26,7 +26,8 @@ set_default GOTO_HOST_IP 127.0.0.1
 set_default GOTO_NGINX_CONFIG_DIR ~/repos/2023_2_Arkitail/docker/nginx
 set_default GOTO_SOURCE_DIR ~/repos/2023_2_Arkitail/source
 
-docker run -dp ${GOTO_HOST_IP}:80:80 \
+docker run -d \
+  --network=host \
 	--name frontend \
 	--network=host \
 	--mount type=bind,src=${GOTO_NGINX_CONFIG_DIR},target=/etc/nginx \
