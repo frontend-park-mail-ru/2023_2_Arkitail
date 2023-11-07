@@ -105,7 +105,12 @@
 }
 
 .trip-plan-point {
-  display: none;
+  display: block;
   width: 100%;
+}
+
+.trip-plan-day-header {
+  display: flex;
+  justify-content: space-between;
 }
 

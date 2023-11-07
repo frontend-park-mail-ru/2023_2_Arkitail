@@ -39,15 +39,20 @@ const TRIP_PAGE_TEMPLATE = `
 
       <div class='trip-plan-days'>
         {{#eachInMap days}}
-        <p class='trip-plan-day'>{{this.key}}</p>
-        {{#each this.value}}
-        <div class='trip-plan-points'>
-          <div class='trip-plan-point'>
-            <p class='trip-plan-point-name'>{{this.name}}</p>
-            <p class='trip-plan-point-description'>{{this.description}}</p>
+        <div class='trip-plan-day'>
+          <div class='trip-plan-day-header'>
+            <p class='trip-plan-day-date'>{{this.key}}</p>
+            <button class='trip-plan-day-show'>Show/Hide</button>
+          </div>
+          <div class='trip-plan-points'>
+          {{#each this.value}}
+            <div class='trip-plan-point'>
+              <p class='trip-plan-point-name'>{{this.name}}</p>
+              <p class='trip-plan-point-description'>{{this.description}}</p>
+            </div>
+          {{/each}}
           </div>
         </div>
-        {{/each}}
         {{/eachInMap}}
       </div>
     </div>
