@@ -20,14 +20,14 @@ class ReviewsPage extends Page {
   }
 
   async renderTemplate() {
-    this.memGetReviews = memorize(this.getReviews);
+    this.memGetReviews = await memorize(this.getReviews);
     await super.renderTemplate();
 
     this.list = this.node.querySelector("[data-list-of-reviews]");
 
     const addReviewCard = new AddRevieCard(
       this.node.querySelector("[data-add-review-btn]"),
-      this.appendReview.bind(this)
+      this.insertToBeginReview.bind(this)
     );
     this.list.appendChild(addReviewCard.getHtml());
 
@@ -37,6 +37,11 @@ class ReviewsPage extends Page {
   appendReview(review) {
     const reviewCard = new ReviewCard(review);
     this.list.appendChild(reviewCard.getHtml());
+  }
+
+  insertToBeginReview(review) {
+    const reviewCard = new ReviewCard(review);
+    this.list.insertBefore(reviewCard.getHtml(), this.list.firstChild);
   }
 
   async fill() {

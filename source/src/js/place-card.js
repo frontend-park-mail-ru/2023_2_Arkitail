@@ -27,7 +27,7 @@ class PlaceCard {
                 </svg>
             </div>
             <div class="card-description gray-text">
-                <p>
+                <p class="broken-text">
                     {{place.description}}
                 </p>
             </div>

@@ -1,4 +1,4 @@
-memorize = (fun) => {
+memorize = async (fun) => {
   let cache = {};
   return (params) => {
     if (cache[params] == undefined) {
@@ -34,6 +34,7 @@ class MainPage extends Page {
   }
 
   async renderTemplate() {
+    this.memGetPlaces = await memorize(this.getPlaces);
     await super.renderTemplate();
 
     this.carousel = new Carousel({
@@ -53,7 +54,7 @@ class MainPage extends Page {
 
   // Добавляет в div-блок с атрибутом carousel слайды достопримечательностей
   async fillCarousel() {
-    await this.getPlaces().then((places) => {
+    await this.memGetPlaces().then((places) => {
       places.forEach((place) => {
         this.carousel.appendSlide({
           template: this.templateCarouselSlide({ place: place }),
@@ -64,7 +65,7 @@ class MainPage extends Page {
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
   async fillListOfPlaces() {
-    await this.getPlaces().then((places) => {
+    await this.memGetPlaces().then((places) => {
       places.forEach((place) => {
         this.listOfPlaces.appendPlace(place);
       });
@@ -74,7 +75,7 @@ class MainPage extends Page {
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей
   // и возвращает мапу достопримечательностей
   // return {Promise} промис запроса мест
-  getPlaces = memorize(async function () {
+  async getPlaces() {
     return fetch("/api/v1/places", {
       method: "GET",
     })
@@ -82,5 +83,5 @@ class MainPage extends Page {
       .then((places) => {
         return places.sort((place1, place2) => place1.id - place2.id);
       });
-  });
+  }
 }

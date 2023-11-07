@@ -231,3 +231,7 @@ svg.trash:hover {
 .input-field:focus {
     border: 1px solid var(--primary);
 }
+
+.broken-text {
+    white-space: pre-wrap;
+}

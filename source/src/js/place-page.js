@@ -1,7 +1,7 @@
 class PlacePage extends Page {
   // @param {string} template
   // @param {object} context
-  constructor(template, context) {
+  constructor(template) {
     super("place page-padding-vertical", template);
 
     this.template = Handlebars.compile(`
@@ -20,13 +20,13 @@ class PlacePage extends Page {
             </svg>
 
             <p class="rating">{{ place.rating }}</p>
-            <a href="#reviews" class="gray-underline-text">256 отзывов</a>
+            <a href="#reviews" class="gray-underline-text">{{ place.reviewCount }} отзывов</a>
         </div>
     </div>
 
     <div class="line">
         <hr>
-        <p class="work-schedule md-size-text">Открыто сейчас <span class="gray-text"> 11:00-12:00 </span></p>
+        <p class="work-schedule md-size-text">Открыто сейчас <span class="gray-text"> {{ place.openHour }}-{{ place.closeHour }} </span></p>
         <hr>
     </div>
 
@@ -37,21 +37,49 @@ class PlacePage extends Page {
             <div class="page-body-margin info card">
                 <p class="general-title">Информация</p>
 
-                <p class="gray-text description">
+                <p class="gray-text description broken-text">
                     {{ place.description }}
                 </p>
 
                 <div>
                     <p class="general-subtitle">Адрес</p>
-                    <p class="gray-underline-text">Адрес какой-то</p>
+                    <p class="gray-underline-text"> {{ place.adress }} </p>
                 </div>
 
                 <div>
                     <p class="general-subtitle">Контакты</p>
                     <div class="contacts">
-                        <p class="gray-underline-text">Сайт</p>
-                        <p class="gray-underline-text">Эл.почта</p>
-                        <p class="gray-underline-text">+71234567890</p>
+
+                        {{#if place.website}}
+                        <p class="gray-underline-text"> 
+                            {{ place.website }}
+                        </p>
+                        {{else}}
+                        <p class="gray-text"> 
+                            Сайт отсутствует
+                        </p>
+                        {{/if}}
+                        
+                        {{#if place.email}}
+                        <p class="gray-underline-text"> 
+                            {{ place.email }}
+                        </p>
+                        {{else}}
+                        <p class="gray-text"> 
+                            Почта отсутствует
+                        </p>
+                        {{/if}}
+                        
+                        {{#if place.phoneNumber}}
+                        <p class="gray-underline-text"> 
+                            {{ place.phoneNumber }}
+                        </p>
+                        {{else}}
+                        <p class="gray-text"> 
+                            Номет телефона отсутствует
+                        </p>
+                        {{/if}}
+
                     </div>
                 </div>
             </div>
@@ -79,7 +107,7 @@ class PlacePage extends Page {
                     {{/stars}}
                 </div>
 
-                <p gateway="#page=reviews;" class="gray-underline-text md-size-text">256 отзывов</p>
+                <p gateway="#page=reviews;" class="gray-underline-text md-size-text">{{ place.reviewCount }} отзывов</p>
 
                 <div class="write-review">
                     <button data-add-review-btn class="btn blue-btn">
@@ -100,16 +128,17 @@ class PlacePage extends Page {
     </button>
 
     `);
-    this.context = { place: context };
   }
 
   async renderTemplate() {
-    this.memGetReviews = memorize(this.getReviews);
+    this.memGetPlace = await memorize(this.getPlace.bind(this));
+    this.memGetReviews = await memorize(this.getReviews.bind(this));
+    await this.generateContext();
     await super.renderTemplate();
 
     const addReviewCard = new AddRevieCard(
       this.node.querySelector("[data-add-review-btn]"),
-      this.appendReview.bind(this)
+      this.insertToBeginReview.bind(this)
     );
     this.node
       .querySelector("[data-write-review-card-container]")
@@ -128,7 +157,7 @@ class PlacePage extends Page {
 
   // Добавляет в div-блок с атрибутом data-carousel карточки отзывов
   async fillCarousel() {
-    await this.memGetReviews().then((reviews) => {
+    await this.memGetReviews(this.id).then((reviews) => {
       reviews.forEach((review) => {
         review.user = {
           userId: review.userId,
@@ -145,16 +174,65 @@ class PlacePage extends Page {
     this.carousel.appendSlide({ content: reviewCard.getHtml() });
   }
 
-  async getReviews() {
-    console.log(
-      "ID достопримечательности",
-      main.serializeLocationHash(main.context.location).id
-    );
+  insertToBeginReview(review) {
+    const reviewCard = new ReviewCard(review);
+    this.carousel.insertToBeginSlide({ content: reviewCard.getHtml() });
+  }
+
+  async generateContext() {
+    this.id = main.serializeLocationHash(main.context.location).id;
+    this.context = await this.memGetPlace(this.id);
+  }
+
+  async getPlace(id) {
+    const test = await fetch(API_V1_URL + `/places/${id}`, {
+      method: "GET",
+    }).then((response) => {
+      console.log(API_V1_URL + `/places/${id}`, response);
+      if (response.ok) return response.json();
+      return {};
+    });
+    console.log(test);
+
+    return {
+      place: {
+        id: this.id,
+        name: "Эфелева башня",
+        adress: "Адрес какой-то",
+        openHour: "11:00",
+        closeHour: "23:00",
+        reviewCount: 256,
+        description:
+          "Это знаменитое архитектурное сооружение, которое находится в центре Парижа, Франция. Эта башня является одной из самых узнаваемых и посещаемых достопримечательностей мира, а также символом как самого Парижа, так и Франции в целом.\
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+      ",
+        rating: 4.5,
+        cost: "$$",
+        imageURL:
+          "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
+      },
+    };
+  }
+
+  async getReviews(id) {
+    const test = await fetch(API_V1_URL + `/places/${id}/reviews`, {
+      method: "GET",
+    }).then((response) => {
+      console.log(API_V1_URL + `/places/${id}/reviews`, response);
+      if (response.ok) return response.json();
+      return {};
+    });
+    console.log(test);
     return Array.from({ length: 10 }, (_, i) => {
       return {
         id: i,
         userId: i,
-        placeId: 0,
+        placeId: this.id,
         text: `Очень нравится <3 
         Очень нравится <3
         Очень нравится <3

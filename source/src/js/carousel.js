@@ -190,6 +190,19 @@ class Carousel {
     this.changeSliderCount();
   }
 
+  insertToBeginSlide({ content, template }) {
+    const slide = document.createElement("div");
+    slide.setAttribute("data-slide", "");
+    slide.classList.add("slide");
+    if (content) {
+      slide.appendChild(content);
+    } else {
+      slide.innerHTML = template;
+    }
+    this.slidesContainer.insertBefore(slide, this.slidesContainer.firstChild);
+    this.changeSliderCount();
+  }
+
   getHtml() {
     return this.block;
   }

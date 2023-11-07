@@ -9,6 +9,7 @@ class SearchPage extends Page {
   }
 
   async renderTemplate() {
+    this.memGetPlaces = await memorize(this.getPlaces);
     super.renderTemplate();
 
     this.filters = new ListFilters();
@@ -25,7 +26,7 @@ class SearchPage extends Page {
 
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
   fillListOfPlaces() {
-    this.getPlaces().then((places) => {
+    this.memGetPlaces().then((places) => {
       for (const [_, place] of places.entries()) {
         this.listOfPlaces.appendPlace(place);
       }
@@ -35,7 +36,7 @@ class SearchPage extends Page {
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей
   // и возвращает мапу достопримечательностей
   // return {Promise} промис запроса мест
-  getPlaces = memorize(async function () {
+  async getPlaces() {
     return fetch("/api/v1/places", {
       method: "GET",
     })
@@ -43,5 +44,5 @@ class SearchPage extends Page {
       .then((places) => {
         return places.sort((place1, place2) => place1.id - place2.id);
       });
-  });
+  }
 }

@@ -1,6 +1,6 @@
-// HTMLDivElement
 
 class ReviewCard {
+//  @param {HTMLDivElement} review
   constructor(review) {
     this.review = review;
     this.block = document.createElement("div");
@@ -43,7 +43,7 @@ class ReviewCard {
       </div>
     </div>
 
-    <p>{{ review.text }}</p>
+    <p class="broken-text">{{ review.text }}</p>
 
     `);
 

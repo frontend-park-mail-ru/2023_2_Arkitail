@@ -119,12 +119,13 @@
 }
 
 .place .info-card .contacts {
-    display: flex;
+    display: grid;
 }
 
-.place .info-card .contacts p+p {
+.place .info-card .contacts p {
     width: max-content;
-    padding-left: var(--page-body-content-margin);
+    display: inline-block;
+    padding-right: var(--page-body-content-margin);
 }
 
 .place .place-carousel .carousel-button-previous {
