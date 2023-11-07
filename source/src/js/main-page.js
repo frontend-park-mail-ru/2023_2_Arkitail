@@ -78,9 +78,6 @@ class MainPage extends Page {
     return fetch("/api/v1/places", {
       method: "GET",
     })
-      .then((response) => response.json())
-      .then((places) => {
-        return places.sort((place1, place2) => place1.id - place2.id);
-      });
+      .then((response) => console.log(response.json()))
   });
 }

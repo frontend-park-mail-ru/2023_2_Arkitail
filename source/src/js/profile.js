@@ -94,7 +94,7 @@ class ProfilePage extends Page {
         const newAbout = this.node.querySelector('#aboutInput').value;
         const newUserInfo = {
             userName: newUserName,
-            //birthday: newBirthday,
+            birthDate: newBirthday,
             about: newAbout,
         };
     
@@ -102,7 +102,7 @@ class ProfilePage extends Page {
     
         this.context = {
             userName: newUserName,
-            //birthday: newBirthday,
+            birthday: newBirthday,
             about: newAbout,
             isEditing: false,
         };

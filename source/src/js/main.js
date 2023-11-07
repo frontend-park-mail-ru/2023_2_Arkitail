@@ -116,27 +116,27 @@ class Main {
         method: 'GET',
       },
     ).then(response => {
+      let kakayatihuina = response.json()
+      console.log(kakayatihuina)
       if (response.status == 200) {
         this.temporaryContext.authenticated = true;
       } else {
         this.temporaryContext.authenticated = false;
-        throw new Error('user failed');
+//        throw new Error('user failed');
       }
-
-      return response.json();
+      return kakayatihuina;
     }).then(data => {
       console.log(data)
-      this.temporaryContext.userName = data['user']['login'];
-      this.temporaryContext.userId = data['user']['id'];
-    }).catch(_ => { });
+      this.temporaryContext.userName = data['email'];
+      this.temporaryContext.userId = data['id'];
+      this.temporaryContext.birthday = data['birthDate']
+      this.temporaryContext.about = data['about']
+    })
   }
 
   async updateUserInfo(newUserInfo) {
     try {
-      this.getUserInfo();
-      const userId = this.temporaryContext.userId
-      console.log(userId)
-      const url = `/api/v1/users/${userId}`;
+      const url = `/api/v1/user`;
       const response = await fetch(url, {
         method: 'PATCH',
         headers: {

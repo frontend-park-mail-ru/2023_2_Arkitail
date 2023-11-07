@@ -170,7 +170,7 @@ class SignupForm extends Page {
       headers: headers,
       body: body,
     }).then(response => {
-      if (response.status == 200) {
+      if (response.status == 204) {
         this.clear();
         main.route('#page=main;');
       } else if (response.status == 401) {
@@ -228,7 +228,7 @@ class SignupForm extends Page {
       API_V1_URL + 'signup',
       fetchBody,
     ).then(response => {
-      if (response.status == 200) {
+      if (response.status == 204) {
         main.temporaryContext.authenticated = true;
       } else if (response.status == 401) {
         main.temporaryContext.authenticated = false;

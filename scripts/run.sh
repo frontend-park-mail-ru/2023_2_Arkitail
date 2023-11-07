@@ -14,7 +14,7 @@ set_default GOTO_BACKEND_SECRET alkjhaldjf
 # 	-e POSTGRES_PASSWORD=qwerty \
 # 	-d postgres
 
-docker run -dp localhost:5432:5432 \
+docker run -d \
 	--network=host \
 	--name backend \
 	--mount type=bind,src=${GOTO_BACKEND_SOURCE_DIR},target=/goto \
