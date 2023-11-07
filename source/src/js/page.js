@@ -7,15 +7,15 @@ class Page {
     this.context = {};
   }
 
-  /**
-   * 
-   * @param {object} context 
-   */
-  async render() {
+  async renderTemplate() {
     this.node.remove();
     this.node = document.createElement('div');
     this.node.className = this.classes;
     this.node.innerHTML = this.template(this.context);
+  }
+
+  async render() {
+    await this.renderTemplate();
 
     this.node
     .querySelectorAll('[gateway]')

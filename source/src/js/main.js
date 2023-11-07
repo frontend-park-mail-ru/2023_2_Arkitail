@@ -40,7 +40,7 @@ class Main {
         renderHeader: false,
         instance: new SignupForm(''),
       },
-      'list-of-places': {
+      'main': {
         renderHeader: true,
         instance: new MainPage(''),
       },
@@ -55,6 +55,32 @@ class Main {
       'profile': {
         renderHeader: true,
         instance: new ProfilePage(''),
+      },
+      'place': {
+        renderHeader: true,
+        instance: new PlacePage('', {
+          id:          "0",
+          name:        "Эфелева башня",
+          description: "Это знаменитое архитектурное сооружение, которое находится в центре Парижа, Франция. Эта башня является одной из самых узнаваемых и посещаемых достопримечательностей мира, а также символом как самого Парижа, так и Франции в целом.\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+                    бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
+          ",
+          rating:      4.5,
+          cost:        "$$",
+          imageURL:    "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
+        }),
+      },
+      'reviews' : {
+        renderHeader: true,
+        instance: new ReviewsPage(''),
+      },
+      'search' : {
+        renderHeader: true,
+        instance: new SearchPage(''),
       },
     };
 
@@ -107,25 +133,6 @@ class Main {
 
   async updateUserInfo(newUserInfo) {
     try {
-      // (async () => {
-      //   const userId = await this.getUserInfo.call(this); // Вызываем с контекстом
-      //   console.log('UserID:', userId);
-      // })();
-      // async function getUserAndUseInfo() {
-      //   try {
-      //     const userId = await this.getUserInfo();
-      //     console.log('UserID:', userId);
-      //     // Здесь вы можете использовать userId в других частях кода
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // }
-      // getUserAndUseInfo();
-      // this.getUserInfo().then(() => {
-      //   const userId = this.temporaryContext.userId
-      //   console.log(userId)
-      // })
-      
       this.getUserInfo();
       const userId = this.temporaryContext.userId
       console.log(userId)
@@ -238,7 +245,6 @@ class Main {
       window.history.pushState(this.context, '', '#page=profile;');
       return;
     }
-
     let state = window.history.state;
 
     if (state !== null) {

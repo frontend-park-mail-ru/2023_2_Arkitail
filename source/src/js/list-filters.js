@@ -1,11 +1,15 @@
 class ListFilters {
-  constructor(parent) {
-    this.parent = parent;
+  constructor() {
+    this.block = document.createElement("div");
+    this.block.className = "filters";
+    this.block.setAttribute("data-filters", "");
     this.template = Handlebars.compile(`
-        <div data-filters>
-            Очень скоро тут будут фильтры <3
-        </div>
+          Очень скоро тут будут фильтры <3
       `);
-    this.parent.innerHTML = this.template();
+    this.block.innerHTML = this.template();
+  }
+
+  getHtml() {
+    return this.block;
   }
 }

@@ -1,16 +1,24 @@
 class SearchPage extends Page {
   // @param {string} template
   constructor(template) {
-    super('searh', template);
+    super("searh page-padding-vertical", template);
     this.template = Handlebars.compile(`
-        <div data-filters class="list-of-places-filters"></div>
+        <div data-filters class="list-of-places-filters page-padding-horizontal"></div>
         <div data-list-of-places class="list-of-places"></div>
     `);
-    super.render();
-    this.carousel = new ListFilters(this.node.querySelector("[data-filters]"));
-    this.listOfPlaces = new ListOfPlaces(
-      this.node.querySelector("[data-list-of-places]")
-    );
+  }
+
+  async renderTemplate() {
+    super.renderTemplate();
+
+    this.filters = new ListFilters();
+    this.node
+      .querySelector("[data-filters]")
+      .appendChild(this.filters.getHtml());
+    this.listOfPlaces = new ListOfPlaces();
+    this.node
+      .querySelector("[data-list-of-places]")
+      .appendChild(this.listOfPlaces.getHtml());
 
     this.fillListOfPlaces();
   }
@@ -27,9 +35,13 @@ class SearchPage extends Page {
   // Функция getPlaces отправляет GET запрос на получение достопримечательностей
   // и возвращает мапу достопримечательностей
   // return {Promise} промис запроса мест
-  async getPlaces() {
+  getPlaces = memorize(async function () {
     return fetch("/api/v1/places", {
       method: "GET",
-    }).then((response) => response.json());
-  }
+    })
+      .then((response) => response.json())
+      .then((places) => {
+        return places.sort((place1, place2) => place1.id - place2.id);
+      });
+  });
 }

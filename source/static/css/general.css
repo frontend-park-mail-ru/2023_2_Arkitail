@@ -11,17 +11,31 @@
     --black: #000;
     --red: rgb(136, 8, 15);
     --extra-red: rgb(210, 8, 18);
+
+    --page-padding: min(2vh, 2rem);
+    --page-body-margin: 3vw;
+    --page-body-content-margin: 1rem;
+    --page-gap: 1rem;
+
     --header-height: 4rem;
     --logo-wight: 6rem;
-    --title: Open Sans;
-    --card-radius: 4px;
+    --field-radius: 8px;
+    --card-radius: var(--field-radius);
+    --carousel-btn-size: 50px;
+
+    --title-font-family: Open Sans;
+    --xs-font-size: .8rem;
+    --sm-font-size: 1rem;
+    --md-font-size: 1.2rem;
+    --lg-font-size: 1.5rem;
+    --xl-font-size: 2rem;
 }
 
 * {
     margin: 0;
     padding: 0;
-    font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    font-size: var(--sm-font-size);
+    font-family: BlinkMacSystemFont, Arial, sans-serif;
 }
 
 body {
@@ -36,7 +50,184 @@ ul {
     list-style: none;
 }
 
+hr {
+    height: 0;
+    border: none;
+    border-bottom: 2px solid var(--transparent-darkest-gray);
+}
+
+[gateway] {
+    cursor: pointer;
+}
+
+.page-body-margin {
+    margin: 0 var(--page-body-margin);
+}
+
+.page-padding-vertical {
+    padding-top: var(--page-padding);
+    padding-bottom: var(--page-padding);
+}
+
+.page-padding-horizontal {
+    padding-left: var(--page-body-margin);
+    padding-right: var(--page-body-margin);
+}
+
 .card {
     border-radius: var(--card-radius);
     box-shadow: 0px 0px 15px 3px var(--transparent-dark-gray);
+    background-color: var(--white);
+}
+
+.general-main-title {
+    font-size: var(--xl-font-size);
+    font-weight: 700;
+    font-family: var(--title-font-family);
+}
+
+.general-title {
+    font-size: var(--lg-font-size);
+    font-weight: 650;
+    font-family: var(--title-font-family);
+}
+
+.general-subtitle {
+    font-size: var(--md-font-size);
+    font-weight: 550;
+    font-family: var(--title-font-family);
+}
+
+.rating {
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+svg.star {
+    height: var(--sm-font-size);
+    width: var(--sm-font-size);
+    fill: var(--dark-gray);
+    padding: 0 .2rem;
+}
+
+.md-size-text svg, svg.md-size-text {
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+    padding: 0 .4rem;
+}
+
+
+@media (max-width: 768px) {
+    svg.clickable {
+         height: var(--lg-font-size) !important;
+         width: var(--lg-font-size) !important;
+     }
+ }
+
+svg.star.active {
+    fill: var(--primary);
+}
+
+.stars svg.star:nth-child(1),
+svg.star:nth-child(2) {
+    padding-right: 0;
+}
+
+.stars svg.star+svg.star {
+    padding: 0;
+}
+
+.stars {
+    display: flex;
+}
+
+.sm-text {
+    font-size: var(--xs-font-size);
+}
+
+.gray-text {
+    color: var(--dark-gray);
+}
+
+.gray-underline-text {
+    color: var(--dark-gray);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.md-size-text,
+.md-size-text * {
+    font-size: var(--md-font-size);
+}
+
+svg.close {
+    fill: var(--dark-gray);
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+}
+
+svg.trash {
+    fill: var(--red);
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+}
+
+svg.trash:hover {
+    fill: var(--extra-red);
+}
+
+.btn {
+    cursor: pointer;
+    padding: calc(0.6rem - 2px);
+    border-radius: 8px;
+}
+
+.fill-green-btn {
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
+    color: var(--white);
+}
+
+.green-btn {
+    background-color: var(--white);
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+}
+
+.blue-btn {
+    background-color: var(--white);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.gray-btn {
+    background-color: var(--white);
+    border: 2px solid var(--transparent-dark-gray);
+    color: var(--dark-gray);
+}
+
+
+.mini-avatar {
+    height: 2.4rem !important;
+    width: 2.4rem !important;
+    background-color: var(--transparent-dark-gray);
+    border-radius: 50%;
+    padding: 0 !important;
+}
+
+.grid-bottom {
+    align-items: end;
+}
+
+.input-field {
+    padding: var(--field-radius);
+    outline: 0;
+    outline-offset: 0;
+    border-radius: var(--field-radius);
+    border: 1px solid var(--light-gray);
+    height: fit-content;
+}
+
+.input-field:focus {
+    border: 1px solid var(--primary);
 }

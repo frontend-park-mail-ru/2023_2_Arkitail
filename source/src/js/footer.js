@@ -21,7 +21,5 @@ class Footer extends Page {
         </a>
         <p>© GoTo, Arkitail 2023. We love our users!</p>
         `);
-
-    this.render();
   }
 }

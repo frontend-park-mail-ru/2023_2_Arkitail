@@ -1,0 +1,32 @@
+.review-card {
+    box-sizing: border-box;
+    padding: var(--page-body-content-margin);
+}
+
+.review-card .review-card-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--page-body-content-margin);
+    margin-bottom: var(--page-gap);
+}
+
+.add-review-card {
+    box-sizing: border-box;
+    padding: var(--page-body-content-margin);
+    gap: var(--page-body-content-margin);
+    display: none;
+}
+
+.add-review-card .add-review-card-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--page-body-content-margin);
+}
+
+.add-review-card textarea {
+    width: 100%;
+}
+
+.reviews-btn-save {
+    justify-self: end;
+}
