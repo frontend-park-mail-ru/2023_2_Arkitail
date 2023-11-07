@@ -12,6 +12,7 @@ class Trip {
 
     let respJson = resp.json();
     */
+
     let respJson = {
       "id": 0,
       "user_id": 0,
@@ -22,7 +23,7 @@ class Trip {
         "additionalProp1": {
           "place": {
             "id": 0,
-            "name": "string",
+            "name": "string1",
             "description": "string",
             "rating": 0,
             "cost": "string",
@@ -41,7 +42,7 @@ class Trip {
         "additionalProp2": {
           "place": {
             "id": 0,
-            "name": "string",
+            "name": "string2",
             "description": "string",
             "rating": 0,
             "cost": "string",
@@ -60,7 +61,7 @@ class Trip {
         "additionalProp3": {
           "place": {
             "id": 0,
-            "name": "string",
+            "name": "string3",
             "description": "string",
             "rating": 0,
             "cost": "string",
@@ -77,45 +78,56 @@ class Trip {
           "last_date": "2017-01-02"
         }
       }
-}
+    }
+
     this.id = respJson['id'];
     this.name = respJson['name'];
     this.description = respJson['description'];
+    this.days = new Map();
     this.placesInTrip = [];
     this.begin = '01 Jan 1970';
     this.end = '01 Jan 1970';
 
     for (const [_, point] of Object.entries(respJson['placesInTrip'])) {
-      this.placesInTrip.push(point);
+      this.placesInTrip.push(point.place);
+      let begin = new Date(point.first_date);
+      let end = new Date(point.last_date);
+
+      for (; begin.getDate() !== end.getDate(); begin.setDate(begin.getDate() + 1)) {
+        if (!this.days.has(begin)) {
+          this.days.set(begin, []);
+        }
+
+        this.days.get(begin).push(point.place);
+      }
     }
+
     return this;
   }
 }
 
 class TripsPage extends Page {
   constructor() {
-    let template = `
-      <div class='trips-name'><h1>Поездки</h1></div>
-      <div class='trips-new'>Добавить поездку</div>
-      <div class='trips-grid'>
-        {{#each trips}}
-        <div class='trip-card' gateway='#page=trip;id={{this.id}};'>
-          <div class='trip-card-caption'>
-            <h1>{{this.name}}</h1>
-            <div class='trip-card-remove'>R</div>
-          </div>
-          <div class='trip-card-date'><span>{{this.begin}} - {{this.end}}</span></div>
-          <div class='trip-card-description'>{{this.description}}</div>
-        </div>
-        {{/each}}
-      </div>`;
-
-    super('trips', template);
+    super('trips', TRIPS_PAGE_TEMPLATE);
 
     this.trips = [];
   }
 
   async getTrips() {
+    /**/
+    let resp = await fetch(
+      API_V1_URL + '/trips',
+      { method: 'GET' }
+    );
+
+    if (resp.status == 401) {
+      throw new Error('Unauthorized');
+    } else if (resp.status == 404) {
+      throw new Error('User doesn\'t exist?');
+    }
+
+    
+
     return this.trips;
   }
 
@@ -149,60 +161,60 @@ class TripsPage extends Page {
 }
 
 class TripPage extends Page {
-  constructor() {
-    let template = `
-      <div class='trip-header'>
-        <div class='trip-name trip-editable'>{{name}}</div>
-        <div class='trip-manage'>
-          <div class='trip-edit'>Редактировать</div>
-          <div class='trip-remove'>Удалить</div>
-        </div>
-      </div>
-      <div class='trip-date trip-editable'>{{begin}} - {{end}}</div>
-      <div class='trip-grid'>
-        <div class='trip-grid-col'>
-          <div class='trip-grid-row trip-description trip-editable'>{{description}}</div>
-          <div class='trip-grid-row trip-plan'>
-            <div class='trip-plan-header'>
-              <div class='trip-plan-name'>
-                <h1>План</h1>
-                <div class='trip-plan-new-point'>
-                  Добавить место
-                </div>
-              </div>
-              <div></div>
-            </div>
-            <div class='trip-plan-points'>
-              {{#each placesInTrip}}
-              <div class='trip-plan-point'>
-                {{this.place.name}}
-              </div>
-              {{/each}}
-            </div>
-          </div>
-        </div>
-        <div class='trip-grid-col trip-members'>Участники</div>
-      </div>
-    `;
+  static TOGGLE_VIEW = 0;
+  static TOGGLE_EDIT = 1;
 
-    super('trip', template);
+  static TOGGLE = (new Map())
+  .set(TripPage.TOGGLE_VIEW, TripPage.TOGGLE_EDIT)
+  .set(TripPage.TOGGLE_EDIT, TripPage.TOGGLE_VIEW)
+
+  constructor() {
+    super('trip', TRIP_PAGE_TEMPLATE);
+    this.toggleState = TripPage.TOGGLE_VIEW;
+    console.log(this.toggleState);
+  }
+
+  findElements() {
+    this.edit = this.node.querySelector('.trip-edit');
+    this.remove = this.node.querySelector('.trip-remove');
+    this.save = this.node.querySelector('.trip-save');
+    this.cancel = this.node.querySelector('.trip-cancel');
+    this.nameInput = this.node.querySelector('.trip-input-name');
+    this.descriptionInput = this.node.querySelector('.trip-input-description');
+  }
+
+  toggle() {
+    this.toggleState = TripPage.TOGGLE.get(this.toggleState);
+
+    this.node
+    .querySelectorAll('.trip-toggle-first')
+    .forEach((elem) => {
+      switch (this.toggleState) {
+        case TripPage.TOGGLE_VIEW:
+          elem.style.display = 'block';
+          break;
+        case TripPage.TOGGLE_EDIT:
+          elem.style.display = 'none';
+          break;
+      };
+    });
+
+    this.node
+    .querySelectorAll('.trip-toggle-second')
+    .forEach((elem) => {
+      switch (this.toggleState) {
+        case TripPage.TOGGLE_VIEW:
+          elem.style.display = 'none';
+          break;
+        case TripPage.TOGGLE_EDIT:
+          elem.style.display = 'block';
+          break;
+      };
+    });
   }
 
   editHandler() {
-    this.node
-    .querySelector('.trip-edit')
-    .replace(, );
-    
-
-    this.node
-    .querySelector('.trip-remove');
-
-    this.node
-    .querySelectorAll('.trip-editable')
-    .forEach((elem) => {
-      let input = document.createElement('input');
-
-    });
+    this.toggle();
   }
 
   removeHandler() {
@@ -231,16 +243,25 @@ class TripPage extends Page {
   async render() {
     await this.generateContext();
     await super.render();
-    this.node
-    .querySelector('.trip-remove')
-    .addEventListener('click', () => {
-      this.removeHandler();
+
+    this.findElements();
+
+    this.remove.addEventListener('click', () => { this.removeHandler() });
+    this.edit.addEventListener('click', () => {
+      this.nameInput.value = this.context.name;
+      this.descriptionInput.value = this.context.description;
+      this.toggle();
     });
 
-    this.node
-    .querySelector('.trip-edit')
-    .addEventListener('click', () => {
-      this.editHandler();
+    this.save.addEventListener('click', () => {
+      this.toggle();
+      this.context.name = this.nameInput.value;
+      this.context.description = this.descriptionInput.value;
+      console.log(this.context);
+    });
+
+    this.cancel.addEventListener('click', () => {
+      this.toggle();
     });
   }
 }

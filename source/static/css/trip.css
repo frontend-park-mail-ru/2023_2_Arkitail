@@ -92,3 +92,20 @@
   justify-content: space-between;
 }
 
+.trip-toggle-first {
+  display: block;
+}
+
+.trip-toggle-second {
+  display: none;
+}
+
+.trip-plan-points {
+  width: 100%;
+}
+
+.trip-plan-point {
+  display: none;
+  width: 100%;
+}
+
