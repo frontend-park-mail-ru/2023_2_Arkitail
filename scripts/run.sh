@@ -7,14 +7,14 @@ set_default() {
 set_default GOTO_BACKEND_SOURCE_DIR ~/repos/2023_2_Arkitail_back
 set_default GOTO_BACKEND_SECRET alkjhaldjf
 
-# docker run 	--network=host \
+# docker run --network=host \
 # 	-v database:/data \
 # 	--name database \
 # 	--mount type=volume,src=database,target=/etc/postgres \
 # 	-e POSTGRES_PASSWORD=qwerty \
 # 	-d postgres
 
-docker run -d \
+docker run -dp localhost:5432:5432 \
 	--network=host \
 	--name backend \
 	--mount type=bind,src=${GOTO_BACKEND_SOURCE_DIR},target=/goto \
