@@ -4,8 +4,6 @@ ENV POSTGRES_DB=GoTo
 ENV POSTGRES_USER=GoTo
 ENV POSTGRES_PASSWORD=qwerty
 
-COPY init.sql /docker-entrypoint-initdb.d/init.sql
-
 RUN psql -U postgres -d $POSTGRES_DB -c "CREATE DATABASE \"GoTo\";"
 RUN psql -U postgres -d $POSTGRES_DB -c "CREATE ROLE \"GoTo\" WITH PASSWORD '$POSTGRES_PASSWORD';"
 RUN psql -U postgres -d $POSTGRES_DB -c "GRANT ALL PRIVILEGES ON DATABASE \"GoTo\" TO \"GoTo\";"
