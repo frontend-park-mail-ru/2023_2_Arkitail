@@ -20,7 +20,7 @@ class MainPage extends Page {
   // Добавляет в div-блок с атрибутом carousel слайды достопримечательностей
   fillCarousel() {
     this.getPlaces().then((places) => {
-      for (const [_, place] of places.entries()) {
+      for (const [_, place] of Object.entries(places)) {
         this.carousel.appendSlide(place);
       }
     });
@@ -29,7 +29,7 @@ class MainPage extends Page {
   // Добавляет в div-блок с атрибутом list-of-places карточки достопримечательностей
   fillListOfPlaces() {
     this.getPlaces().then(places => {
-      for (const [_, place] of places.entries()) {
+      for (const [_, place] of Object.entries(places)) {
         this.listOfPlaces.appendPlace(place);
       }
     });

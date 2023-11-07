@@ -47,8 +47,10 @@ const TRIP_PAGE_TEMPLATE = `
           <div class='trip-plan-points'>
           {{#each this.value}}
             <div class='trip-plan-point'>
-              <p class='trip-plan-point-name'>{{this.name}}</p>
-              <p class='trip-plan-point-description'>{{this.description}}</p>
+              <div class='trip-plan-point-header'>
+                <p class='trip-plan-point-name'>{{this.name}}</p>
+                <p class='trip-plan-point-description'>{{this.description}}</p>
+              </div>
             </div>
           {{/each}}
           </div>

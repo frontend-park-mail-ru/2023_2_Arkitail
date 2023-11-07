@@ -95,8 +95,8 @@ class Main {
 
       return response.json();
     }).then(data => {
-      this.temporaryContext.userName = data['user']['login'];
-      this.temporaryContext.userId = data['user']['id'];
+      this.temporaryContext.userName = data['email'];
+      this.temporaryContext.userId = data['id'];
     }).catch(_ => {});
   }
 

@@ -45,8 +45,7 @@ class Trip {
     console.log(this.days);
   }
 
-  fromFetch(id) {
-    /*
+  async fromFetch(id) {
     let resp = await fetch(
       API_V1_URL + `/trips/${id}`,
       { method: 'GET' }
@@ -56,9 +55,9 @@ class Trip {
       throw new Error(await resp.json()['error']);
     }
 
-    let respJson = resp.json();
-    */
+    this.normalize(resp.json());
 
+    /*
     this.normalize({
       "id": 0,
       "user_id": 0,
@@ -125,6 +124,7 @@ class Trip {
         }
       }
     });
+    */
 
     return this;
   }
@@ -134,24 +134,18 @@ class TripsPage extends Page {
   constructor() {
     super('trips', TRIPS_PAGE_TEMPLATE);
 
-    this.trips = [
-      (new Trip()).fromFetch(0),
-      (new Trip()).fromFetch(1),
-      (new Trip()).fromFetch(2),
-      (new Trip()).fromFetch(3),
-    ];
+    this.trips = [];
   }
 
   async getTrips() {
-    /*
     let resp = await fetch(
       API_V1_URL + '/trips',
       { method: 'GET' }
     );
 
     if (resp.status != 200) {
-      throw new Error(resp.json().error);
-    }*/
+      // throw new Error(resp.json().error);
+    }
 
     return this.trips;
   }
@@ -290,7 +284,9 @@ class TripPage extends Page {
     this.planDays.querySelectorAll('.trip-plan-day').forEach(elem => {
       let btn = elem.querySelector('.trip-plan-day-show');
       let points = elem.querySelector('.trip-plan-points');
+
       let mode = 0;
+
       btn.addEventListener('click', () => {
         if (mode == 0) {
           points.style.display = 'none';
