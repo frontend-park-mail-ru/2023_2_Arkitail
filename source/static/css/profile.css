@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #eaeaea;
+}
+
+.profile {
+    height: 800px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    position: relative;
+}
+
+.combined-section {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 960px;
+    height: 650px;
+    margin-top: 500px;
+    margin-left: 50px;
+}
+
+.profile-picture {
+    margin-left: 250px;
+    margin-top: 140px;
+    margin-right: 0px;
+    width: 870px;
+}
+
+.profile-header {
+    text-align: left;
+    padding-top: 1rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.profile-picture img {
+    width: 870px;
+    height: 870px;
+    border-radius: 2%;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+.edit-profile-button {
+    background-color: white;
+    color: var(--primary);
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    font-size: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    width: 870px;
+    height: 55px;
+}
+
+.profile-info p {
+    font-size: 1.2rem;
+}
+
+.profile-picture p {
+    font-weight: 900;
+    font-size: 3rem;
+    margin: 0;
+    margin-top: 20px;
+}
+
+.username-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.username-section h1 {
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--secondary);
+    padding-top: 1rem;
+}
+
+.combined-section h2 {
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+.combined-section p {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .profile .slider {
+        display: none;
+    }
+}
+
+.profile-header h1 {
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--secondary);
+    padding-top: 1rem;
+    margin-left: 25%;
+}
+
+.info-item p strong {
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+.info-item p {
+    font-size: 2rem;    width: 100%;
+
+    margin-right: 5px;
+    margin-bottom: 25px;
+}
+
+.profile-info {
+    padding: 1rem;
+}
+
+.profile::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40%;
+    background: #eaeaea;
+    z-index: -1;
+    box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 60%;
+    background: #afbfd1;
+    z-index: -1;
+}
+
+#save-button{
+    background-color: var(--secondary);;
+    color: white;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    font-size: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    width: 420px;
+    height: 55px;
+    margin-right: 20px;
+}
+
+#cancel-button {
+    background-color: white;
+    color: var(--primary);
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    font-size: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    width: 420px;
+    height: 55px;
+}
+
+#save-button:hover,
+#cancel-button:hover {
+    background-color: #afbfd1; /* Замените var(--primary-light) на цвет для состояния hover */
+}
+
+input[type="text"] {
+    width: 100%; /* Замените на необходимую ширину */
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid black; /* Либо замените на вашу границу */
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+/* Стили для поля "О себе" в режиме редактирования */
+textarea#aboutInput {
+    width: 100%;
+    height: 50%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid black; /* Либо замените на вашу границу */
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    white-space: pre-line; /* Перенос текста */
+    vertical-align: top; /* Выравнивание текста вверх */
+}
+
+
+/* Дополнительные стили для активного режима редактирования */
+.is-editing input[type="text"] {
+    background-color: #f5f5f5; /* Замените на желаемый цвет для активного режима редактирования */
+}
+
+
+.edit-profile-button:hover {
+    background-color: var(--primary-light);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

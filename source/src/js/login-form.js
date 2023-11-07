@@ -39,7 +39,6 @@ class LoginForm extends Page {
       </div>
     `);
 
-    this.render();
   }
 
   submit() {

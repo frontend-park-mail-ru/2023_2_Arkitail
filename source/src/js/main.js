@@ -6,13 +6,13 @@ const API_V1_URL = '/api/v1/';
  * и обновляет информацию об авторизации пользователя
  */
 class Main {
-    /**
-     * Конструктор класса Main
-     */
+  /**
+   * Конструктор класса Main
+   */
   constructor() {
     this.context = {
-      activePage: 'trips',
-      location: '#page=trips;',
+      activePage: 'profile',
+      location: '#page=profile;',
     };
 
     this.temporaryContext = {
@@ -52,6 +52,10 @@ class Main {
         renderHeader: true,
         instance: new TripPage(),
       },
+      'profile': {
+        renderHeader: true,
+        instance: new ProfilePage(''),
+      },
     };
 
     this.route(this.context.location);
@@ -76,7 +80,7 @@ class Main {
         this.temporaryContext.authenticated = false;
         throw new Error('authenticate failed');
       }
-    }).catch(_ => {});
+    }).catch(_ => { });
   }
 
   async getUserInfo() {
@@ -95,10 +99,60 @@ class Main {
 
       return response.json();
     }).then(data => {
+      console.log(data)
       this.temporaryContext.userName = data['user']['login'];
       this.temporaryContext.userId = data['user']['id'];
-    }).catch(_ => {});
+    }).catch(_ => { });
   }
+
+  async updateUserInfo(newUserInfo) {
+    try {
+      // (async () => {
+      //   const userId = await this.getUserInfo.call(this); // Вызываем с контекстом
+      //   console.log('UserID:', userId);
+      // })();
+      // async function getUserAndUseInfo() {
+      //   try {
+      //     const userId = await this.getUserInfo();
+      //     console.log('UserID:', userId);
+      //     // Здесь вы можете использовать userId в других частях кода
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // }
+      // getUserAndUseInfo();
+      // this.getUserInfo().then(() => {
+      //   const userId = this.temporaryContext.userId
+      //   console.log(userId)
+      // })
+      
+      this.getUserInfo();
+      const userId = this.temporaryContext.userId
+      console.log(userId)
+      const url = `/api/v1/users/${userId}`;
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUserInfo),
+      });
+
+      if (response.ok) {
+        const updatedUserData = await response.json();
+        console.log('Данные пользователя успешно обновлены:', updatedUserData);
+      } else if (response.status === 401) {
+        console.error('У вас нет прав доступа для обновления данных пользователя');
+      } else if (response.status === 404) {
+        console.error('Пользователь с указанным userId не найден');
+      } else {
+        console.error('Ошибка при обновлении данных пользователя');
+      }
+    } catch (error) {
+      console.error('Ошибка при выполнении запроса:', error);
+    }
+  }
+
 
   unserializeLocationHash(parameters) {
     let hash = '#';
@@ -120,11 +174,11 @@ class Main {
 
     hash.split(';').forEach(elem => {
       elem = elem.split('=');
-      let k = elem[0], v = elem[1];     
+      let k = elem[0], v = elem[1];
 
       parameters[k] = v;
     });
-    
+
     return parameters;
   }
 
@@ -139,7 +193,7 @@ class Main {
     this.context.location = location;
 
     if (this.pages[pageName].renderHeader) {
-        this.getUserInfo()
+      this.getUserInfo()
         .then(() => {
           this.header.generateContext();
           this.header.render();
@@ -166,10 +220,13 @@ class Main {
     }
 
     this.context.activePage = pageName;
-  
+
     this.pages[pageName].instance.render().then(() => {
-      this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+      this.reRender(pageName);
     });
+  }
+  reRender(pageName) {
+    this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
   }
 
   /**
@@ -178,18 +235,18 @@ class Main {
    */
   restoreState() {
     if (window.location.hash == '') {
-      window.history.pushState(this.context, '', '#page=trips;');
+      window.history.pushState(this.context, '', '#page=profile;');
       return;
     }
 
     let state = window.history.state;
-  
+
     if (state !== null) {
       this.context = state;
     } else {
       this.context = {
-        activePage: 'trips',
-        location: '#page=trips;',
+        activePage: 'profile',
+        location: '#page=profile;',
       }
     }
   }
