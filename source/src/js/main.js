@@ -203,13 +203,16 @@ class Main {
     }
     window.history.pushState(this.context, '', this.context.location);
 
-    window.history.pushState(this.context, '', this.context.location);
     this.context.activePage = pageName;
 
     this.pages[pageName].instance.render().then(() => {
       console.log(this.pages[pageName].instance.node);
-      this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+      this.reRender();
     });
+  }
+
+  reRender() {
+    this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
   }
 
   /**
