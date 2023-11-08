@@ -4,32 +4,32 @@ class ProfilePage extends Page {
 
         this.template = Handlebars.compile(`
         <div class="profile">
-            <div class="profile-header">
-                <div class="profile-picture">
-                    <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
-                    <p>{{userName}}</p>
-                    {{#if isEditing}}
-                        <button id="save-button">Сохранить</button>
-                        <button id="cancel-button">Отмена</button>
-                    {{else}}
-                        <button class="edit-profile-button" id="edit-button">Редактировать профиль</button>
-                    {{/if}}
-                </div>
-                <div class="combined-section">
-                    <div class="info-item">
-                        {{#if isEditing}}
-                            <p><strong>Логин:</strong><input type="text" id="userNameInput" value="{{userName}}"></p>
-                            <p><strong>День рождения:</strong><input type="text" id="birthdayInput" value="{{birthday}}"></p>
-                            <p><strong>О себе:</strong><textarea id="aboutInput" rows="1">{{about}}</textarea><p>
-                        {{else}}
-                            <p><strong>Логин:</strong> {{userName}}</p>
-                            <p><strong>День рождения:</strong> {{birthday}}</p>
-                            <p><strong>О себе:</strong> {{about}}</p>
-                        {{/if}}
-                    </div>
-                </div>
+    <div class="profile-picture">
+        <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
+        <p>{{userName}}</p>
+        {{#if isEditing}}
+            <div class="edit-buttons">
+                <button id="save-button">Сохранить</button>
+                <button id="cancel-button">Отмена</button>
             </div>
+        {{else}}
+            <button class="edit-profile-button" id="edit-button">Редактировать профиль</button>
+        {{/if}}
+    </div>
+    <div class="info-panel">
+        <div class="info-item">
+            {{#if isEditing}}
+                <p><strong>Имя:</strong><input type="text" id="userNameInput" value="{{userName}}"></p>
+                <p><strong>День рождения:</strong><input type="text" id="birthdayInput" value="{{birthday}}"></p>
+                <p><strong>О себе:</strong><textarea id="aboutInput" rows="4">{{about}}</textarea></p>
+            {{else}}
+                <p><strong>Имя:</strong> {{userName}}</p>
+                <p><strong>День рождения:</strong> {{birthday}}</p>
+                <p><strong>О себе:</strong> {{about}}</p>
+            {{/if}}
         </div>
+    </div>
+</div>
         `
         );
         this.context = {
@@ -93,13 +93,13 @@ class ProfilePage extends Page {
         const newBirthday = this.node.querySelector('#birthdayInput').value;
         const newAbout = this.node.querySelector('#aboutInput').value;
         const newUserInfo = {
-            userName: newUserName,
+            name: newUserName,
             birthDate: newBirthday,
             about: newAbout,
         };
-    
+
         await this.updateUserInfo(newUserInfo);
-    
+
         this.context = {
             userName: newUserName,
             birthday: newBirthday,
@@ -108,5 +108,5 @@ class ProfilePage extends Page {
         };
         main.route(main.context.location);
         this.render();
-    }    
+    }
 }

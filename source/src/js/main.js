@@ -127,7 +127,7 @@ class Main {
       return kakayatihuina;
     }).then(data => {
       console.log(data)
-      this.temporaryContext.userName = data['email'];
+      this.temporaryContext.userName = data['name'];
       this.temporaryContext.userId = data['id'];
       this.temporaryContext.birthday = data['birthDate']
       this.temporaryContext.about = data['about']

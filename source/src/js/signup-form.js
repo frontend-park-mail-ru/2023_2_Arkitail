@@ -160,7 +160,7 @@ class SignupForm extends Page {
     }
 
     const body = JSON.stringify({
-      login: inputs['name'].value,
+      name: inputs['name'].value,
       password: inputs['password'].value,
       email: inputs['email'].value,
     });

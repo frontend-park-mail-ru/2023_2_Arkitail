@@ -27,9 +27,8 @@ set_default GOTO_NGINX_CONFIG_DIR ~/repos/2023_2_Arkitail/docker/nginx
 set_default GOTO_SOURCE_DIR ~/repos/2023_2_Arkitail/source
 
 docker run -d \
-  --network=host \
+    --network=host \
 	--name frontend \
-	--network=host \
 	--mount type=bind,src=${GOTO_NGINX_CONFIG_DIR},target=/etc/nginx \
 	--mount type=bind,src=${GOTO_SOURCE_DIR},target=/goto \
 	frontend-park-company

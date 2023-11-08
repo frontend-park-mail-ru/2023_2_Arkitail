@@ -25,7 +25,7 @@ class Header extends Page {
                     <img src="{{""}}"/>
                     {{/if}}
                 </div>
-                <p class="hidden-on-mobile">{{this.userName}}</p>
+                <p gateway="#page=profile;" class="hidden-on-mobile">{{this.userName}}</p>
             </div>
             <div class="right-menu authorized">
                 <img class="heart" src="../../static/img/heart.svg" alt="GoTo" />
