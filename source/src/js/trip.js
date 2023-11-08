@@ -116,23 +116,7 @@ class TripsPage extends Page {
         body: JSON.stringify({
           "name": "string",
           "description": "string",
-          "placesInTrip": {
-            "additionalProp1": {
-              "placeId": 1,
-              "firstDate": "2017-01-01",
-              "lastDate": "2017-01-02"
-            },
-            "additionalProp2": {
-              "placeId": 2,
-              "firstDate": "2017-01-01",
-              "lastDate": "2017-01-02"
-            },
-            "additionalProp3": {
-              "placeId": 3,
-              "firstDate": "2017-01-01",
-              "lastDate": "2017-01-02"
-            }
-          }
+          "placesInTrip": {},
         }),
       });
 
