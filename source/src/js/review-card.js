@@ -14,7 +14,7 @@ class ReviewCard {
       <div class="review-card-header grid-bottom">
         <div>
           <p>{{ review.user.name }}</p>
-          <p class="gray-text sm-text">{{ review.createdAt }}</p>
+          <p class="gray-text sm-text">{{ review.creationDate }}</p>
         </div>
 
         {{#if review.abilityToRemove}}
@@ -42,7 +42,7 @@ class ReviewCard {
       </div>
     </div>
 
-    <p class="broken-text">{{ review.text }}</p>
+    <p class="broken-text">{{ review.content }}</p>
 
     `);
 
@@ -55,10 +55,12 @@ class ReviewCard {
 
   async remove() {
     console.log("Удаление", this.review.id);
-    await fetch(API_V1_URL + `/reviews/${id}`, {
+    await fetch(API_V1_URL + `/reviews/${this.review.id}`, {
       method: "DELETE",
     });
-    this.block.parentElement.removeChild(this.block);
+    if (this.block.parentElement.classList == "slide") {
+      this.block.parentElement.parentElement.removeChild(this.block.parentElement);
+    } else this.block.parentElement.removeChild(this.block);
   }
 
   getHtml() {

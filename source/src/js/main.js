@@ -102,10 +102,8 @@ class Main {
         this.temporaryContext.authenticated = true;
       } else {
         this.temporaryContext.authenticated = false;
-//        throw new Error('user failed');
       }
-      return response.json()
-;
+      return response.json();
     }).then(data => {
       this.temporaryContext.userName = data['name'];
       this.temporaryContext.userId = data['id'];
@@ -203,6 +201,7 @@ class Main {
       this.context.activePage = pageName;
       // at the moment, context is not needed
     }
+    window.history.pushState(this.context, '', this.context.location);
 
     window.history.pushState(this.context, '', this.context.location);
     this.context.activePage = pageName;

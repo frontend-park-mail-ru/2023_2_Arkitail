@@ -20,6 +20,7 @@ class ReviewsPage extends Page {
   }
 
   async renderTemplate() {
+    this.id = main.serializeLocationHash(main.context.location).id;
     this.memGetReviews = await memorize(this.getReviews);
     await super.renderTemplate();
 
@@ -45,60 +46,51 @@ class ReviewsPage extends Page {
       "Content-Type": "application/json",
     };
     const body = JSON.stringify({
-      placeId: main.serializeLocationHash(main.context.location).id,
-      text: review.text,
-      rating: review.rating,
+      placeId: Number(main.serializeLocationHash(main.context.location).id),
+      content: review.text,
+      rating: Number(review.rating),
     });
-    console.log(body)
+    console.log("BODY", body);
 
     return await fetch(API_V1_URL + `/review`, {
       method: method,
       headers: headers,
       body: body,
-    }).then((response) => {
-      console.log(response)
-      if (response.status == 200) {
-        const reviewCard = new ReviewCard(response.json());
+    })
+      .then((response) => response.json())
+      .then(async (review) => {
+        const user = await fetch(API_V1_URL + `/users/${review.userId}`, {
+          method: "GET",
+        }).then((response) => response.json());
+        review.user = user;
+        review.abilityToRemove = true;
+        const reviewCard = new ReviewCard(review);
         this.list.insertBefore(reviewCard.getHtml(), this.list.firstChild);
-      }
-    });
+      });
   }
 
   async fill() {
-    await this.memGetReviews().then((reviews) => {
-      reviews.forEach((review) => {
-        review.user = {
-          userId: review.userId,
-          avatarImg: "",
-          name: "User" + review.userId,
-        };
-        // review.abilityToRemove = review.user.name == main.temporaryContext.userName
-        review.abilityToRemove = review.user.name == "User7";
+    await this.memGetReviews(this.id).then((reviews) => {
+      reviews.forEach(async (review) => {
+        const user = await fetch(API_V1_URL + `/users/${review.userId}`, {
+          method: "GET",
+        }).then((response) => response.json());
+        review.user = user;
+        review.abilityToRemove =
+          review.user.name == main.temporaryContext.userName;
         this.appendReview(review);
       });
     });
   }
 
-  async getReviews() {
-    console.log(
-      "ID достопримечательности",
-      main.serializeLocationHash(main.context.location).id
-    );
-    return Array.from({ length: 10 }, (_, i) => {
-      return {
-        id: i,
-        userId: i,
-        placeId: 0,
-        text: `Очень нравится <3 
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3`.repeat(i + 1),
-        rating: i * 0.5 + ((i * i) % 5),
-        createdAt: i + 3 + " октября, 14:36",
-      };
-    });
+  async getReviews(id) {
+    return fetch(API_V1_URL + `/places/${id}/reviews`, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) return response.json();
+        return {};
+      })
+      .then((reviews) => Object.values(reviews));
   }
 }

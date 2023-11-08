@@ -169,7 +169,8 @@ class SignupForm extends Page {
       headers: headers,
       body: body,
     }).then(response => {
-      if (response.status == 204) {
+        console.log(response.json())
+        if (response.status == 204) {
         this.clear();
         main.route('#page=main;');
       } else if (response.status == 401) {
