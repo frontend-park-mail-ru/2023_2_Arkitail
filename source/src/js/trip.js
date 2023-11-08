@@ -114,8 +114,8 @@ class TripsPage extends Page {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "name": "string",
-          "description": "string",
+          "name": "Новая поездка",
+          "description": "Описание новой поездки",
           "placesInTrip": {},
         }),
       });

@@ -1,28 +1,30 @@
 const TRIP_PAGE_TEMPLATE = `
-<div class='trip-header'>
-  <div class='trip-toggle-first'>
+<div class='trip-toggle-first'>
+  <div class='trip-header'>
     <div class='trip-name'>
       <p>{{name}}</p>
     </div>
     <div class='trip-manage'>
-      <div class='trip-edit'>Редактировать</div>
-      <div class='trip-remove'>Удалить</div>
+      <button class='trip-edit btn green-btn'>Редактировать</button>
+      <button class='trip-remove btn blue-btn'>Удалить</button>
     </div>
-    <div class='trip-date'>{{begin}} - {{end}}</div>
-  </div>
-  <div class='trip-toggle-second'>
-    <input class='trip-input-name' name='name' type='text'/>
-    <div class='trip-manage'>
-      <div class='trip-save'>Сохранить</div>
-      <div class='trip-cancel'>Отменить</div>
-    </div>
-    <div class='trip-date'>{{begin}} - {{end}}</div>
   </div>
 </div>
+<div class='trip-toggle-second'>
+  <div class='trip-header'>
+    <input class='trip-input-name' name='name' type='text'/>
+    <div class='trip-manage'>
+      <button class='trip-save btn green-btn'>Сохранить</button>
+      <button class='trip-cancel btn gray-btn'>Отменить</button>
+    </div>
+  </div>
+</div>
+<div class='trip-date'>{{begin}} - {{end}}</div>
 
 <div class='trip-grid'>
   <div class='trip-grid-col'>
     <div class='trip-grid-row trip-description'>
+      <h1>Описание</h1>
       <p class='trip-toggle-first'>{{description}}</p>
       <input class='trip-input-description trip-toggle-second' name='description' type='text'/>
     </div>
@@ -39,7 +41,7 @@ const TRIP_PAGE_TEMPLATE = `
         </div>
       </div>
     </div>
-
+    <div class='trip-grid-row'>
       <div class='trip-plan-days'>
         {{#eachInMap days}}
         <div class='trip-plan-day'>
@@ -50,10 +52,10 @@ const TRIP_PAGE_TEMPLATE = `
           <div class='trip-plan-points'>
           {{#each this.value}}
             <div class='trip-plan-point'>
-              <div class='trip-plan-point-header'>
+              <div class='trip-plan-point-header'><hr/>
                 <p class='trip-plan-point-name'>{{this.name}}</p>
                 <p class='trip-plan-point-description'>{{this.description}}</p>
-              </div>
+              <hr/></div>
             </div>
           {{/each}}
           </div>

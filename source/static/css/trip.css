@@ -88,13 +88,9 @@
   justify-content: space-between;
 }
 
-.trip-header, .trip-manage {
+.trip-header {
   display: flex;
   justify-content: space-between;
-}
-
-.trip-toggle-first {
-  display: block;
 }
 
 .trip-toggle-second {

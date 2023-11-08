@@ -1,10 +1,3 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #eaeaea;
-    font-family: Arial, sans-serif;
-}
-
 .profile {
     width: 100%;
     display: flex;
@@ -122,15 +115,17 @@ body {
     height: 55px;
 }
 
+/*
 input[type="text"] {
-    width: 100%; /* Замените на необходимую ширину */
+    width: 100%; 
     padding: 10px;
     margin: 5px 0;
-    border: 1px solid black; /* Либо замените на вашу границу */
+    border: 1px solid black;
     border-radius: 5px;
     font-weight: 500;
     font-size: 1.5rem;
 }
+*/
 
 /* Стили для поля "О себе" в режиме редактирования */
 textarea#aboutInput {
