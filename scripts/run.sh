@@ -4,10 +4,18 @@ set_default() {
 	fi
 }
 
-set_default GOTO_BACKEND_SOURCE_DIR ~/dev/golang/2023_2_Arkitail
+set_default GOTO_BACKEND_SOURCE_DIR ~/repos/2023_2_Arkitail_back
 set_default GOTO_BACKEND_SECRET alkjhaldjf
 
+# docker run --network=host \
+# 	-v database:/data \
+# 	--name database \
+# 	--mount type=volume,src=database,target=/etc/postgres \
+# 	-e POSTGRES_PASSWORD=qwerty \
+# 	-d postgres
+
 docker run -d \
+	--network=host \
 	--name backend \
 	--mount type=bind,src=${GOTO_BACKEND_SOURCE_DIR},target=/goto \
 	-w /goto \
@@ -15,13 +23,12 @@ docker run -d \
 	bash -c "go run cmd/goToProject/main.go -secret ${GOTO_BACKEND_SECRET}"
 
 set_default GOTO_HOST_IP 127.0.0.1
-set_default GOTO_NGINX_CONFIG_DIR ~/dev/js/2023_2_Arkitail/docker/nginx
-set_default GOTO_SOURCE_DIR ~/dev/js/2023_2_Arkitail/source
+set_default GOTO_NGINX_CONFIG_DIR ~/repos/2023_2_Arkitail/docker/nginx
+set_default GOTO_SOURCE_DIR ~/repos/2023_2_Arkitail/source
 
-docker run -dp ${GOTO_HOST_IP}:80:80 \
+docker run -d \
+    --network=host \
 	--name frontend \
-	--link backend:backend \
 	--mount type=bind,src=${GOTO_NGINX_CONFIG_DIR},target=/etc/nginx \
 	--mount type=bind,src=${GOTO_SOURCE_DIR},target=/goto \
 	frontend-park-company
-

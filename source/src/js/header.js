@@ -19,7 +19,7 @@ class Header extends Page {
                 </ul>
             </nav>
             {{#if authenticated}}
-            <div class="right-menu authorized">
+            <div gateway="#page=profile;" class="right-menu authorized">
                 <div class="mini-avatar">
                     {{#if ""}}
                     <img src="{{""}}"/>

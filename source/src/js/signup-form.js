@@ -160,7 +160,7 @@ class SignupForm extends Page {
     }
 
     const body = JSON.stringify({
-      login: inputs['name'].value,
+      name: inputs['name'].value,
       password: inputs['password'].value,
       email: inputs['email'].value,
     });
@@ -170,7 +170,7 @@ class SignupForm extends Page {
       headers: headers,
       body: body,
     }).then(response => {
-      if (response.status == 200) {
+      if (response.status == 204) {
         this.clear();
         main.route('#page=main;');
       } else if (response.status == 401) {
@@ -225,10 +225,10 @@ class SignupForm extends Page {
   // @return {{Promise|object}}
   async signup(fetchBody) {
     return fetch(
-      API_V1_URL + 'signup',
+      API_V1_URL + '/signup',
       fetchBody,
     ).then(response => {
-      if (response.status == 200) {
+      if (response.status == 204) {
         main.temporaryContext.authenticated = true;
       } else if (response.status == 401) {
         main.temporaryContext.authenticated = false;
