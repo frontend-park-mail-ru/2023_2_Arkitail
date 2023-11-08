@@ -14,7 +14,7 @@ class ReviewCard {
       <div class="review-card-header grid-bottom">
         <div>
           <p>{{ review.user.name }}</p>
-          <p class="gray-text sm-text">{{ review.createdAt }}</p>
+          <p class="gray-text sm-text">{{ review.creationDate }}</p>
         </div>
 
         {{#if review.abilityToRemove}}
@@ -42,7 +42,7 @@ class ReviewCard {
       </div>
     </div>
 
-    <p class="broken-text">{{ review.text }}</p>
+    <p class="broken-text">{{ review.content }}</p>
 
     `);
 
@@ -55,9 +55,9 @@ class ReviewCard {
 
   async remove() {
     console.log("Удаление", this.review.id);
-    await fetch(API_V1_URL + `/reviews/${id}`, {
+    await fetch(API_V1_URL + `/reviews/${this.review.id}`, {
       method: "DELETE",
-    });
+    }).then((response) => console.log(response.json()));
     this.block.parentElement.removeChild(this.block);
   }
 

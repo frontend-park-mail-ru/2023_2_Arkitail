@@ -131,14 +131,12 @@ class PlacePage extends Page {
   }
 
   async renderTemplate() {
-    this.memGetPlace = await memorize(this.getPlace.bind(this));
-    this.memGetReviews = await memorize(this.getReviews.bind(this));
     await this.generateContext();
     await super.renderTemplate();
 
     const addReviewCard = new AddRevieCard(
       this.node.querySelector("[data-add-review-btn]"),
-      this.insertToBeginReview.bind(this)
+      await this.insertToBeginReview.bind(this)
     );
     this.node
       .querySelector("[data-write-review-card-container]")
@@ -158,13 +156,13 @@ class PlacePage extends Page {
   // Добавляет в div-блок с атрибутом data-carousel карточки отзывов
   async fillCarousel() {
     await this.memGetReviews(this.id).then((reviews) => {
-      console.log("reviews", reviews);
-      reviews.forEach((review) => {
-        review.user = {
-          userId: review.userId,
-          avatarImg: "",
-          name: "User" + review.userId,
-        };
+      reviews.forEach(async (review) => {
+        const user = await fetch(API_V1_URL + `/users/${review.userId}`, {
+          method: "GET",
+        }).then((response) => response.json());
+        review.user = user;
+        review.abilityToRemove =
+          review.user.name == main.temporaryContext.userName;
         this.appendReview(review);
       });
     });
@@ -175,33 +173,51 @@ class PlacePage extends Page {
     this.carousel.appendSlide({ content: reviewCard.getHtml() });
   }
 
-  insertToBeginReview(review) {
-    const reviewCard = new ReviewCard(review);
-    this.carousel.insertToBeginSlide({ content: reviewCard.getHtml() });
+  async insertToBeginReview(review) {
+    const method = "POST";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const body = JSON.stringify({
+      placeId: Number(main.serializeLocationHash(main.context.location).id),
+      content: review.text,
+      rating: Number(review.rating),
+    });
+    console.log("BODY", body);
+
+    return await fetch(API_V1_URL + `/review`, {
+      method: method,
+      headers: headers,
+      body: body,
+    })
+      .then((response) => response.json())
+      .then(async (review) => {
+        const reviewCard = new ReviewCard(review);
+        this.carousel.insertToBeginSlide({ content: reviewCard.getHtml() });
+      });
   }
 
   async generateContext() {
+    this.memGetPlace = await memorize(this.getPlace.bind(this));
+    this.memGetReviews = await memorize(this.getReviews.bind(this));
     this.id = main.serializeLocationHash(main.context.location).id;
     this.context = { place: await this.memGetPlace(this.id) };
-    console.log(this.context);
   }
 
   async getPlace(id) {
     return await fetch(API_V1_URL + `/places/${id}`, {
       method: "GET",
     }).then((response) => {
-      // console.log(API_V1_URL + `/places/${id}`, response.json());
       if (response.ok) return response.json();
       return {};
     });
   }
 
   async getReviews(id) {
-    return await fetch(API_V1_URL + `/places/${id}/reviews`, {
+    return fetch(API_V1_URL + `/places/${id}/reviews`, {
       method: "GET",
     })
       .then((response) => {
-        // console.log(API_V1_URL + `/places/${id}/reviews`, response);
         if (response.ok) return response.json();
         return {};
       })

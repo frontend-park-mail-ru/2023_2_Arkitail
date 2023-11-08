@@ -209,8 +209,8 @@ class Main {
       this.context.activePage = pageName;
 
       // at the moment, context is not needed
-      window.history.pushState(this.context, '', this.context.location);
     }
+    window.history.pushState(this.context, '', this.context.location);
 
     this.context.activePage = pageName;
 
