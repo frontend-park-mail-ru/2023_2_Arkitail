@@ -14,15 +14,15 @@ class Trip {
 
     console.log(this);
 
-    let placeInTrip = [];
-    for (let [_, v] of Object.entries(this.placeInTrip)) {
-      placeInTrip.push(v);
+    let placesInTrip = [];
+    for (let [_, v] of Object.entries(this.placesInTrip)) {
+      placesInTrip.push(v);
     }
 
-    this.placeInTrip = placeInTrip;
+    this.placesInTrip = placesInTrip;
     this.days = new Map();
 
-    for (const place of this.placeInTrip) {
+    for (const place of this.placesInTrip) {
       let begin = new Date(place.firstDate);
       let end = new Date(place.lastDate);
 
@@ -64,75 +64,6 @@ class Trip {
 
     this.normalize(await resp.json());
 
-    /*
-    this.normalize({
-      "id": 0,
-      "user_id": 0,
-      "name": "string",
-      "publicity": "public or private",
-      "description": "string",
-      "placesInTrip": {
-        "additionalProp1": {
-          "place": {
-            "id": 0,
-            "name": "string1",
-            "description": "string",
-            "rating": 0,
-            "cost": "string",
-            "adress": "string",
-            "phone_number": "string",
-            "review_count": 0,
-            "web-site": "string",
-            "email": "string",
-            "open_hour": "string",
-            "close_hour": "string",
-            "image_url": "string"
-          },
-          "first_date": "2017-01-01",
-          "last_date": "2017-01-02"
-        },
-        "additionalProp2": {
-          "place": {
-            "id": 0,
-            "name": "string2",
-            "description": "string",
-            "rating": 0,
-            "cost": "string",
-            "adress": "string",
-            "phone_number": "string",
-            "review_count": 0,
-            "web-site": "string",
-            "email": "string",
-            "open_hour": "string",
-            "close_hour": "string",
-            "image_url": "string"
-          },
-          "first_date": "2017-01-01",
-          "last_date": "2017-01-02"
-        },
-        "additionalProp3": {
-          "place": {
-            "id": 0,
-            "name": "string3",
-            "description": "string",
-            "rating": 0,
-            "cost": "string",
-            "adress": "string",
-            "phone_number": "string",
-            "review_count": 0,
-            "web-site": "string",
-            "email": "string",
-            "open_hour": "string",
-            "close_hour": "string",
-            "image_url": "string"
-          },
-          "first_date": "2017-01-01",
-          "last_date": "2017-01-02"
-        }
-      }
-    });
-    */
-
     return this;
   }
 }
@@ -163,9 +94,7 @@ class TripsPage extends Page {
     return trips;
   }
 
-  async addTrip(trip) {
-    this.trips.push(trip);
-  }
+  async addTrip(trip) {}
 
   async editCard() {
     return 
@@ -179,7 +108,34 @@ class TripsPage extends Page {
     this.node
     .querySelector('.trips-new')
     .addEventListener('click', async () => {
-      await this.addTrip(await (new Trip()).fromFetch(0));
+      await fetch(API_V1_URL + '/trip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "name": "string",
+          "description": "string",
+          "placesInTrip": {
+            "additionalProp1": {
+              "placeId": 1,
+              "firstDate": "2017-01-01",
+              "lastDate": "2017-01-02"
+            },
+            "additionalProp2": {
+              "placeId": 2,
+              "firstDate": "2017-01-01",
+              "lastDate": "2017-01-02"
+            },
+            "additionalProp3": {
+              "placeId": 3,
+              "firstDate": "2017-01-01",
+              "lastDate": "2017-01-02"
+            }
+          }
+        }),
+      });
+
       main.route('#page=trips;');
     });
   }
@@ -213,6 +169,7 @@ class TripPage extends Page {
     this.nameInput = this.node.querySelector('.trip-input-name');
     this.descriptionInput = this.node.querySelector('.trip-input-description');
     this.planDays = this.node.querySelector('.trip-plan-days');
+    this.newPoint = this.node.querySelector('.trip-plan-new-point');
   }
 
   toggle() {
@@ -276,7 +233,11 @@ class TripPage extends Page {
 
     this.findElements();
 
-    this.remove.addEventListener('click', () => { this.removeHandler() });
+    this.remove.addEventListener('click', () => {
+      fetch(API_V1_URL + `/trips/${this.context.id}`, {method: 'DELETE'})
+      .then(main.route('#page=trips;'));
+    });
+
     this.edit.addEventListener('click', () => {
       this.nameInput.value = this.context.name;
       this.descriptionInput.value = this.context.description;
@@ -287,6 +248,17 @@ class TripPage extends Page {
       this.toggle();
       this.context.name = this.nameInput.value;
       this.context.description = this.descriptionInput.value;
+      fetch(
+        API_V1_URL + `/trips/${this.context.id}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({
+            name: this.context.name,
+            description: this.context.description,
+            publicity: 'private',
+          }),
+        },
+      ).then(main.route(window.location.hash));
       console.log(this.context);
     });
 
@@ -309,6 +281,19 @@ class TripPage extends Page {
           mode = 0;
         }
       });
+    });
+
+    this.newPoint.addEventListener('click', () => {
+      fetch(
+        API_V1_URL + `/trips/${this.context.id}/place`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            "placeId": 0,
+            "firstDate": "2017-01-01",
+            "lastDate": "2017-01-02",
+          }),
+        });
     });
   }
 }

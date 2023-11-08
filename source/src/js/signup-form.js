@@ -14,7 +14,6 @@ const EMAIL_ERROR = "Введена некоректная почта";
 const UPPERCASE_PASSWORD_TEMPLATE = /^.*(?=[A-Z])/;
 const UPPERCASE_PASSWORD_ERROR =
   "Пароль должен содержать хотя бы одну прописную букву";
-
 const LOWERCASE_PASSWORD_TEMPLATE = /^.*(?=[a-z])/;
 const LOWERCASE_PASSWORD_ERROR =
   "Пароль должен содержать хотя бы одну строчную букву";
