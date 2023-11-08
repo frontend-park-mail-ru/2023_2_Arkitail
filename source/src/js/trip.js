@@ -289,7 +289,7 @@ class TripPage extends Page {
         {
           method: 'POST',
           body: JSON.stringify({
-            "placeId": 0,
+            "placeId": 4,
             "firstDate": "2017-01-01",
             "lastDate": "2017-01-02",
           }),
