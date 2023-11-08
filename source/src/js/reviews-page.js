@@ -39,9 +39,29 @@ class ReviewsPage extends Page {
     this.list.appendChild(reviewCard.getHtml());
   }
 
-  insertToBeginReview(review) {
-    const reviewCard = new ReviewCard(review);
-    this.list.insertBefore(reviewCard.getHtml(), this.list.firstChild);
+  async insertToBeginReview(review) {
+    const method = "POST";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const body = JSON.stringify({
+      placeId: main.serializeLocationHash(main.context.location).id,
+      text: review.text,
+      rating: review.rating,
+    });
+    console.log(body)
+
+    return await fetch(API_V1_URL + `/review`, {
+      method: method,
+      headers: headers,
+      body: body,
+    }).then((response) => {
+      console.log(response)
+      if (response.status == 200) {
+        const reviewCard = new ReviewCard(response.json());
+        this.list.insertBefore(reviewCard.getHtml(), this.list.firstChild);
+      }
+    });
   }
 
   async fill() {

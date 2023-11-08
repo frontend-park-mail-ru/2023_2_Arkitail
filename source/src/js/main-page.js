@@ -67,11 +67,11 @@ class MainPage extends Page {
   // async fillListOfPlaces() {
   //   await this.getPlaces().then((places) => {
   //     places.forEach((place) => {
-  fillListOfPlaces() {
-    this.getPlaces().then((places) => {
-      for (const [_, place] of Object.entries(places)) {
+  async fillListOfPlaces() {
+    this.memGetPlaces().then((places) => {
+      places.forEach((place) => {
         this.listOfPlaces.appendPlace(place);
-      }
+      });
     });
   }
 
@@ -84,7 +84,7 @@ class MainPage extends Page {
     })
       .then((response) => response.json())
       .then((places) => {
-        return places.sort((place1, place2) => place1.id - place2.id);
+        return Object.values(places);
       });
   }
 }

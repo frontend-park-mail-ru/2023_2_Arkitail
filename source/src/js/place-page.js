@@ -31,7 +31,7 @@ class PlacePage extends Page {
     </div>
 
     <div class="info-card">
-        <img src="{{ place.imageURL }}" />
+        <img src="{{ place.imageUrl }}" />
 
         <div class="info-container">
             <div class="page-body-margin info card">
@@ -158,6 +158,7 @@ class PlacePage extends Page {
   // Добавляет в div-блок с атрибутом data-carousel карточки отзывов
   async fillCarousel() {
     await this.memGetReviews(this.id).then((reviews) => {
+      console.log("reviews", reviews);
       reviews.forEach((review) => {
         review.user = {
           userId: review.userId,
@@ -181,68 +182,29 @@ class PlacePage extends Page {
 
   async generateContext() {
     this.id = main.serializeLocationHash(main.context.location).id;
-    this.context = await this.memGetPlace(this.id);
+    this.context = { place: await this.memGetPlace(this.id) };
+    console.log(this.context);
   }
 
   async getPlace(id) {
-    const test = await fetch(API_V1_URL + `/places/${id}`, {
+    return await fetch(API_V1_URL + `/places/${id}`, {
       method: "GET",
     }).then((response) => {
-      console.log(API_V1_URL + `/places/${id}`, response);
+      // console.log(API_V1_URL + `/places/${id}`, response.json());
       if (response.ok) return response.json();
       return {};
     });
-    console.log(test);
-
-    return {
-      place: {
-        id: this.id,
-        name: "Эфелева башня",
-        adress: "Адрес какой-то",
-        openHour: "11:00",
-        closeHour: "23:00",
-        reviewCount: 256,
-        description:
-          "Это знаменитое архитектурное сооружение, которое находится в центре Парижа, Франция. Эта башня является одной из самых узнаваемых и посещаемых достопримечательностей мира, а также символом как самого Парижа, так и Франции в целом.\
-                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-                бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
-      ",
-        rating: 4.5,
-        cost: "$$",
-        imageURL:
-          "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
-      },
-    };
   }
 
   async getReviews(id) {
-    const test = await fetch(API_V1_URL + `/places/${id}/reviews`, {
+    return await fetch(API_V1_URL + `/places/${id}/reviews`, {
       method: "GET",
-    }).then((response) => {
-      console.log(API_V1_URL + `/places/${id}/reviews`, response);
-      if (response.ok) return response.json();
-      return {};
-    });
-    console.log(test);
-    return Array.from({ length: 10 }, (_, i) => {
-      return {
-        id: i,
-        userId: i,
-        placeId: this.id,
-        text: `Очень нравится <3 
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3
-        Очень нравится <3`.repeat(i + 1),
-        rating: i * 0.5 + ((i * i) % 5),
-        createdAt: i + 3 + " октября, 14:36",
-      };
-    });
+    })
+      .then((response) => {
+        // console.log(API_V1_URL + `/places/${id}/reviews`, response);
+        if (response.ok) return response.json();
+        return {};
+      })
+      .then((reviews) => Object.values(reviews));
   }
 }

@@ -15,7 +15,13 @@ class PlaceCard {
             <section>
             <div class="card-header">
                 <h3 gateway="#page=place;id={{place.id}};">{{place.name}}</h3>
-                <p class="rating">{{place.rating}}</p>
+                <p class="rating">
+                {{#if place.rating}}
+                {{place.rating}}
+                {{else}}
+                -
+                {{/if}}
+                </p>
                 <svg
                     class="star"
                     viewBox="0 0 184 184"

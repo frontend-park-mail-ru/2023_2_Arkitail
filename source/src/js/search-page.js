@@ -42,7 +42,7 @@ class SearchPage extends Page {
     })
       .then((response) => response.json())
       .then((places) => {
-        return places.sort((place1, place2) => place1.id - place2.id);
+        return Object.values(places);
       });
   }
 }

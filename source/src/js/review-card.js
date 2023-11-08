@@ -1,6 +1,5 @@
-
 class ReviewCard {
-//  @param {HTMLDivElement} review
+  //  @param {HTMLDivElement} review
   constructor(review) {
     this.review = review;
     this.block = document.createElement("div");
@@ -54,8 +53,11 @@ class ReviewCard {
       .forEach((btn) => btn.addEventListener("click", this.remove.bind(this)));
   }
 
-  remove() {
+  async remove() {
     console.log("Удаление", this.review.id);
+    await fetch(API_V1_URL + `/reviews/${id}`, {
+      method: "DELETE",
+    });
     this.block.parentElement.removeChild(this.block);
   }
 
@@ -181,16 +183,13 @@ class AddRevieCard {
     }
   }
 
-  sendData() {
+  async sendData() {
     if (this.abilityToSend) {
       console.log(this.rating, this.textarea.value);
+
       this.callback({
-        id: 100,
-        userId: 3,
-        placeId: 0,
         text: this.textarea.value,
         rating: this.rating,
-        createdAt: "Сейчас",
       });
       this.close();
     }
