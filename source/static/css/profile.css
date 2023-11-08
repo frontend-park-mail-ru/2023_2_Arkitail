@@ -34,7 +34,7 @@ body {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    height: 500px;
+    height: 600px;
 }
 
 .info-item p strong {
@@ -89,11 +89,61 @@ body {
         flex-direction: column;
         align-items: center;
     }
+}
 
-    #save-button,
-    #cancel-button {
-        width: 100%;
-    }
+#save-button{
+    background-color: var(--secondary);;
+    color: white;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    font-size: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    width: 420px;
+    height: 55px;
+    margin-right: 20px;
+}
+
+#cancel-button {
+    background-color: white;
+    color: var(--primary);
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    font-size: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    width: 420px;
+    height: 55px;
+}
+
+input[type="text"] {
+    width: 100%; /* Замените на необходимую ширину */
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid black; /* Либо замените на вашу границу */
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+/* Стили для поля "О себе" в режиме редактирования */
+textarea#aboutInput {
+    width: 100%;
+    height: 50%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid black; /* Либо замените на вашу границу */
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    white-space: pre-line; /* Перенос текста */
+    vertical-align: top; /* Выравнивание текста вверх */
 }
 
 .profile-header {
