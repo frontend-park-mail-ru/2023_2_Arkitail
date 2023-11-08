@@ -192,6 +192,11 @@ class PlacePage extends Page {
     })
       .then((response) => response.json())
       .then(async (review) => {
+        const user = await fetch(API_V1_URL + `/users/${review.userId}`, {
+          method: "GET",
+        }).then((response) => response.json());
+        review.user = user;
+        review.abilityToRemove = true;
         const reviewCard = new ReviewCard(review);
         this.carousel.insertToBeginSlide({ content: reviewCard.getHtml() });
       });

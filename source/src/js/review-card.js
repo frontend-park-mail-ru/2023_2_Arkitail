@@ -57,8 +57,10 @@ class ReviewCard {
     console.log("Удаление", this.review.id);
     await fetch(API_V1_URL + `/reviews/${this.review.id}`, {
       method: "DELETE",
-    }).then((response) => console.log(response.json()));
-    this.block.parentElement.removeChild(this.block);
+    });
+    if (this.block.parentElement.classList == "slide") {
+      this.block.parentElement.parentElement.removeChild(this.block.parentElement);
+    } else this.block.parentElement.removeChild(this.block);
   }
 
   getHtml() {
