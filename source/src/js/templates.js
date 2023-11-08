@@ -31,11 +31,14 @@ const TRIP_PAGE_TEMPLATE = `
         <div class='trip-plan-name'>
           <h1>План</h1>
           <div class='trip-plan-new-point'>
-            Добавить место
+            <button>
+              Добавить место
+            </button>
+            <input class='trip-plan-new-point-id' name='new-trip-id' placeholder=''>
           </div>
         </div>
-        <div></div>
       </div>
+    </div>
 
       <div class='trip-plan-days'>
         {{#eachInMap days}}

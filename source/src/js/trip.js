@@ -283,13 +283,13 @@ class TripPage extends Page {
       });
     });
 
-    this.newPoint.addEventListener('click', () => {
+    this.newPoint.querySelector('button').addEventListener('click', () => {
       fetch(
         API_V1_URL + `/trips/${this.context.id}/place`,
         {
           method: 'POST',
           body: JSON.stringify({
-            "placeId": 4,
+            "placeId": Number(this.newPoint.querySelector('input').value),
             "firstDate": "2017-01-01",
             "lastDate": "2017-01-02",
           }),

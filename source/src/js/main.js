@@ -207,11 +207,11 @@ class Main {
 
     this.pages[pageName].instance.render().then(() => {
       console.log(this.pages[pageName].instance.node);
-      this.reRender();
+      this.reRender(pageName);
     });
   }
 
-  reRender() {
+  reRender(pageName) {
     this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
   }
 
