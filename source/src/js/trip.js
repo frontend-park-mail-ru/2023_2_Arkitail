@@ -12,17 +12,23 @@ class Trip {
       this[k] = v;
     }
 
-    let placesInTrip = [];
-    for (let [_, v] of Object.entries(this.placesInTrip)) {
-      placesInTrip.push(v);
+    console.log(this);
+
+    let placeInTrip = [];
+    for (let [_, v] of Object.entries(this.placeInTrip)) {
+      placeInTrip.push(v);
     }
 
-    this.placesInTrip = placesInTrip;
+    this.placeInTrip = placeInTrip;
     this.days = new Map();
 
-    for (const place of this.placesInTrip) {
-      let begin = new Date(place.first_date);
-      let end = new Date(place.last_date);
+    for (const place of this.placeInTrip) {
+      let begin = new Date(place.firstDate);
+      let end = new Date(place.lastDate);
+
+      if (place.lastDate === "") {
+        end = new Date(place.firstDate);
+      }
 
       if (this.begin === undefined || new Date(this.begin) > begin) {
         this.begin = formatDate(begin);
@@ -43,6 +49,7 @@ class Trip {
     }
 
     console.log(this.days);
+    return this;
   }
 
   async fromFetch(id) {
@@ -55,7 +62,7 @@ class Trip {
       throw new Error(await resp.json()['error']);
     }
 
-    this.normalize(resp.json());
+    this.normalize(await resp.json());
 
     /*
     this.normalize({
@@ -147,7 +154,13 @@ class TripsPage extends Page {
       // throw new Error(resp.json().error);
     }
 
-    return this.trips;
+    let trips = [];
+
+    for (let [_, v] of Object.entries(await resp.json())) {
+      trips.push((new Trip()).normalize(v));
+    }
+
+    return trips;
   }
 
   async addTrip(trip) {
@@ -254,7 +267,7 @@ class TripPage extends Page {
 
   async generateContext() {
     let params = main.serializeLocationHash(main.context.location);
-    this.context = (new Trip()).fromFetch(params['id']);
+    this.context = await (new Trip()).fromFetch(params['id']);
   }
 
   async render() {

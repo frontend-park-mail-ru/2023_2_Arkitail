@@ -11,8 +11,8 @@ class Main {
    */
   constructor() {
     this.context = {
-      activePage: 'profile',
-      location: '#page=profile;',
+      activePage: 'main',
+      location: '#page=main;',
     };
 
     this.temporaryContext = {
@@ -20,8 +20,6 @@ class Main {
       userName: '',
       userId: -1,
     }
-
-    this.restoreState();
   }
 
   init() {
@@ -69,8 +67,6 @@ class Main {
         instance: new SearchPage(''),
       },
     };
-
-    this.route(this.context.location);
   }
 
   /**
@@ -102,17 +98,15 @@ class Main {
         method: 'GET',
       },
     ).then(response => {
-      let kakayatihuina = response.json()
-      console.log(kakayatihuina)
       if (response.status == 200) {
         this.temporaryContext.authenticated = true;
       } else {
         this.temporaryContext.authenticated = false;
 //        throw new Error('user failed');
       }
-      return kakayatihuina;
+      return response.json()
+;
     }).then(data => {
-      console.log(data)
       this.temporaryContext.userName = data['name'];
       this.temporaryContext.userId = data['id'];
       this.temporaryContext.birthday = data['birthDate']
@@ -207,7 +201,6 @@ class Main {
 
     if (pageName != this.context.activePage) {
       this.context.activePage = pageName;
-
       // at the moment, context is not needed
       window.history.pushState(this.context, '', this.context.location);
     }
@@ -215,11 +208,11 @@ class Main {
     this.context.activePage = pageName;
 
     this.pages[pageName].instance.render().then(() => {
-      this.reRender(pageName);
+      console.log(this.pages[pageName].instance.node);
+      this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
     });
   }
   reRender(pageName) {
-    this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
   }
 
   /**
@@ -228,19 +221,11 @@ class Main {
    */
   restoreState() {
     if (window.location.hash == '') {
-      window.history.pushState(this.context, '', '#page=profile;');
+      window.history.pushState(this.context, '', '#page=main;');
       return;
     }
-    let state = window.history.state;
 
-    if (state !== null) {
-      this.context = state;
-    } else {
-      this.context = {
-        activePage: 'profile',
-        location: '#page=profile;',
-      }
-    }
+    this.route(window.location.hash);
   }
 
   /**
@@ -249,10 +234,10 @@ class Main {
    */
   popState(_) {
     this.restoreState();
-    this.route(this.context.location);
   }
 }
 
 let main = new Main();
 main.init();
+main.restoreState();
 window.addEventListener('popstate', event => main.popState(event));

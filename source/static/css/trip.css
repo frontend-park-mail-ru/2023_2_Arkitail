@@ -15,6 +15,7 @@
 .trip-card {
   width: var(--card-size);
   padding: .4rem 0 .3rem 0;
+  background-color: var(--white);
 }
 
 .trip-card-date {
