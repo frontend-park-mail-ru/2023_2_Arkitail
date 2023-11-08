@@ -116,15 +116,12 @@ class Main {
         method: 'GET',
       },
     ).then(response => {
-      let kakayatihuina = response.json()
-      console.log(kakayatihuina)
       if (response.status == 200) {
         this.temporaryContext.authenticated = true;
       } else {
         this.temporaryContext.authenticated = false;
-//        throw new Error('user failed');
       }
-      return kakayatihuina;
+      return response.json();
     }).then(data => {
       console.log(data)
       this.temporaryContext.userName = data['name'];
