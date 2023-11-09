@@ -59,8 +59,8 @@ class Main {
       'place': {
         renderHeader: true,
         instance: new PlacePage('', {
-          id:          "0",
-          name:        "Эфелева башня",
+          id: "0",
+          name: "Эфелева башня",
           description: "Это знаменитое архитектурное сооружение, которое находится в центре Парижа, Франция. Эта башня является одной из самых узнаваемых и посещаемых достопримечательностей мира, а также символом как самого Парижа, так и Франции в целом.\
                     бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
                     бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
@@ -69,16 +69,16 @@ class Main {
                     бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
                     бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла\
           ",
-          rating:      4.5,
-          cost:        "$$",
-          imageURL:    "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
+          rating: 4.5,
+          cost: "$$",
+          imageURL: "https://mykaleidoscope.ru/x/uploads/posts/2022-09/1663090921_7-mykaleidoscope-ru-p-zimnii-dvorets-sankt-peterburg-krasivo-7.jpg",
         }),
       },
-      'reviews' : {
+      'reviews': {
         renderHeader: true,
         instance: new ReviewsPage(''),
       },
-      'search' : {
+      'search': {
         renderHeader: true,
         instance: new SearchPage(''),
       },
@@ -126,8 +126,9 @@ class Main {
       console.log(data)
       this.temporaryContext.userName = data['name'];
       this.temporaryContext.userId = data['id'];
-      this.temporaryContext.birthday = data['birthDate']
-      this.temporaryContext.about = data['about']
+      this.temporaryContext.birthday = data['birthDate'];
+      this.temporaryContext.about = data['about'];
+      this.temporaryContext.imageURL = data['avatarUrl'].replaceAll("/", "\\");
     })
   }
 
@@ -155,6 +156,34 @@ class Main {
     } catch (error) {
       console.error('Ошибка при выполнении запроса:', error);
     }
+  }
+
+  uploadFile(file) {
+    fetch('/api/v1/user/avatar', {
+      method: 'POST',
+      body: file,
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+        }
+        console.log('File uploaded successfully.');
+      })
+      .catch(error => {
+        console.error('Error uploading file:', error);
+      });
+  }
+
+  async upload(blobOrFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/v1/user/avatar', true);
+    xhr.onload = function(e) {
+      console.log(e);
+    };
+  
+    xhr.send(blobOrFile);
   }
 
 

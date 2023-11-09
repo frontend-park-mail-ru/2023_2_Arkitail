@@ -34,7 +34,7 @@ body {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    height: 600px;
+    height: 700px;
 }
 
 .info-item p strong {
@@ -130,6 +130,10 @@ input[type="text"] {
     border-radius: 5px;
     font-weight: 500;
     font-size: 1.5rem;
+}
+
+input[type="file"]#avatar {
+    padding-top: 30px;
 }
 
 /* Стили для поля "О себе" в режиме редактирования */
