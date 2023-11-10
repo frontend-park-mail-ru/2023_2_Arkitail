@@ -206,6 +206,11 @@ svg.trash:hover {
     color: var(--dark-gray);
 }
 
+.red-btn {
+    background-color: var(--white);
+    border: 2px solid var(--red);
+    color: var(--red);
+}
 
 .mini-avatar {
     height: 2.4rem !important;

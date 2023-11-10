@@ -122,3 +122,17 @@
   justify-content: space-between;
 }
 
+.trip-content {
+  display: block;
+  margin: 5px 10px 0px;
+}
+
+.trip-card {
+  margin: 10px 0px;
+}
+
+.trip-plan-header {
+  display: flex;
+  justify-content: space-between;
+}
+
