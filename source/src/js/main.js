@@ -33,38 +33,47 @@ class Main {
       'login': {
         renderHeader: false,
         instance: new LoginForm(''),
+        mustBeAuthorized: false,
       },
       'signup': {
         renderHeader: false,
         instance: new SignupForm(''),
+        mustBeAuthorized: false,
       },
       'main': {
         renderHeader: true,
         instance: new MainPage(''),
+        mustBeAuthorized: false,
       },
       'trips': {
         renderHeader: true,
         instance: new TripsPage(),
+        mustBeAuthorized: true,
       },
       'trip': {
         renderHeader: true,
         instance: new TripPage(),
+        mustBeAuthorized: true,
       },
       'profile': {
         renderHeader: true,
         instance: new ProfilePage(''),
+        mustBeAuthorized: true,
       },
       'place': {
         renderHeader: true,
         instance: new PlacePage(''),
+        mustBeAuthorized: false,
       },
       'reviews' : {
         renderHeader: true,
         instance: new ReviewsPage(''),
+        mustBeAuthorized: false,
       },
       'search' : {
         renderHeader: true,
         instance: new SearchPage(''),
+        mustBeAuthorized: false,
       },
     };
   }
@@ -88,7 +97,7 @@ class Main {
         this.temporaryContext.authenticated = false;
         throw new Error('authenticate failed');
       }
-    }).catch(_ => { });
+    }).catch(_ => {});
   }
 
   async getUserInfo() {
@@ -102,6 +111,7 @@ class Main {
         this.temporaryContext.authenticated = true;
       } else {
         this.temporaryContext.authenticated = false;
+        throw Error('Unauthorized');
       }
       return response.json();
     }).then(data => {
@@ -109,7 +119,7 @@ class Main {
       this.temporaryContext.userId = data['id'];
       this.temporaryContext.birthday = data['birthDate']
       this.temporaryContext.about = data['about']
-    })
+    }).catch(_ => {});
   }
 
   async updateUserInfo(newUserInfo) {
@@ -177,37 +187,36 @@ class Main {
     let pageName = parameters['page'];
     this.context.location = location;
 
-    if (this.pages[pageName].renderHeader) {
-      this.getUserInfo()
-        .then(() => {
-          this.header.generateContext();
-          this.header.render();
-          this.headerSlot.style.display = 'block';
-          this.headerSlot.replaceChildren(this.header.node);
+    this.getUserInfo().
+    then(() => {
+      let pageInfo = this.pages[pageName];
+      if (pageInfo.mustBeAuthorized &&
+        !this.temporaryContext.authenticated) {
+        this.route('#page=login;');
+        return;
+      }
 
-          this.footer.render();
-          this.footerSlot.style.display = 'block';
-          this.footerSlot.replaceChildren(this.footer.node);
-        });
-    } else {
-      this.headerSlot.style.display = 'none';
-      this.headerSlot.replaceChildren();
+      if (pageInfo.renderHeader) {
+        this.header.render();
+        this.headerSlot.style.display = 'block';
+        this.headerSlot.replaceChildren(this.header.node);
+        this.footer.render();
+        this.footerSlot.style.display = 'block';
+        this.footerSlot.replaceChildren(this.footer.node);
+      } else {
+        this.headerSlot.style.display = 'none';
+        this.headerSlot.replaceChildren();
+        this.footerSlot.style.display = 'none';
+        this.footerSlot.replaceChildren();
+      }
 
-      this.footerSlot.style.display = 'none';
-      this.footerSlot.replaceChildren();
-    }
-
-    if (pageName != this.context.activePage) {
+      window.history.pushState(this.context, '', this.context.location);
       this.context.activePage = pageName;
-      // at the moment, context is not needed
-    }
-    window.history.pushState(this.context, '', this.context.location);
 
-    this.context.activePage = pageName;
-
-    this.pages[pageName].instance.render().then(() => {
-      console.log(this.pages[pageName].instance.node);
-      this.reRender(pageName);
+      this.pages[pageName].instance.render().then(() => {
+        console.log(this.pages[pageName].instance.node);
+        this.reRender(pageName);
+      });
     });
   }
 
@@ -221,10 +230,11 @@ class Main {
    */
   restoreState() {
     if (window.location.hash == '') {
-      window.history.pushState(this.context, '', '#page=main;');
+      this.route('#page=main;');
       return;
     }
 
+    console.log('HERE');
     this.route(window.location.hash);
   }
 

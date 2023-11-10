@@ -48,6 +48,8 @@ class Header extends Page {
     }
 
     renderTemplate() {
+        this.generateContext();
+
         super.renderTemplate();
         this.node
         .querySelectorAll('[data-logout]')
