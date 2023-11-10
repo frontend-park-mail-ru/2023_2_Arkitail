@@ -2,43 +2,9 @@ const DATA_ERROR = "Неверный логин или пароль";
 const LOGIN_SERVER_ERROR = "Server error";
 
 class LoginForm extends Page {
-  // @param {string} template
-  constructor(template) {
-    super('login form', template);
+  constructor() {
+    super('login form', LOGIN_PAGE_TEMPLATE);
     this.preroute = this.clear;
-    this.template = Handlebars.compile(`
-      <div class="goto-form">
-        <figure class="logo">
-            <img gateway='#page=main;' src="/static/img/logo.svg" alt="GoTo" />
-            <figcaption>
-                <p class="title">Время путешествовать</p>
-            </figcaption>
-        </figure>
-        <form>
-            <div class="form-item email">
-                <input name="email" type="email" placeholder="Ваша почта" />
-            </div>
-            <div class="form-item password">
-                <input name="password" type="password" placeholder="Ваш пароль" />
-            </div>
-            <div class="form-submit submit">
-                <input class="btn fill-green-btn" type="submit" value="Войти" />
-            </div>
-
-            <div>
-                <p error class="validation-error"></p>
-            </div>
-        </form>
-        <div class="form-footer">
-            <p class="forgot-password">Забыли пароль?</p>
-            <p class="non-registered">Ещё не зарегестрированы?</p>
-            <p gateway="#page=signup;" class="register">
-                <span class="goto-signup-link">Зарегестрироваться</span>
-            </p>
-        </div>
-      </div>
-    `);
-
   }
 
   submit() {

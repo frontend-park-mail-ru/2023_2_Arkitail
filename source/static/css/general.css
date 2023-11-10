@@ -226,6 +226,7 @@ svg.trash:hover {
     border-radius: var(--field-radius);
     border: 1px solid var(--light-gray);
     height: fit-content;
+    background-color: var(--white);
 }
 
 .input-field:focus {

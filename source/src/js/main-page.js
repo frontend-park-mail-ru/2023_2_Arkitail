@@ -12,25 +12,11 @@ memorize = async (fun) => {
 };
 
 class MainPage extends Page {
-  // @param {string} template
-  constructor(template) {
-    super("main", template);
-    this.template = Handlebars.compile(`
-        <div data-carousel class="list-of-places-carousel"></div>
-        <div data-list-of-places class="list-of-places page-padding-vertical"></div>
-    `);
-
-    this.templateCarouselSlide = Handlebars.compile(`
-        <div>
-          <img src="{{place.imageUrl}}" />
-          <div class="desc">
-            <p>{{place.name}}</p>
-            <button gateway="#page=place;id={{place.id}};">
-              <p>Узнать больше</p>
-            </button>
-          </div>
-        </div>
-        `);
+  constructor() {
+    super("main", MAIN_PAGE_TEMPLATE);
+    this.templateCarouselSlide = Handlebars.compile(
+      MAIN_PAGE_CAROUSEL_SLIDE_TEMPLATE
+    );
   }
 
   async renderTemplate() {

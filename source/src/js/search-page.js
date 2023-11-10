@@ -1,11 +1,6 @@
 class SearchPage extends Page {
-  // @param {string} template
-  constructor(template) {
-    super("searh page-padding-vertical", template);
-    this.template = Handlebars.compile(`
-        <div data-filters class="list-of-places-filters page-padding-horizontal"></div>
-        <div data-list-of-places class="list-of-places"></div>
-    `);
+  constructor() {
+    super("searh page-padding-vertical", SEARCH_PAGE_TEMPLATE);
   }
 
   async renderTemplate() {

@@ -1,4 +1,4 @@
-const API_V1_URL = '/api/v1';
+const API_V1_URL = "/api/v1";
 
 /**
  * Класс Main представляет собой общий контекст приложения
@@ -11,60 +11,60 @@ class Main {
    */
   constructor() {
     this.context = {
-      activePage: 'main',
-      location: '#page=main;',
+      activePage: "main",
+      location: "#page=main;",
     };
 
     this.temporaryContext = {
       authenticated: false,
-      userName: '',
+      userName: "",
       userId: -1,
-    }
+    };
   }
 
   init() {
-    this.headerSlot = document.querySelector('header');
-    this.header = new Header('');
-    this.mainSlot = document.querySelector('main');
-    this.footer = new Footer('');
-    this.footerSlot = document.querySelector('footer');
+    this.headerSlot = document.querySelector("header");
+    this.header = new Header("");
+    this.mainSlot = document.querySelector("main");
+    this.footer = new Footer("");
+    this.footerSlot = document.querySelector("footer");
 
     this.pages = {
-      'login': {
+      login: {
         renderHeader: false,
-        instance: new LoginForm(''),
+        instance: new LoginForm(),
       },
-      'signup': {
+      signup: {
         renderHeader: false,
-        instance: new SignupForm(''),
+        instance: new SignupForm(),
       },
-      'main': {
+      main: {
         renderHeader: true,
-        instance: new MainPage(''),
+        instance: new MainPage(),
       },
-      'trips': {
+      trips: {
         renderHeader: true,
         instance: new TripsPage(),
       },
-      'trip': {
+      trip: {
         renderHeader: true,
         instance: new TripPage(),
       },
-      'profile': {
+      profile: {
         renderHeader: true,
-        instance: new ProfilePage(''),
+        instance: new ProfilePage(),
       },
-      'place': {
+      place: {
         renderHeader: true,
-        instance: new PlacePage(''),
+        instance: new PlacePage(),
       },
-      'reviews' : {
+      reviews: {
         renderHeader: true,
-        instance: new ReviewsPage(''),
+        instance: new ReviewsPage(),
       },
-      'search' : {
+      search: {
         renderHeader: true,
-        instance: new SearchPage(''),
+        instance: new SearchPage(),
       },
     };
   }
@@ -75,72 +75,71 @@ class Main {
    * @returns {Promise} промис запроса авторизации
    */
   async authenticate() {
-    return fetch(
-      API_V1_URL + '/auth',
-      {
-        credentials: 'include',
-        method: 'GET',
-      }
-    ).then(response => {
-      if (response.status == 200) {
-        this.temporaryContext.authenticated = true;
-      } else {
-        this.temporaryContext.authenticated = false;
-        throw new Error('authenticate failed');
-      }
-    }).catch(_ => { });
+    return fetch(API_V1_URL + "/auth", {
+      credentials: "include",
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          this.temporaryContext.authenticated = true;
+        } else {
+          this.temporaryContext.authenticated = false;
+          throw new Error("authenticate failed");
+        }
+      })
+      .catch((_) => {});
   }
 
   async getUserInfo() {
-    return fetch(
-      API_V1_URL + '/user',
-      {
-        method: 'GET',
-      },
-    ).then(response => {
-      if (response.status == 200) {
-        this.temporaryContext.authenticated = true;
-      } else {
-        this.temporaryContext.authenticated = false;
-      }
-      return response.json();
-    }).then(data => {
-      this.temporaryContext.userName = data['name'];
-      this.temporaryContext.userId = data['id'];
-      this.temporaryContext.birthday = data['birthDate']
-      this.temporaryContext.about = data['about']
+    return fetch(API_V1_URL + "/user", {
+      method: "GET",
     })
+      .then((response) => {
+        if (response.status == 200) {
+          this.temporaryContext.authenticated = true;
+        } else {
+          this.temporaryContext.authenticated = false;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.temporaryContext.userName = data["name"];
+        this.temporaryContext.userId = data["id"];
+        this.temporaryContext.birthday = data["birthDate"];
+        this.temporaryContext.about = data["about"];
+      });
   }
 
   async updateUserInfo(newUserInfo) {
     try {
       const url = `/api/v1/user`;
       const response = await fetch(url, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newUserInfo),
       });
 
       if (response.ok) {
         const updatedUserData = await response.json();
-        console.log('Данные пользователя успешно обновлены:', updatedUserData);
+        console.log("Данные пользователя успешно обновлены:", updatedUserData);
       } else if (response.status === 401) {
-        console.error('У вас нет прав доступа для обновления данных пользователя');
+        console.error(
+          "У вас нет прав доступа для обновления данных пользователя"
+        );
       } else if (response.status === 404) {
-        console.error('Пользователь с указанным userId не найден');
+        console.error("Пользователь с указанным userId не найден");
       } else {
-        console.error('Ошибка при обновлении данных пользователя');
+        console.error("Ошибка при обновлении данных пользователя");
       }
     } catch (error) {
-      console.error('Ошибка при выполнении запроса:', error);
+      console.error("Ошибка при выполнении запроса:", error);
     }
   }
 
-
   unserializeLocationHash(parameters) {
-    let hash = '#';
+    let hash = "#";
     for (const [k, v] of parameters) {
       hash += `${k}=${v};`;
     }
@@ -150,16 +149,17 @@ class Main {
   serializeLocationHash(hash) {
     const hashTemplate = /^#(\S+=\S*;)*$/;
     if (!hash.match(hashTemplate)) {
-      throw new Error('Wrong location');
+      throw new Error("Wrong location");
     }
 
     // discarding hash symbol and last end of element
     hash = hash.substring(1, hash.length - 1);
     let parameters = {};
 
-    hash.split(';').forEach(elem => {
-      elem = elem.split('=');
-      let k = elem[0], v = elem[1];
+    hash.split(";").forEach((elem) => {
+      elem = elem.split("=");
+      let k = elem[0],
+        v = elem[1];
 
       parameters[k] = v;
     });
@@ -170,30 +170,29 @@ class Main {
   /**
    * Данная функция отвечает за перемещение по приложению.
    * Управляет также отображением хедера и футера
-   * @param {string} название страницы из множества ключей Main.pages 
+   * @param {string} название страницы из множества ключей Main.pages
    */
   route(location) {
     let parameters = this.serializeLocationHash(location);
-    let pageName = parameters['page'];
+    let pageName = parameters["page"];
     this.context.location = location;
 
     if (this.pages[pageName].renderHeader) {
-      this.getUserInfo()
-        .then(() => {
-          this.header.generateContext();
-          this.header.render();
-          this.headerSlot.style.display = 'block';
-          this.headerSlot.replaceChildren(this.header.node);
+      this.getUserInfo().then(() => {
+        this.header.generateContext();
+        this.header.render();
+        this.headerSlot.style.display = "block";
+        this.headerSlot.replaceChildren(this.header.node);
 
-          this.footer.render();
-          this.footerSlot.style.display = 'block';
-          this.footerSlot.replaceChildren(this.footer.node);
-        });
+        this.footer.render();
+        this.footerSlot.style.display = "block";
+        this.footerSlot.replaceChildren(this.footer.node);
+      });
     } else {
-      this.headerSlot.style.display = 'none';
+      this.headerSlot.style.display = "none";
       this.headerSlot.replaceChildren();
 
-      this.footerSlot.style.display = 'none';
+      this.footerSlot.style.display = "none";
       this.footerSlot.replaceChildren();
     }
 
@@ -201,18 +200,17 @@ class Main {
       this.context.activePage = pageName;
       // at the moment, context is not needed
     }
-    window.history.pushState(this.context, '', this.context.location);
+    window.history.pushState(this.context, "", this.context.location);
 
     this.context.activePage = pageName;
-
-    this.pages[pageName].instance.render().then(() => {
-      console.log(this.pages[pageName].instance.node);
-      this.reRender(pageName);
-    });
+    this.reRender();
   }
 
-  reRender(pageName) {
-    this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+  reRender(pageName = this.context.activePage) {
+    this.pages[pageName].instance.render().then(() => {
+      console.log(this.pages[pageName].instance.node);
+      this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+    });
   }
 
   /**
@@ -220,8 +218,8 @@ class Main {
    * используя HistoryApi
    */
   restoreState() {
-    if (window.location.hash == '') {
-      window.history.pushState(this.context, '', '#page=main;');
+    if (window.location.hash == "") {
+      window.history.pushState(this.context, "", "#page=main;");
       return;
     }
 
@@ -230,7 +228,7 @@ class Main {
 
   /**
    * Обработчик события перемещения по истории
-   * @param {Event} event 
+   * @param {Event} event
    */
   popState(_) {
     this.restoreState();
@@ -240,4 +238,4 @@ class Main {
 let main = new Main();
 main.init();
 main.restoreState();
-window.addEventListener('popstate', event => main.popState(event));
+window.addEventListener("popstate", (event) => main.popState(event));

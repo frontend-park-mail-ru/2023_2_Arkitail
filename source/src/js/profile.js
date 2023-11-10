@@ -1,37 +1,6 @@
 class ProfilePage extends Page {
-    constructor(template) {
-        super('profile-page', template);
-
-        this.template = Handlebars.compile(`
-        <div class="profile">
-    <div class="profile-picture">
-        <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
-        <p>{{userName}}</p>
-        {{#if isEditing}}
-            <div class="edit-buttons">
-                <button id="save-button">Сохранить</button>
-                <button id="cancel-button">Отмена</button>
-            </div>
-        {{else}}
-            <button class="edit-profile-button" id="edit-button">Редактировать профиль</button>
-        {{/if}}
-    </div>
-    <div class="info-panel">
-        <div class="info-item">
-            {{#if isEditing}}
-                <p><strong>Имя:</strong><input type="text" id="userNameInput" value="{{userName}}"></p>
-                <p><strong>День рождения:</strong><input type="text" id="birthdayInput" value="{{birthday}}"></p>
-                <p><strong>О себе:</strong><textarea id="aboutInput" rows="4">{{about}}</textarea></p>
-            {{else}}
-                <p><strong>Имя:</strong> {{userName}}</p>
-                <p><strong>День рождения:</strong> {{birthday}}</p>
-                <p><strong>О себе:</strong> {{about}}</p>
-            {{/if}}
-        </div>
-    </div>
-</div>
-        `
-        );
+    constructor() {
+        super('profile-page', PROFILE_PAGE_TEMPLATE);
         this.context = {
             isEditing: false,
             userName: main.temporaryContext.userName,
@@ -40,10 +9,9 @@ class ProfilePage extends Page {
         }
     }
 
-    async render(isFirstRender) {
+    async render() {
         await this.generateContext()
         await super.render()
-        main.reRender('profile');
         this.addEditProfileButtonListener();
     }
 
@@ -81,7 +49,7 @@ class ProfilePage extends Page {
             about: main.temporaryContext.about,
             isEditing: !this.context.isEditing,
         }
-        this.render();
+        main.reRender()
     }
 
     async updateUserInfo(newUserInfo) {
@@ -107,6 +75,6 @@ class ProfilePage extends Page {
             isEditing: false,
         };
         main.route(main.context.location);
-        this.render();
+        main.reRender()
     }
 }
