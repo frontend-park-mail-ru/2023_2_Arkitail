@@ -5,7 +5,7 @@ class ProfilePage extends Page {
         this.template = Handlebars.compile(`
         <div class="profile">
     <div class="profile-picture">
-        <img src="file:///{{avatar}}" alt="Ваше фото профиля">
+        <img src="data:image/png;base64,{{avatar}}" alt="Ваше фото профиля">
         {{#if isEditing}}
             <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
         {{/if}}
@@ -78,8 +78,8 @@ class ProfilePage extends Page {
 
             const fileInput = this.node.querySelector('#avatar');
             fileInput.addEventListener('change', (event) => {
-                debugger
                 var file = this.node.querySelector("#avatar").files[0];
+                console.log(file);
                 main.upload(file);
             });
         };
