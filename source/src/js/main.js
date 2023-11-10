@@ -64,13 +64,14 @@ class Main {
         renderHeader: true,
         instance: new PlacePage(''),
         mustBeAuthorized: false,
+
       },
-      'reviews' : {
+      'reviews': {
         renderHeader: true,
         instance: new ReviewsPage(''),
         mustBeAuthorized: false,
       },
-      'search' : {
+      'search': {
         renderHeader: true,
         instance: new SearchPage(''),
         mustBeAuthorized: false,
@@ -119,6 +120,7 @@ class Main {
       this.temporaryContext.userId = data['id'];
       this.temporaryContext.birthday = data['birthDate']
       this.temporaryContext.about = data['about']
+      this.temporaryContext.imageURL = data['avatar'];
     }).catch(_ => {});
   }
 
@@ -146,6 +148,34 @@ class Main {
     } catch (error) {
       console.error('Ошибка при выполнении запроса:', error);
     }
+  }
+
+  uploadFile(file) {
+    fetch('/api/v1/user/avatar', {
+      method: 'POST',
+      body: file,
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+        }
+        console.log('File uploaded successfully.');
+      })
+      .catch(error => {
+        console.error('Error uploading file:', error);
+      });
+  }
+
+  async upload(blobOrFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/v1/user/avatar', true);
+    xhr.onload = function(e) {
+      console.log(e);
+    };
+  
+    xhr.send(blobOrFile);
   }
 
 

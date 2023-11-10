@@ -5,7 +5,10 @@ class ProfilePage extends Page {
         this.template = Handlebars.compile(`
         <div class="profile">
     <div class="profile-picture">
-        <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
+        <img src="data:image/png;base64,{{avatar}}" alt="Ваше фото профиля">
+        {{#if isEditing}}
+            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+        {{/if}}
         <p>{{userName}}</p>
         {{#if isEditing}}
             <div class="edit-buttons">
@@ -37,6 +40,7 @@ class ProfilePage extends Page {
             userName: main.temporaryContext.userName,
             birthday: '01.01.1990',
             about: 'Здесь может быть краткое описание о вас и ваших интересах.',
+            avatar: '../../static/img/example.jpg'
         }
     }
 
@@ -52,9 +56,10 @@ class ProfilePage extends Page {
         this.context.userName = main.temporaryContext.userName;
         this.context.birthday = main.temporaryContext.birthday;
         this.context.about = main.temporaryContext.about;
+        this.context.avatar = main.temporaryContext.imageURL;
     }
 
-    addEditProfileButtonListener() {
+    async addEditProfileButtonListener() {
         if (this.context.isEditing == false) {
             const editButton = this.node.querySelector('#edit-button');
             editButton.addEventListener('click', () => {
@@ -70,7 +75,14 @@ class ProfilePage extends Page {
             cancelButton.addEventListener('click', () => {
                 this.toggleEditProfileMode();
             });
-        }
+
+            const fileInput = this.node.querySelector('#avatar');
+            fileInput.addEventListener('change', (event) => {
+                var file = this.node.querySelector("#avatar").files[0];
+                console.log(file);
+                main.upload(file);
+            });
+        };
     }
 
 
@@ -80,6 +92,7 @@ class ProfilePage extends Page {
             birthday: main.temporaryContext.birthday,
             about: main.temporaryContext.about,
             isEditing: !this.context.isEditing,
+            avatar: main.temporaryContext.imageURL,
         }
         this.render();
     }
@@ -92,10 +105,12 @@ class ProfilePage extends Page {
         const newUserName = this.node.querySelector('#userNameInput').value;
         const newBirthday = this.node.querySelector('#birthdayInput').value;
         const newAbout = this.node.querySelector('#aboutInput').value;
+        const newAvatar = this.node.querySelector('#avatar').value;
         const newUserInfo = {
             name: newUserName,
             birthDate: newBirthday,
             about: newAbout,
+            avatar: newAvatar,
         };
 
         await this.updateUserInfo(newUserInfo);
@@ -105,6 +120,7 @@ class ProfilePage extends Page {
             birthday: newBirthday,
             about: newAbout,
             isEditing: false,
+            avatar: newAvatar,
         };
         main.route(main.context.location);
         this.render();
