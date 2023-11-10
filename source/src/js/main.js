@@ -210,8 +210,10 @@ class Main {
         this.footerSlot.replaceChildren();
       }
 
-      window.history.pushState(this.context, '', this.context.location);
-      this.context.activePage = pageName;
+      if (this.context.activePage != pageName) {
+        window.history.pushState(this.context, '', this.context.location);
+        this.context.activePage = pageName;
+      }
 
       this.pages[pageName].instance.render().then(() => {
         console.log(this.pages[pageName].instance.node);
@@ -234,7 +236,6 @@ class Main {
       return;
     }
 
-    console.log('HERE');
     this.route(window.location.hash);
   }
 

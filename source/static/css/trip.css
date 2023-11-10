@@ -91,6 +91,17 @@
 .trip-header {
   display: flex;
   justify-content: space-between;
+  margin: 0px 10px 5px;
+}
+
+.trip-header input {
+  flex: 1;
+}
+
+.trip-date {
+  padding: 2px 0px 2px 20px;
+  background-color: var(--secondary);
+  color: var(--white);
 }
 
 .trip-toggle-second {
