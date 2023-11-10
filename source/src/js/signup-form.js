@@ -85,63 +85,9 @@ const validationData = {
 };
 
 class SignupForm extends Page {
-  // @param {string} template
-  constructor(template) {
-    super('signup form', template);
+  constructor() {
+    super('signup form', SIGNUP_PAGE_TEMPLATE);
     this.preroute = this.clear;
-    this.template = Handlebars.compile(`
-      <div class="goto-form">
-        <figure class="logo">
-          <img gateway='#page=main;' src="/static/img/logo.svg" alt="GoTo" />
-          <figcaption>
-            <p class="title">Начните путешествовать сейчас</p>
-            <p>моментальная регистрация</p>
-          </figcaption>
-        </figure>
-        <form>
-          <div class="form-item name">
-            <input name="name" type="text" placeholder="Ваше имя" />
-          </div>
-          <div class="form-item email">
-            <input name="email" type="text" placeholder="Ваша почта" />
-          </div>
-          <div class="form-item password">
-            <input name="password" type="password" placeholder="Ваш пароль" />
-          </div>
-          <div class="form-item repeat-password">
-            <input
-              name="repeat-password"
-              type="password"
-              placeholder="Ваш пароль еще раз"
-            />
-          </div>
-          <!-- <div class="input-group-label">Дата рождения</div>
-          <div class="form-item input-group">
-            <div class="input-group-item">
-              <input name="day" type="text" placeholder="День" />
-            </div>
-            <div class="input-group-item">
-              <input name="month" type="text" placeholder="Месяц" />
-            </div>
-            <div class="input-group-item">
-              <input name="year" type="text" placeholder="Год" />
-            </div>
-          </div> -->
-          <div class="form-submit submit">
-            <input class="btn fill-green-btn" name="submit" type="submit" value="Зарегистрироваться" />
-          </div>
-
-          <div>
-              <p error class="validation-error"></p>
-          </div>
-        </form>
-        <div class="form-footer">
-          <p gateway="#page=login;" class="login">
-            Уже есть аккаунт? <span class="goto-login-link">Войти</span>
-          </p>
-        </div>
-      </div>
-    `);
   }
 
   submit() {

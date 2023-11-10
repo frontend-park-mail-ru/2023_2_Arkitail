@@ -1,4 +1,4 @@
-const API_V1_URL = '/api/v1';
+const API_V1_URL = "/api/v1";
 
 /**
  * Класс Main представляет собой общий контекст приложения
@@ -11,69 +11,68 @@ class Main {
    */
   constructor() {
     this.context = {
-      activePage: 'main',
-      location: '#page=main;',
+      activePage: "main",
+      location: "#page=main;",
     };
 
     this.temporaryContext = {
       authenticated: false,
-      userName: '',
+      userName: "",
       userId: -1,
-    }
+    };
   }
 
   init() {
-    this.headerSlot = document.querySelector('header');
-    this.header = new Header('');
-    this.mainSlot = document.querySelector('main');
-    this.footer = new Footer('');
-    this.footerSlot = document.querySelector('footer');
+    this.headerSlot = document.querySelector("header");
+    this.header = new Header("");
+    this.mainSlot = document.querySelector("main");
+    this.footer = new Footer("");
+    this.footerSlot = document.querySelector("footer");
 
     this.pages = {
-      'login': {
+      login: {
         renderHeader: false,
-        instance: new LoginForm(''),
+        instance: new LoginForm(),
         mustBeAuthorized: false,
       },
-      'signup': {
+      signup: {
         renderHeader: false,
-        instance: new SignupForm(''),
+        instance: new SignupForm(),
         mustBeAuthorized: false,
       },
-      'main': {
+      main: {
         renderHeader: true,
-        instance: new MainPage(''),
+        instance: new MainPage(),
         mustBeAuthorized: false,
       },
-      'trips': {
+      trips: {
         renderHeader: true,
         instance: new TripsPage(),
         mustBeAuthorized: true,
       },
-      'trip': {
+      trip: {
         renderHeader: true,
         instance: new TripPage(),
         mustBeAuthorized: true,
       },
-      'profile': {
+      profile: {
         renderHeader: true,
-        instance: new ProfilePage(''),
+        instance: new ProfilePage(),
         mustBeAuthorized: true,
       },
-      'place': {
+      place: {
         renderHeader: true,
-        instance: new PlacePage(''),
-        mustBeAuthorized: false,
-
-      },
-      'reviews': {
-        renderHeader: true,
-        instance: new ReviewsPage(''),
+        instance: new PlacePage(),
         mustBeAuthorized: false,
       },
-      'search': {
+      reviews: {
         renderHeader: true,
-        instance: new SearchPage(''),
+        instance: new ReviewsPage(),
+        mustBeAuthorized: false,
+      },
+      search: {
+        renderHeader: true,
+        instance: new SearchPage(),
         mustBeAuthorized: false,
       },
     };
@@ -128,25 +127,27 @@ class Main {
     try {
       const url = `/api/v1/user`;
       const response = await fetch(url, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newUserInfo),
       });
 
       if (response.ok) {
         const updatedUserData = await response.json();
-        console.log('Данные пользователя успешно обновлены:', updatedUserData);
+        console.log("Данные пользователя успешно обновлены:", updatedUserData);
       } else if (response.status === 401) {
-        console.error('У вас нет прав доступа для обновления данных пользователя');
+        console.error(
+          "У вас нет прав доступа для обновления данных пользователя"
+        );
       } else if (response.status === 404) {
-        console.error('Пользователь с указанным userId не найден');
+        console.error("Пользователь с указанным userId не найден");
       } else {
-        console.error('Ошибка при обновлении данных пользователя');
+        console.error("Ошибка при обновлении данных пользователя");
       }
     } catch (error) {
-      console.error('Ошибка при выполнении запроса:', error);
+      console.error("Ошибка при выполнении запроса:", error);
     }
   }
 
@@ -178,9 +179,8 @@ class Main {
     xhr.send(blobOrFile);
   }
 
-
   unserializeLocationHash(parameters) {
-    let hash = '#';
+    let hash = "#";
     for (const [k, v] of parameters) {
       hash += `${k}=${v};`;
     }
@@ -190,16 +190,17 @@ class Main {
   serializeLocationHash(hash) {
     const hashTemplate = /^#(\S+=\S*;)*$/;
     if (!hash.match(hashTemplate)) {
-      throw new Error('Wrong location');
+      throw new Error("Wrong location");
     }
 
     // discarding hash symbol and last end of element
     hash = hash.substring(1, hash.length - 1);
     let parameters = {};
 
-    hash.split(';').forEach(elem => {
-      elem = elem.split('=');
-      let k = elem[0], v = elem[1];
+    hash.split(";").forEach((elem) => {
+      elem = elem.split("=");
+      let k = elem[0],
+        v = elem[1];
 
       parameters[k] = v;
     });
@@ -210,11 +211,11 @@ class Main {
   /**
    * Данная функция отвечает за перемещение по приложению.
    * Управляет также отображением хедера и футера
-   * @param {string} название страницы из множества ключей Main.pages 
+   * @param {string} название страницы из множества ключей Main.pages
    */
   route(location) {
     let parameters = this.serializeLocationHash(location);
-    let pageName = parameters['page'];
+    let pageName = parameters["page"];
     this.context.location = location;
 
     this.getUserInfo().
@@ -252,8 +253,11 @@ class Main {
     });
   }
 
-  reRender(pageName) {
-    this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+  reRender(pageName = this.context.activePage) {
+    this.pages[pageName].instance.render().then(() => {
+      console.log(this.pages[pageName].instance.node);
+      this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
+    });
   }
 
   /**
@@ -271,7 +275,7 @@ class Main {
 
   /**
    * Обработчик события перемещения по истории
-   * @param {Event} event 
+   * @param {Event} event
    */
   popState(_) {
     this.restoreState();
@@ -281,4 +285,4 @@ class Main {
 let main = new Main();
 main.init();
 main.restoreState();
-window.addEventListener('popstate', event => main.popState(event));
+window.addEventListener("popstate", (event) => main.popState(event));

@@ -1,22 +1,6 @@
 class ReviewsPage extends Page {
-  // @param {string} template
-  constructor(template) {
-    super("reviews page-padding-vertical", template);
-    this.template = Handlebars.compile(`
-    <div class="reviews-header page-body-margin grid-bottom">
-        <p class="general-main-title">
-            Все отзывы
-        </p>
-        <div class="write-review">
-            <button data-add-review-btn class="btn blue-btn">
-                Написать отзыв
-            </button>
-        </div>
-    </div>
-
-    <div data-list-of-reviews class="list-of-reviews page-body-margin">
-    </div>
-   `);
+  constructor() {
+    super("reviews page-padding-vertical", REVIEWS_PAGE_TEMPLATE);
   }
 
   async renderTemplate() {
@@ -28,7 +12,7 @@ class ReviewsPage extends Page {
 
     const addReviewCard = new AddRevieCard(
       this.node.querySelector("[data-add-review-btn]"),
-      this.insertToBeginReview.bind(this)
+      this.sendReview.bind(this)
     );
     this.list.appendChild(addReviewCard.getHtml());
 
@@ -40,7 +24,7 @@ class ReviewsPage extends Page {
     this.list.appendChild(reviewCard.getHtml());
   }
 
-  async insertToBeginReview(review) {
+  async sendReview(review) {
     const method = "POST";
     const headers = {
       "Content-Type": "application/json",
