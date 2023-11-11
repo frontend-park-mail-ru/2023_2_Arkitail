@@ -40,13 +40,6 @@ class ProfilePage extends Page {
             cancelButton.addEventListener('click', () => {
                 this.toggleEditProfileMode();
             });
-
-            const fileInput = this.node.querySelector('#avatar');
-            fileInput.addEventListener('change', (event) => {
-                var file = this.node.querySelector("#avatar").files[0];
-                console.log(file);
-                main.upload(file);
-            });
         };
     }
 
