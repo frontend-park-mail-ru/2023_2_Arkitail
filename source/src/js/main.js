@@ -119,7 +119,6 @@ class Main {
       this.temporaryContext.userId = data['id'];
       this.temporaryContext.birthday = data['birthDate']
       this.temporaryContext.about = data['about']
-      this.temporaryContext.imageURL = data['avatar'];
     }).catch(_ => {});
   }
 
