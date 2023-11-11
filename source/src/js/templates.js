@@ -327,10 +327,7 @@ const PLACE_PAGE_TEMPLATE = `
 const PROFILE_PAGE_TEMPLATE = `
 <div class="profile">
     <div class="profile-picture">
-        <img src="data:image/png;base64,{{avatar}}" alt="Ваше фото профиля">
-        {{#if isEditing}}
-            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
-        {{/if}}
+        <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
         <p>{{userName}}</p>
         {{#if isEditing}}
             <div class="edit-buttons">
