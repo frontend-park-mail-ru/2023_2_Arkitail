@@ -175,20 +175,41 @@
   justify-content: space-between;
 }
 
-.trip-plan-point-header {
-  display: flex;
-  justify-content: space-between;
+@media (min-width: 768px) {
+  .trip-plan-point-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+ .trip-plan-point-content {
+    display: flex;
+  } 
+  .trip-plan-point-content > img {
+    max-width: 30%;
+  }
 }
 
-.trip-plan-point-content {
-  display: flex;
+@media (max-width: 768px) {
+  .trip-plan-point-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+ .trip-plan-point-content {
+    display: flex;
+    flex-direction: column;
+  } 
+
+  .trip-plan-point-content > img {
+    max-width: auto;
+  }
 }
+
+
 
 .trip-plan-point-content > * {
   margin: 5px 10px;
 }
 
-.trip-plan-point-content > img {
-  max-width: 500px;
-}
+
 
