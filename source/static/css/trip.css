@@ -1,31 +1,46 @@
+.trips-header-grid {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .trips-grid {
   width: 100%;
-  margin: 20px 0px;
-
-  --card-size: 20rem;
+  margin-top: var(--page-body-content-margin);
+  --card-height: 11rem;
+  --card-width: 22rem;
+  --card-description-size: 4;
 
   width: 100%;
-  
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), var(--card-width)));
   gap: 2rem;
   justify-content: space-evenly;
 }
 
+.trips-content-padding {
+  padding-left: var(--page-body-content-margin);
+  padding-right: var(--page-body-content-margin);
+}
+
 .trip-card {
-  width: var(--card-size);
+  height: var(--card-height);
+  width: var(--card-width);
   padding: .4rem 0 .3rem 0;
-  background-color: var(--white);
 }
 
 .trip-card-date {
   background-color: var(--secondary);
   color: var(--white);
+  padding: .5rem var(--page-body-content-margin);
+  margin: .5rem 0;
 }
 
 .trip-card-caption {
   display: flex;
 }
+
 .trip-card-edit {
   background-color: gray;
 }
@@ -34,14 +49,31 @@
   background-color: red;
 }
 
+.trip-card-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  display: -webkit-box;
+  -webkit-line-clamp: var(--card-description-size);
+  -webkit-box-orient: vertical;
+
+  display: -moz-box;
+  -moz-line-clamp: var(--card-description-size);
+  -moz-box-orient: vertical;
+
+  display: -o-box;
+  -o-line-clamp: var(--card-description-size);
+  -o-box-orient: vertical;
+
+  display: -ms-box;
+  -ms-line-clamp: var(--card-description-size);
+  -ms-box-orient: vertical;
+}
+
 .trip {
   width: 100%;
   margin: 20px 0px;
   display: block;
-}
-
-.trip-name {
-  margin: 0px;
 }
 
 .trip-grid {
@@ -110,4 +142,3 @@
   display: flex;
   justify-content: space-between;
 }
-

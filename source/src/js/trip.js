@@ -70,7 +70,7 @@ class Trip {
 
 class TripsPage extends Page {
   constructor() {
-    super('trips', TRIPS_PAGE_TEMPLATE);
+    super('trips page-padding-horizontal page-padding-vertical', TRIPS_PAGE_TEMPLATE);
 
     this.trips = [];
   }

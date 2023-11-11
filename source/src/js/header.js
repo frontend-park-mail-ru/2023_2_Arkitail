@@ -27,10 +27,10 @@ class Header extends Page {
                 </div>
                 <p class="hidden-on-mobile">{{this.userName}}</p>
             </div>
-            <div class="right-menu authorized">
+            <!-- <div class="right-menu authorized">
                 <img class="heart" src="../../static/img/heart.svg" alt="GoTo" />
                 <p class="heart hidden-on-mobile">Избранное</p>
-            </div>
+            </div> -->
             {{else}}
             <button gateway="#page=signup;" class="right-menu btn fill-green-btn hidden-on-mobile">
                 <p>Регистрация</p>

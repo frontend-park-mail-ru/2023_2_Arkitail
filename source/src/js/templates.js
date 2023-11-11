@@ -70,19 +70,20 @@ const TRIP_PAGE_TEMPLATE = `
 </div>`;
 
 const TRIPS_PAGE_TEMPLATE = `
-<div class='trips-name'><h1>Поездки</h1></div>
-  <div class='trips-new'>Добавить поездку</div>
-  <div class='trips-grid'>
-    {{#each trips}}
-    <div class='trip-card' gateway='#page=trip;id={{this.id}};'>
-      <div class='trip-card-caption'>
-        <h1>{{this.name}}</h1>
-      </div>
-      <div class='trip-card-date'><span>{{this.begin}} - {{this.end}}</span></div>
-      <div class='trip-card-description'>{{this.description}}</div>
+<div class="trips-header-grid">
+  <p class="general-main-title">Поездки</p>
+  <div class='trips-new btn blue-btn'>Добавить поездку</div>
+</div>
+<div class='trips-grid page-padding-vertical'>
+  {{#each trips}}
+  <div class='trip-card card' gateway='#page=trip;id={{this.id}};'>
+    <div class='trips-content-padding trip-card-caption'>
+      <h1 class="broken-text general-subtitle">{{this.name}}</h1>
     </div>
-    {{/each}}
+    <div class='trips-content-padding trip-card-date'><span>{{this.begin}} - {{this.end}}</span></div>
+    <div class='gray-text trips-content-padding trip-card-description'>{{this.description}}qwerty qwert qwerty qwerty qwerty qwerty qwerty qwerty qwert qwerty qwerty qwerty qwerty qwerty qerty qwerty qwerty wqwert qwertyu qwertyufdsdf qwerty sdfghjk dfghj fghj fghj gthyui yf</div>
   </div>
+  {{/each}}
 </div>
 `;
 const LOGIN_PAGE_TEMPLATE = `

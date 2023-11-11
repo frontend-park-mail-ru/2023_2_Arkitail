@@ -84,6 +84,9 @@
 
 .list-of-places-carousel .desc>p {
     -webkit-text-stroke: 1px var(--black);
+    -moz-text-stroke: 1px var(--black);
+    -o-text-stroke: 1px var(--black);
+    -o-ms-stroke: 1px var(--black);
     color: var(--white);
     font-size: 3rem;
     margin-bottom: 1vw;
