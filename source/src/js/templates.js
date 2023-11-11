@@ -25,44 +25,46 @@ const TRIP_PAGE_TEMPLATE = `
   <div class='trip-description card trip-card'>
     <h1 class='general-title'>Описание</h1>
     <p class='trip-toggle-first'>{{description}}</p>
-    <input class='trip-input-description trip-toggle-second' name='description' type='text'/>
+    <textarea class='trip-input-description trip-toggle-second' name='description'></textarea>
   </div>
   
-  <div class='trip-plan card trip-card'>
-    <div class='trip-plan-header'>
-      <div class='trip-plan-name'>
-        <h1 class='general-title'>План</h1>
-      </div>
-      <div class='trip-plan-new-point'>
-        <input class='trip-plan-new-point-id input-field' name='new-trip-id' placeholder=''>
-        <button class='btn blue-btn'>
-          Добавить место
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <div class='trip-plan-days card'>
-    {{#eachInMap days}}
-    <div class='trip-plan-day'>
-      <div class='trip-plan-day-header'>
-        <p class='trip-plan-day-date'>{{this.key}}</p>
-        <button class='trip-plan-day-show'>Show/Hide</button>
-      </div>
-      <div class='trip-plan-points'>
-      {{#each this.value}}
-        <di trip-cardv class='trip-plan-point card trip-card'>
-          <div class='trip-plan-point-header'>
-            <h1>Название места</h1>
-            <p class='trip-plan-point-name'>{{this.name}}</p>
-            <h1>Описание</h1>
-            <p class='trip-plan-point-description'>{{this.description}}</p>
-          </div>
+  <div class='card'>
+    <div class='trip-plan card trip-card'>
+      <div class='trip-plan-header'>
+        <div class='trip-plan-name'>
+          <h1 class='general-title'>План</h1>
         </div>
-      {{/each}}
+        <div class='trip-plan-new-point'>
+          <input class='trip-plan-new-point-id input-field' name='new-trip-id' placeholder=''>
+          <button class='btn blue-btn'>
+            Добавить место
+          </button>
+        </div>
       </div>
     </div>
-    {{/eachInMap}}
+    
+    <div class='trip-plan-days'>
+      {{#eachInMap days}}
+      <div class='trip-plan-day'>
+        <div class='trip-plan-day-header trip-card green-trip-card'>
+          <p class='trip-plan-day-date'>{{this.key}}</p>
+          <button class='trip-plan-day-show btn green-btn'>Show/Hide</button>
+        </div>
+        <div class='trip-plan-points'>
+        {{#each this.value}}
+          <div class='trip-plan-point card trip-card'>
+            <div class='trip-plan-point-header'>
+              <h1>Название места</h1>
+              <p class='trip-plan-point-name'>{{this.name}}</p>
+              <h1>Описание</h1>
+              <p class='trip-plan-point-description'>{{this.description}}</p>
+            </div>
+          </div>
+        {{/each}}
+        </div>
+      </div>
+      {{/eachInMap}}
+    </div>
   </div>
 </div>`;
 

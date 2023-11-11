@@ -15,7 +15,6 @@
 .trip-card {
   width: var(--card-size);
   padding: .4rem 0 .3rem 0;
-  background-color: var(--white);
 }
 
 .trip-card-date {
@@ -114,12 +113,13 @@
 
 .trip-plan-point {
   display: block;
-  width: 100%;
 }
 
 .trip-plan-day-header {
   display: flex;
   justify-content: space-between;
+  padding: 5px 10px;
+  align-items: center;
 }
 
 .trip-content {
@@ -129,10 +129,17 @@
 
 .trip-card {
   margin: 10px 0px;
+  padding: 5px 10px;
+}
+
+.green-trip-card {
+  background-color: var(--secondary) !important;
+  color: var(--white);
 }
 
 .trip-plan-header {
   display: flex;
   justify-content: space-between;
 }
+
 

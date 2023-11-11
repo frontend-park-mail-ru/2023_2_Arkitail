@@ -12,8 +12,6 @@ class Trip {
       this[k] = v;
     }
 
-    console.log(this);
-
     let placesInTrip = [];
     for (let [_, v] of Object.entries(this.placesInTrip)) {
       placesInTrip.push(v);
@@ -48,7 +46,6 @@ class Trip {
       }
     }
 
-    console.log(this.days);
     return this;
   }
 
@@ -250,7 +247,9 @@ class TripPage extends Page {
       this.toggle();
     });
 
+    console.log(this.planDays.querySelectorAll('.trip-plan-day'));
     this.planDays.querySelectorAll('.trip-plan-day').forEach(elem => {
+      console.log(elem);
       let btn = elem.querySelector('.trip-plan-day-show');
       let points = elem.querySelector('.trip-plan-points');
 
@@ -277,7 +276,7 @@ class TripPage extends Page {
             "firstDate": "2017-01-01",
             "lastDate": "2017-01-02",
           }),
-        });
+        }).then(() => main.route(main.context.location));
     });
   }
 }
