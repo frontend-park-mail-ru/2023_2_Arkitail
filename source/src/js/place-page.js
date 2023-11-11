@@ -38,28 +38,22 @@ class PlacePage extends Page {
     this.node
       .querySelector("[data-choose-trip-btn]")
       .addEventListener("click", async () => {
-        console.log(
-          this.selectTrip.options[this.selectTrip.selectedIndex].value
-        );
-
-        await fetch(
-          API_V1_URL +
-            `/trips/${
-              this.selectTrip.options[this.selectTrip.selectedIndex].value
-            }/place`,
-          {
+        const tripId =
+          this.selectTrip.options[this.selectTrip.selectedIndex].value;
+        if (tripId) {
+          await fetch(API_V1_URL + `/trips/${tripId}/place`, {
             method: "POST",
             body: JSON.stringify({
               placeId: Number(this.id),
               firstDate: "2017-01-01",
               lastDate: "2017-01-02",
             }),
-          }
-        );
+          });
 
-        this.selectTrip.removeChild(
-          this.selectTrip.options[this.selectTrip.selectedIndex]
-        );
+          this.selectTrip.removeChild(
+            this.selectTrip.options[this.selectTrip.selectedIndex]
+          );
+        }
       });
   }
 
@@ -109,23 +103,14 @@ class PlacePage extends Page {
     this.id = main.serializeLocationHash(main.context.location).id;
     const trips = (await this.getTrips()).filter(
       (trip) =>
-        !Object.values(trip.placesInTrip).includes(
+        !Object.values(trip.placesInTrip).some(
           (placeInTrip) => placeInTrip.place.id == this.id
         )
     );
-    trips.forEach((trip) => {
-      console.log(
-        Object.values(trip.placesInTrip).some(
-          (placeInTrip) => placeInTrip.size > 0 && placeInTrip.place.id == this.id
-        )
-      );
-    });
     this.context = {
       place: await this.memGetPlace(this.id),
       trips: trips,
     };
-
-    console.log(this.id, this.context.trips);
   }
 
   async getPlace(id) {
