@@ -80,7 +80,7 @@ const TRIPS_PAGE_TEMPLATE = `
       <h1 class="broken-text general-subtitle">{{this.name}}</h1>
     </div>
     <div class='trips-content-padding trip-card-date'><span>{{this.begin}} - {{this.end}}</span></div>
-    <div class='gray-text trips-content-padding trip-card-description'>{{this.description}}qwerty qwert qwerty qwerty qwerty qwerty qwerty qwerty qwert qwerty qwerty qwerty qwerty qwerty qerty qwerty qwerty wqwert qwertyu qwertyufdsdf qwerty sdfghjk dfghj fghj fghj gthyui yf</div>
+    <div class='gray-text trips-content-padding trip-card-description'>{{this.description}}</div>
   </div>
   {{/each}}
 </div>
