@@ -54,7 +54,6 @@ class ReviewCard {
   }
 
   async remove() {
-    console.log("Удаление", this.review.id);
     await fetch(API_V1_URL + `/reviews/${this.review.id}`, {
       method: "DELETE",
     });
@@ -187,8 +186,6 @@ class AddRevieCard {
 
   async sendData() {
     if (this.abilityToSend) {
-      console.log(this.rating, this.textarea.value);
-
       this.callback({
         text: this.textarea.value,
         rating: this.rating,

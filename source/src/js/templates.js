@@ -275,6 +275,7 @@ const PLACE_PAGE_TEMPLATE = `
 <button data-choose-trip-btn class="btn green-btn">Добавить в поездку</button>
 
 <select class="input-field" data-select-trip class="field">
+<option value="">Выбрать поездку</option>
 {{#each trips}}
   <option value="{{this.id}}">{{this.name}}</option>
 {{/each}}

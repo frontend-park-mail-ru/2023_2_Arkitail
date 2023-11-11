@@ -34,8 +34,6 @@ class ReviewsPage extends Page {
       content: review.text,
       rating: Number(review.rating),
     });
-    console.log("BODY", body);
-
     return await fetch(API_V1_URL + `/review`, {
       method: method,
       headers: headers,
