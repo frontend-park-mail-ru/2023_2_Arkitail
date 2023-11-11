@@ -330,29 +330,29 @@ const PLACE_PAGE_TEMPLATE = `
 `;
 
 const PROFILE_PAGE_TEMPLATE = `
-<div class="profile">
+<div class="profile grid-bottom">
     <div class="profile-picture">
         <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
         <p>{{userName}}</p>
         {{#if isEditing}}
             <div class="edit-buttons">
-                <button id="save-button">Сохранить</button>
-                <button id="cancel-button">Отмена</button>
+                <button class="btn green-btn" id="save-button">Сохранить</button>
+                <button class="btn gray-btn" id="cancel-button">Отмена</button>
             </div>
         {{else}}
-            <button class="edit-profile-button" id="edit-button">Редактировать профиль</button>
+            <button class="edit-profile-button btn fill-green-btn" id="edit-button">Редактировать профиль</button>
         {{/if}}
     </div>
     <div class="info-panel">
-        <div class="info-item">
+        <div class="info-item card">
             {{#if isEditing}}
-                <p><strong>Имя:</strong><input type="text" id="userNameInput" value="{{userName}}"></p>
-                <p><strong>День рождения:</strong><input type="text" id="birthdayInput" value="{{birthday}}"></p>
-                <p><strong>О себе:</strong><textarea id="aboutInput" rows="4">{{about}}</textarea></p>
+                <p><strong>Имя:</strong><input class="input-field" type="text" id="userNameInput" value="{{userName}}"></p>
+                <p><strong>День рождения:</strong><input class="input-field" type="text" id="birthdayInput" value="{{birthday}}"></p>
+                <p><strong>О себе:</strong><textarea class="input-field" id="aboutInput" rows="4">{{about}}</textarea></p>
             {{else}}
                 <p><strong>Имя:</strong> {{userName}}</p>
                 <p><strong>День рождения:</strong> {{birthday}}</p>
-                <p><strong>О себе:</strong> {{about}}</p>
+                <p class="broken-text"><strong>О себе:</strong> {{about}}</p>
             {{/if}}
         </div>
     </div>

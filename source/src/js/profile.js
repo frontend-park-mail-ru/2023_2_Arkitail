@@ -1,6 +1,6 @@
 class ProfilePage extends Page {
     constructor() {
-        super('profile-page', PROFILE_PAGE_TEMPLATE);
+        super('profile-page page-padding-horizontal page-padding-vertical', PROFILE_PAGE_TEMPLATE);
         this.context = {
             isEditing: false,
             userName: main.temporaryContext.userName,
