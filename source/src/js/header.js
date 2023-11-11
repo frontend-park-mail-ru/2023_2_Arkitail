@@ -69,14 +69,6 @@ class Header extends Page {
         authenticated: main.temporaryContext.authenticated,
         menu: [
           {
-            name: 'Поиск',
-            url: '#page=search;',
-            authOnly: false,
-            show: true,
-            attr: '',
-            styleClass: '',
-          },
-          {
             name: 'Поездки',
             url: '#page=trips;',
             authOnly: true,

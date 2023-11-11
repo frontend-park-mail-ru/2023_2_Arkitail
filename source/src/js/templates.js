@@ -54,9 +54,11 @@ const TRIP_PAGE_TEMPLATE = `
         {{#each this.value}}
           <div class='trip-plan-point card trip-card'>
             <div class='trip-plan-point-header'>
-              <h1>Название места</h1>
-              <p class='trip-plan-point-name'>{{this.name}}</p>
-              <h1>Описание</h1>
+              <h1 class='trip-plan-point-name general-subtitle'>{{this.name}}</h1>
+              <button class='btn green-btn'>Удалить</button>
+            </div>
+            <div class='trip-plan-point-content'>
+              <img src="{{this.imageUrl}}"/>
               <p class='trip-plan-point-description'>{{this.description}}</p>
             </div>
           </div>
