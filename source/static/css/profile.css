@@ -1,74 +1,36 @@
 .profile {
     width: 100%;
-    display: flex;
-    align-items: flex-end; /* Выравниваем содержимое вертикально по центру */
+    display: grid;
+    gap: 2rem;
+    /* align-items: flex-end; Выравниваем содержимое вертикально по центру */
 }
 
 .profile-picture {
+    width: 100%;
+    height: auto;
     text-align: left;
-    margin-left: 6%;
-    margin-top: 3%;
-    padding: 0 3%; /* Добавьте отступ с левой стороны, если нужно */
 }
 
 .profile-picture img {
-    width: 900px; /* Максимальная ширина фотографии (выберите желаемую ширину) */
-    height: 700px;
-    border-radius: 2%;
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
-}
-
-.info-panel {
-    text-align: left;
-    padding: 0 20px; /* Добавьте отступ с левой стороны, если нужно */
-    width: 40%; /* Занимает всю доступную ширину */
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    height: 700px;
+    width: 100%;
 }
 
 .info-item p strong {
-    font-weight: 900;
+    text-align: left;
     font-size: 2rem;
     color: var(--secondary);
+    width: 100%;
+    height: 100%;
 }
 
 .info-item p {
     font-size: 2rem;
     width: 100%;
-    margin-right: 5px;
-    margin-bottom: 25px;
 }
-
 
 .edit-buttons {
-    display: flex;
-    background-color: #afbfd1; /* Сохраняем цвет кнопок */
-    justify-content: center;
-    margin-top: 10px;
-}
-
-#save-button,
-#cancel-button {
-    flex: 1;
-    margin: 5px;
-    background-color: #afbfd1;
-    color: white;
-    padding: 0.5rem 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid var(--primary);
-    font-size: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#save-button:hover,
-#cancel-button:hover {
-    background-color: #afbfd1;
+    padding-top: 1rem;
+    display: grid;
 }
 
 @media (max-width: 768px) {
@@ -78,41 +40,30 @@
         padding: 10px;
     }
 
-    .edit-buttons {
-        flex-direction: column;
-        align-items: center;
+    .profile .slider {
+        display: none;
     }
+
+    .info-panel {
+        min-height: fit-content;
+    }
+
 }
 
-#save-button{
-    background-color: var(--secondary);;
-    color: white;
-    padding: 0.5rem 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid var(--primary);
-    font-size: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin-top: 10px;
-    width: 420px;
-    height: 55px;
-    margin-right: 20px;
-}
+@media (min-width: 768px) {
+    .profile {
+        grid-template-columns: 4fr 6fr;
+    }
 
-#cancel-button {
-    background-color: white;
-    color: var(--primary);
-    padding: 0.5rem 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid var(--primary);
-    font-size: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin-top: 10px;
-    width: 420px;
-    height: 55px;
+    .edit-buttons {
+        gap: 2rem;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .info-panel {
+        margin-top: 30%;
+        height: 70%;
+    }
 }
 
 /*
@@ -133,16 +84,7 @@ input[type="file"]#avatar {
 
 /* Стили для поля "О себе" в режиме редактирования */
 textarea#aboutInput {
-    width: 100%;
-    height: 50%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid black; /* Либо замените на вашу границу */
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 1.5rem;
-    white-space: pre-line; /* Перенос текста */
-    vertical-align: top; /* Выравнивание текста вверх */
+    vertical-align: top;
 }
 
 .profile-header {
@@ -161,24 +103,8 @@ textarea#aboutInput {
 }
 
 .edit-profile-button {
-    background-color: white;
-    color: var(--primary);
-    padding: 0.5rem 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid var(--primary);
-    font-size: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin-top: 10px;
+    margin-top: 1rem;
     width: 100%;
-    height: 55px;
-}
-
-@media (max-width: 768px) {
-    .profile .slider {
-        display: none;
-    }
 }
 
 .profile-header h1 {
@@ -189,10 +115,7 @@ textarea#aboutInput {
     margin-left: 25%;
 }
 
-.info-item p {
-    font-size: 2rem;
-    width: 100%;
-    margin-right: 5px;
+.info-item strong+strong {
     margin-bottom: 25px;
 }
 
@@ -206,7 +129,7 @@ textarea#aboutInput {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 60%;
+    height: 70%;
     background: #eaeaea;
     z-index: -1;
     box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.2);
@@ -218,7 +141,7 @@ textarea#aboutInput {
     left: 0;
     right: 0;
     top: 0;
-    height: 40%;
+    height: 30%;
     background: #afbfd1;
     z-index: -1;
 }
