@@ -33,9 +33,7 @@ class PlaceCard {
                 </svg>
             </div>
             <div class="card-description gray-text">
-                <p class="broken-text">
-                    {{place.description}}
-                </p>
+                <p class="broken-text">{{place.description}}</p>
             </div>
             </section>
         </div>
