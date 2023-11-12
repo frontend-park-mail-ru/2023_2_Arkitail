@@ -412,8 +412,7 @@ const HEADER_TEMPLATE = `
     <img src="{{""}}"/>
     {{/if}} -->
   </div>
-  <p class="hidden-on-mobile">{{this.userName}}</p>
-</div>
+  <p gateway="#page=profile;" class="hidden-on-mobile">{{this.userName}}</p></div>
 {{else}}
 <button gateway="#page=signup;" class="right-menu btn fill-green-btn hidden-on-mobile">
     <p>Регистрация</p>
