@@ -324,20 +324,37 @@ const PLACE_PAGE_TEMPLATE = `
 
 const PROFILE_PAGE_TEMPLATE = `
 <div class="profile grid-bottom">
-    <div class="profile-left-block">
-        <img class="card" src="https://i.pinimg.com/originals/31/ec/2c/31ec2ce212492e600b8de27f38846ed7.jpg" alt="Ваше фото профиля">
-        {{#if isEditing}}
-            <input style="display: none;" type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
-        {{/if}}
+    <div class="profile-left-container">
+        <div class="profile-avatar-container">
+
+            {{#if avatar}}
+            <img class="card" src="data:image/png;base64,{{avatar}}" alt="Ваше фото профиля">
+            {{else}}
+            <img class="card" src="../../static/img/example_avatar.jpg" alt="Ваше фото профиля">
+            {{/if}}
+
+            {{#if isEditing}}
+            <div class="profile-avatar-input">
+                <button class="btn green-btn">
+                    <input 
+                        type="file" 
+                        data-avatar
+                        name="avatar" 
+                        accept="image/png, image/jpeg" />
+                    Загрузить фото
+                </button>
+            </div>
+            {{/if}}
+        </div>
         <p class="general-main-title">{{userName}}</p>
 
         {{#if isEditing}}
         <div class="edit-buttons">
-            <button class="btn fill-green-btn" id="save-button">Сохранить</button>
-            <button class="btn gray-btn" id="cancel-button">Отмена</button>
+            <button class="btn fill-green-btn" data-save-button>Сохранить</button>
+            <button class="btn gray-btn" data-cancel-button>Отмена</button>
         </div>
         {{else}}
-        <button class="edit-profile-button btn blue-btn" id="edit-button">
+        <button class="edit-profile-button btn blue-btn" data-edit-button>
             Редактировать профиль
         </button>
         {{/if}}
@@ -351,7 +368,7 @@ const PROFILE_PAGE_TEMPLATE = `
             <input 
                 class="input-field right-input-field profile-info-input" 
                 type="text" 
-                id="userNameInput" 
+                data-user-name-input
                 maxlength="32"
                 value="{{userName}}">
         </p>
@@ -359,7 +376,7 @@ const PROFILE_PAGE_TEMPLATE = `
             <strong class="green-text input-field left-input-field">О себе:</strong>
             <textarea 
                 class="input-field" 
-                id="aboutInput" 
+                data-about-input
                 maxlength="100"
                 rows="5">{{about}}</textarea>
         </p>

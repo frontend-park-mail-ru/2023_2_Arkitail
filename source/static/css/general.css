@@ -16,7 +16,8 @@
     --page-padding: min(2vh, 2rem);
     --page-body-margin: 3vw;
     --page-body-content-margin: 1rem;
-    --page-gap: 1rem;
+    --page-gap: 2rem;
+    --btn-padding: calc(0.6rem - 2px);
 
     --header-height: 4rem;
     --logo-wight: 6rem;
@@ -203,7 +204,7 @@ svg.trash:hover,
 
 .btn {
     cursor: pointer;
-    padding: calc(0.6rem - 2px);
+    padding: var(--btn-padding);
     border-radius: 8px;
 }
 
