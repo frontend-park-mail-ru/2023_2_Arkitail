@@ -24,7 +24,7 @@ class Main {
 
   init() {
     this.headerSlot = document.querySelector("header");
-    this.header = new Header("");
+    this.header = new Header();
     this.mainSlot = document.querySelector("main");
     this.footer = new Footer("");
     this.footerSlot = document.querySelector("footer");
@@ -220,8 +220,10 @@ class Main {
     this.getUserInfo().
     then(() => {
       let pageInfo = this.pages[pageName];
+      console.log(pageName);
       if (pageInfo.mustBeAuthorized &&
         !this.temporaryContext.authenticated) {
+        console.log('WTF');
         this.route('#page=login;');
         return;
       }

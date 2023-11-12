@@ -52,6 +52,7 @@ header nav {
 .menu .logout:hover {
   color: var(--extra-red);
 }
+
 .menu .active a {
   font-weight: bold;
   color: var(--primary);

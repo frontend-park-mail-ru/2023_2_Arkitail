@@ -23,7 +23,7 @@
     --card-radius: var(--field-radius);
     --carousel-btn-size: 50px;
 
-    --title-font-family: Open Sans;
+    --title-font-family: "GoTo Bold";
     --xs-font-size: .8rem;
     --sm-font-size: 1rem;
     --md-font-size: 1.2rem;
@@ -35,7 +35,7 @@
     margin: 0;
     padding: 0;
     font-size: var(--sm-font-size);
-    font-family: BlinkMacSystemFont, Arial, sans-serif;
+    font-family: "GoTo Regular";
 }
 
 body {
@@ -240,4 +240,22 @@ svg.trash:hover {
 
 .broken-text {
     white-space: pre-wrap;
+}
+
+@font-face {
+  font-family: "GoTo Bold";
+  src:
+    url("/static/fonts/open-sans/OpenSans-Bold.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "GoTo Regular";
+  src: 
+    url("/static/fonts/open-sans/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GoTo Italic";
+  src: 
+    url("/static/fonts/open-sans/OpenSans-Italic.ttf") format("truetype");
 }
