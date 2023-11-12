@@ -1,15 +1,12 @@
-const LENGTH_LOGIN_TEMPLATE = /.{8,32}$/;
-const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 8 до 32";
-
-const LOGIN_TEMPLATE = /^\S*$/;
-const LOGIN_ERROR = "Логин не должен содержать пробелы";
+const LENGTH_LOGIN_TEMPLATE = /.{1,32}$/;
+const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 1 до 32";
 
 const EMAIL_TEMPLATE = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 const EMAIL_ERROR = "Введена некоректная почта";
 
 // const PASSWORD_TEMPLATE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])$/;
 // const PASSWORD_ERROR = "Пароль должен содержать хотя бы одну прописную букву, \
-//               одну строчную букву, одну цифру, а также специальный символ";
+//               одну строчную букву, одну цифру, а также специальный символ из !@#$%^&*";
 
 const UPPERCASE_PASSWORD_TEMPLATE = /^.*(?=[A-Z])/;
 const UPPERCASE_PASSWORD_ERROR =
