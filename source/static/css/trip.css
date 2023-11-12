@@ -27,7 +27,6 @@
 .trip-card {
   height: var(--card-height);
   width: var(--card-width);
-  padding: .4rem 0 .3rem 0;
 }
 
 .trip-card-date {
@@ -158,11 +157,6 @@
 .trip-content {
   display: block;
   margin: 5px 10px 0px;
-}
-
-.trip-card {
-  margin: 10px 0px;
-  padding: 5px 10px;
 }
 
 .green-trip-card {

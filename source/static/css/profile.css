@@ -1,94 +1,76 @@
 .profile {
+    --bg-img-height: calc(var(--page-padding) + var(--padding) + (100vw)/6);
+    --bg-img-height-mobile: calc(50vw + var(--page-padding));
+    --padding: calc(2*var(--page-padding));
+    --page-padding: 2rem;
+
     width: 100%;
     display: grid;
-    gap: 2rem;
-    /* align-items: flex-end; Выравниваем содержимое вертикально по центру */
+    gap: var(--page-padding);
+    padding-top: var(--padding);
+    padding-bottom: var(--padding);
 }
 
-.profile-picture {
-    width: 100%;
-    height: auto;
-    text-align: left;
-}
-
-.profile-picture img {
-    width: 100%;
-}
-
-.info-item {
-
-    width: 100%;
-    height: 100%;
-}
-
-.info-item p strong {
-    text-align: left;
-    font-size: 2rem;
-    color: var(--secondary);
-}
-
-.info-item p {
-    font-size: 2rem;
-    width: 100%;
-}
-
-.edit-buttons {
-    padding-top: 1rem;
-    display: grid;
-}
-
-@media (max-width: 900px) {
-    .combined-section {
-        width: 100%;
-        margin: 20px;
-        padding: 10px;
-    }
-
-    .profile .slider {
-        display: none;
-    }
-
+@media (max-width: 768px) {
     .info-panel {
         min-height: fit-content;
     }
 
+    .profile::before {
+        height: var(--bg-img-height-mobile);
+    }
+
+    .profile::after {
+        height: calc(100% - var(--bg-img-height-mobile));
+    }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
     .profile {
-        grid-template-columns: 4fr 6fr;
+        grid-template-columns: 1fr 2fr;
     }
 
     .edit-buttons {
-        gap: 2rem;
         grid-template-columns: 1fr 1fr;
     }
 
     .info-panel {
-        margin-top: 18rem;
-        height: calc(100% - 18rem);
+        margin-top: calc(var(--bg-img-height) - var(--header-height) - var(--padding) + var(--page-padding));
+        height: calc(100% - var(--bg-img-height) + var(--header-height) + var(--padding) - var(--page-padding));
+    }
+
+    .profile::before {
+        height: var(--bg-img-height);
+    }
+
+    .profile::after {
+        height: calc(100% - var(--bg-img-height));
     }
 }
 
-/*
-input[type="text"] {
-    width: 100%; 
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 1.5rem;
-}
-*/
-
-input[type="file"]#avatar {
-    padding-top: 30px;
+.info-panel {
+    box-sizing: border-box;
+    padding: var(--page-body-content-margin);
 }
 
-/* Стили для поля "О себе" в режиме редактирования */
-textarea#aboutInput {
-    vertical-align: top;
+.info-panel p+p {
+    margin-top: 25px;
+}
+
+.profile-left-block {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    gap: var(--page-body-content-margin);
+}
+
+.profile-left-block img {
+    width: 100%;
+}
+
+.edit-buttons {
+    display: grid;
+    gap: 1rem;
 }
 
 .profile-header {
@@ -99,18 +81,6 @@ textarea#aboutInput {
     align-items: center;
 }
 
-.profile-picture p {
-    font-weight: 900;
-    font-size: 3rem;
-    margin: 0;
-    margin-top: 20px;
-}
-
-.edit-profile-button {
-    margin-top: 1rem;
-    width: 100%;
-}
-
 .profile-header h1 {
     font-weight: 900;
     font-size: 2rem;
@@ -119,12 +89,14 @@ textarea#aboutInput {
     margin-left: 25%;
 }
 
-.info-item p+p {
-    margin-top: 25px;
-}
-
-.profile-info {
-    padding: 1rem;
+.profile::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: var(--gray);
+    z-index: -1;
 }
 
 .profile::after {
@@ -133,19 +105,20 @@ textarea#aboutInput {
     left: 0;
     right: 0;
     bottom: 0;
-    height: calc(100% - 20rem);
-    background: #eaeaea;
+    box-shadow: 0 -10px 15px var(--transparent-dark-gray);
     z-index: -1;
-    box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.2);
 }
 
-.profile::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 20rem;
-    background: #afbfd1;
-    z-index: -1;
+.profile-info-field {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.profile-info-field textarea{
+    border-start-start-radius: 0 !important;
+    vertical-align: top;
+}
+
+.profile-info-input {
+    width: 100%;
 }
