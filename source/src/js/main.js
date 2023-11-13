@@ -11,8 +11,8 @@ class Main {
    */
   constructor() {
     this.context = {
-      activePage: "main",
-      location: "#page=main;",
+      activePage: "",
+      location: "",
     };
 
     this.temporaryContext = {

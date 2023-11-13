@@ -71,10 +71,6 @@ const validationData = {
   ],
   'name': [
     {
-      template: LOGIN_TEMPLATE,
-      error: LOGIN_ERROR,
-    },
-    {
       template: LENGTH_LOGIN_TEMPLATE,
       error: LENGTH_LOGIN_ERROR,
     },
