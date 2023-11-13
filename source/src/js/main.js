@@ -84,20 +84,19 @@ class Main {
    * @returns {Promise} промис запроса авторизации
    */
   async authenticate() {
-    return fetch(
-      API_V1_URL + '/auth',
-      {
-        credentials: 'include',
-        method: 'GET',
-      }
-    ).then(response => {
-      if (response.status == 200) {
-        this.temporaryContext.authenticated = true;
-      } else {
-        this.temporaryContext.authenticated = false;
-        throw new Error('authenticate failed');
-      }
-    }).catch(_ => {});
+    return fetch(API_V1_URL + "/auth", {
+      credentials: "include",
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          this.temporaryContext.authenticated = true;
+        } else {
+          this.temporaryContext.authenticated = false;
+          throw new Error("authenticate failed");
+        }
+      })
+      .catch((_) => {});
   }
 
   async getUserInfo() {
@@ -151,30 +150,30 @@ class Main {
   }
 
   uploadFile(file) {
-    fetch('/api/v1/user/avatar', {
-      method: 'POST',
+    fetch("/api/v1/user/avatar", {
+      method: "POST",
       body: file,
       headers: {
-        'Content-Type': 'application/octet-stream',
+        "Content-Type": "application/octet-stream",
       },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
         }
-        console.log('File uploaded successfully.');
+        console.log("File uploaded successfully.");
       })
-      .catch(error => {
-        console.error('Error uploading file:', error);
+      .catch((error) => {
+        console.error("Error uploading file:", error);
       });
   }
 
   async upload(blobOrFile) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/v1/user/avatar', true);
-    xhr.onload = function(e) {
+    xhr.open("POST", "/api/v1/user/avatar", true);
+    xhr.onload = function (e) {
       console.log(e);
     };
-  
+
     xhr.send(blobOrFile);
   }
 
@@ -217,46 +216,38 @@ class Main {
     let pageName = parameters["page"];
     this.context.location = location;
 
-    this.getUserInfo().
-    then(() => {
+    this.getUserInfo().then(() => {
       let pageInfo = this.pages[pageName];
-      console.log(pageName);
-      if (pageInfo.mustBeAuthorized &&
-        !this.temporaryContext.authenticated) {
-        console.log('WTF');
-        this.route('#page=login;');
+      if (pageInfo.mustBeAuthorized && !this.temporaryContext.authenticated) {
+        this.route("#page=login;");
         return;
       }
 
       if (pageInfo.renderHeader) {
         this.header.render();
-        this.headerSlot.style.display = 'block';
+        this.headerSlot.style.display = "block";
         this.headerSlot.replaceChildren(this.header.node);
         this.footer.render();
-        this.footerSlot.style.display = 'block';
+        this.footerSlot.style.display = "block";
         this.footerSlot.replaceChildren(this.footer.node);
       } else {
-        this.headerSlot.style.display = 'none';
+        this.headerSlot.style.display = "none";
         this.headerSlot.replaceChildren();
-        this.footerSlot.style.display = 'none';
+        this.footerSlot.style.display = "none";
         this.footerSlot.replaceChildren();
       }
 
       if (this.context.activePage != pageName) {
-        window.history.pushState(this.context, '', this.context.location);
+        window.history.pushState(this.context, "", this.context.location);
         this.context.activePage = pageName;
       }
-
-      this.pages[pageName].instance.render().then(() => {
-        console.log(this.pages[pageName].instance.node);
-        this.reRender(pageName);
-      });
+      this.reRender();
     });
   }
 
   reRender(pageName = this.context.activePage) {
     this.pages[pageName].instance.render().then(() => {
-      console.log(this.pages[pageName].instance.node);
+      // console.log(this.pages[pageName].instance.node);
       this.mainSlot.replaceChildren(this.pages[pageName].instance.node);
     });
   }
@@ -266,8 +257,8 @@ class Main {
    * используя HistoryApi
    */
   restoreState() {
-    if (window.location.hash == '') {
-      this.route('#page=main;');
+    if (window.location.hash == "") {
+      this.route("#page=main;");
       return;
     }
 

@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: var(--page-body-content-margin);
-    margin-bottom: var(--page-gap);
+    margin-bottom: var(--page-body-content-margin);
 }
 
 .add-review-card {

@@ -12,7 +12,7 @@
     font-size: 1rem;
     height: var(--card-size);
     display: grid;
-    grid-template-rows: 5fr 4fr;
+    grid-template-rows: 9fr 7fr;
 }
 .list-of-places .place-card section:first-child img {
     display: block;

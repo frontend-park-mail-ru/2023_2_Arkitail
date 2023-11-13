@@ -184,20 +184,20 @@ const MAIN_PAGE_TEMPLATE = `
 
 const MAIN_PAGE_CAROUSEL_SLIDE_TEMPLATE = `
 <div>
-  <img src="{{place.imageUrl}}" />
-  <div class="desc">
-    <p>{{place.name}}</p>
-    <button gateway="#page=place;id={{place.id}};">
-      <p>Узнать больше</p>
-    </button>
-  </div>
+    <img src="{{place.imageUrl}}" />
+    <div class="desc">
+        <p>{{place.name}}</p>
+        <button gateway="#page=place;id={{place.id}};">
+            <p>Узнать больше</p>
+        </button>
+    </div>
 </div>
 `;
 
 const PLACE_PAGE_TEMPLATE = `
 <div class="page-body-margin">
     <p class="general-main-title">{{ place.name }}</p>
-    <div class="reviews md-size-text">
+    <div class="reviews md-text">
         <svg
             class="star active"
             viewBox="0 0 184 184"
@@ -216,7 +216,7 @@ const PLACE_PAGE_TEMPLATE = `
 
 <div class="line">
     <hr>
-    <p class="work-schedule md-size-text">Открыто сейчас <span class="gray-text"> {{ place.openHour }}-{{ place.closeHour }} </span></p>
+    <p class="work-schedule md-text">Открыто сейчас <span class="gray-text"> {{ place.openHour }}-{{ place.closeHour }} </span></p>
     <hr>
 </div>
 
@@ -227,9 +227,7 @@ const PLACE_PAGE_TEMPLATE = `
         <div class="page-body-margin info card">
             <p class="general-title">Информация</p>
 
-            <p class="gray-text description broken-text">
-                {{ place.description }}
-            </p>
+            <p class="gray-text description broken-text">{{ place.description }}</p>
 
             <div>
                 <p class="general-subtitle">Адрес</p>
@@ -292,7 +290,7 @@ const PLACE_PAGE_TEMPLATE = `
         <p class="general-title">Отзывы</p>
 
         <div class="reviews-header grid-bottom">
-            <div class="stars md-size-text">
+            <div class="stars md-text">
                 <p class="rating">{{ place.rating }}</p>
                 {{#stars 5 place.rating}}
                 <svg
@@ -308,7 +306,7 @@ const PLACE_PAGE_TEMPLATE = `
                 {{/stars}}
             </div>
 
-            <p gateway="#page=reviews;" class="gray-underline-text md-size-text">{{ place.reviewCount }} отзывов</p>
+            <p gateway="#page=reviews;" class="gray-underline-text md-text">{{ place.reviewCount }} отзывов</p>
 
             <div class="write-review">
                 <button data-add-review-btn class="btn blue-btn">
@@ -331,30 +329,73 @@ const PLACE_PAGE_TEMPLATE = `
 
 const PROFILE_PAGE_TEMPLATE = `
 <div class="profile grid-bottom">
-    <div class="profile-picture">
-        <img src="../../static/img/example.jpg" alt="Ваше фото профиля">
-        <p>{{userName}}</p>
-        {{#if isEditing}}
-            <div class="edit-buttons">
-                <button class="btn green-btn" id="save-button">Сохранить</button>
-                <button class="btn gray-btn" id="cancel-button">Отмена</button>
-            </div>
-        {{else}}
-            <button class="edit-profile-button btn fill-green-btn" id="edit-button">Редактировать профиль</button>
-        {{/if}}
-    </div>
-    <div class="info-panel">
-        <div class="info-item card">
-            {{#if isEditing}}
-                <p><strong>Имя:</strong><input class="input-field" type="text" id="userNameInput" value="{{userName}}"></p>
-                <p><strong>День рождения:</strong><input class="input-field" type="text" id="birthdayInput" value="{{birthday}}"></p>
-                <p><strong>О себе:</strong><textarea class="input-field" id="aboutInput" rows="4">{{about}}</textarea></p>
+    <div class="profile-left-container">
+        <div class="profile-avatar-container">
+
+            {{#if avatar}}
+            <img class="card" src="data:image/png;base64,{{avatar}}" alt="Ваше фото профиля">
             {{else}}
-                <p><strong>Имя:</strong> {{userName}}</p>
-                <p><strong>День рождения:</strong> {{birthday}}</p>
-                <p class="broken-text"><strong>О себе:</strong> {{about}}</p>
+            <img class="card" src="../../static/img/example_avatar.jpg" alt="Ваше фото профиля"> {{/if}}
+
+            {{#if isEditing}}
+            <div class="profile-avatar-input">
+                <button class="btn green-btn">
+                    <input 
+                        type="file" 
+                        data-avatar
+                        name="avatar" 
+                        accept="image/png, image/jpeg" />
+                    Загрузить фото
+                </button>
+            </div>
             {{/if}}
         </div>
+        <p class="general-main-title">{{userName}}</p>
+
+        {{#if isEditing}}
+        <div class="edit-buttons">
+            <button class="btn fill-green-btn" data-save-button>Сохранить</button>
+            <button class="btn gray-btn" data-cancel-button>Отмена</button>
+        </div>
+        {{else}}
+        <button class="edit-profile-button btn blue-btn" data-edit-button>
+            Редактировать профиль
+        </button>
+        {{/if}}
+
+    </div>
+    <div class="info-panel card">
+
+        {{#if isEditing}}
+        <p class="profile-info-field">
+            <strong class="input-field left-input-field green-text">Имя:</strong>
+            <input 
+                class="input-field right-input-field profile-info-input" 
+                type="text" 
+                data-user-name-input
+                maxlength="32"
+                value="{{userName}}">
+        </p>
+        <p class="profile-info-field">
+            <strong class="green-text input-field left-input-field">О себе:</strong>
+            <textarea 
+                class="input-field" 
+                data-about-input
+                maxlength="100"
+                rows="5">{{about}}</textarea>
+        </p>
+
+        {{else}}
+
+        <p>
+            <strong class="green-text">Имя:</strong> 
+            <span>{{userName}}</span>
+        </p>
+        <p>
+          <strong class="green-text">О себе:</strong> 
+          <span class="broken-text">{{about}}</span>
+        </p>
+        {{/if}}
     </div>
 </div>`;
 

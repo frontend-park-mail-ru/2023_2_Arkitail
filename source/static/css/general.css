@@ -1,5 +1,6 @@
 :root {
     --light-gray: #d6dde4;
+    --gray: #AFBFD1;
     --dark-gray: #667085;
     --transparent-dark-gray: rgba(102, 112, 133, .5);
     --transparent-darkest-gray: rgba(0, 11, 35, .5);
@@ -15,7 +16,8 @@
     --page-padding: min(2vh, 2rem);
     --page-body-margin: 3vw;
     --page-body-content-margin: 1rem;
-    --page-gap: 1rem;
+    --page-gap: 2rem;
+    --btn-padding: calc(0.6rem - 2px);
 
     --header-height: 4rem;
     --logo-wight: 6rem;
@@ -56,6 +58,8 @@ hr {
     border-bottom: 2px solid var(--transparent-darkest-gray);
 }
 
+
+/* стили для страниц */
 [gateway] {
     cursor: pointer;
 }
@@ -74,10 +78,42 @@ hr {
     padding-right: var(--page-body-margin);
 }
 
+.grid-bottom {
+    align-items: end;
+}
+
+
+/* стиль для карточек */
 .card {
     border-radius: var(--card-radius);
     box-shadow: 0px 0px 15px 3px var(--transparent-dark-gray);
     background-color: var(--white);
+}
+
+
+/* стили для текста */
+
+.gray-text {
+    color: var(--dark-gray);
+}
+
+.green-text {
+    color: var(--secondary);
+}
+
+.gray-underline-text {
+    color: var(--dark-gray);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.sm-text {
+    font-size: var(--xs-font-size);
+}
+
+.md-text,
+.md-text * {
+    font-size: var(--md-font-size);
 }
 
 .general-main-title {
@@ -103,6 +139,12 @@ hr {
     font-weight: 600;
 }
 
+.broken-text {
+    white-space: pre-wrap;
+}
+
+
+/* стили для звезд */
 svg.star {
     height: var(--sm-font-size);
     width: var(--sm-font-size);
@@ -110,19 +152,12 @@ svg.star {
     padding: 0 .2rem;
 }
 
-.md-size-text svg, svg.md-size-text {
+.md-text svg,
+svg.md-text {
     height: var(--md-font-size);
     width: var(--md-font-size);
     padding: 0 .4rem;
 }
-
-
-@media (max-width: 768px) {
-    svg.clickable {
-         height: var(--lg-font-size) !important;
-         width: var(--lg-font-size) !important;
-     }
- }
 
 svg.star.active {
     fill: var(--primary);
@@ -141,23 +176,13 @@ svg.star:nth-child(2) {
     display: flex;
 }
 
-.sm-text {
-    font-size: var(--xs-font-size);
-}
 
-.gray-text {
-    color: var(--dark-gray);
-}
-
-.gray-underline-text {
-    color: var(--dark-gray);
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.md-size-text,
-.md-size-text * {
-    font-size: var(--md-font-size);
+/* стили для кнопок */
+@media (max-width: 768px) {
+    svg.clickable {
+        height: var(--lg-font-size) !important;
+        width: var(--lg-font-size) !important;
+    }
 }
 
 svg.close {
@@ -172,13 +197,14 @@ svg.trash {
     width: var(--md-font-size);
 }
 
-svg.trash:hover {
+svg.trash:hover,
+.red-btn:hover {
     fill: var(--extra-red);
 }
 
 .btn {
     cursor: pointer;
-    padding: calc(0.6rem - 2px);
+    padding: var(--btn-padding);
     border-radius: 8px;
 }
 
@@ -212,6 +238,7 @@ svg.trash:hover {
     color: var(--red);
 }
 
+/* стиль для отображения маленькой аватрки */
 .mini-avatar {
     height: 2.4rem !important;
     width: 2.4rem !important;
@@ -220,10 +247,7 @@ svg.trash:hover {
     padding: 0 !important;
 }
 
-.grid-bottom {
-    align-items: end;
-}
-
+/* стиль для инпутов */
 .input-field {
     padding: var(--field-radius);
     outline: 0;
@@ -238,8 +262,24 @@ svg.trash:hover {
     border: 1px solid var(--primary);
 }
 
-.broken-text {
-    white-space: pre-wrap;
+.none-input-field {
+    padding: 0;
+    outline: 0;
+    outline-offset: 0;
+    border: none;
+    height: fit-content;
+    background-color: var(--white);
+}
+
+.left-input-field {
+    border-end-end-radius: 0 !important;
+    border-start-end-radius: 0 !important;
+    border-right: 0;
+}
+
+.right-input-field {
+    border-start-start-radius: 0 !important;
+    border-end-start-radius: 0 !important;
 }
 
 @font-face {
