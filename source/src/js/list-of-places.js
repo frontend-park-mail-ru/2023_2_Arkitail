@@ -1,14 +1,16 @@
 class ListOfPlaces {
-  constructor(parent) {
-    this.parent = parent;
-    this.template = Handlebars.compile(`
-      <div data-list class="list"></div>
-    `);
-    this.parent.innerHTML = this.template();
-    this.list = this.parent.querySelector("[data-list]");
+  constructor() {
+    this.block = document.createElement("div");
+    this.block.className = "list";
+    this.block.setAttribute("data-list", "");
   }
 
   appendPlace(place) {
-    new PlaceCard(this.list, place);
+    const placeCard = new PlaceCard(place);
+    this.block.appendChild(placeCard.getHtml());
+  }
+
+  getHtml() {
+    return this.block;
   }
 }

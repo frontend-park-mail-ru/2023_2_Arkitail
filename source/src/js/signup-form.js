@@ -1,20 +1,16 @@
-const LENGTH_LOGIN_TEMPLATE = /.{8,32}$/;
-const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 8 до 32";
-
-const LOGIN_TEMPLATE = /^\S*$/;
-const LOGIN_ERROR = "Логин не должен содержать пробелы";
+const LENGTH_LOGIN_TEMPLATE = /.{1,32}$/;
+const LENGTH_LOGIN_ERROR = "Длина логина должна быть от 1 до 32";
 
 const EMAIL_TEMPLATE = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 const EMAIL_ERROR = "Введена некоректная почта";
 
 // const PASSWORD_TEMPLATE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])$/;
 // const PASSWORD_ERROR = "Пароль должен содержать хотя бы одну прописную букву, \
-//               одну строчную букву, одну цифру, а также специальный символ";
+//               одну строчную букву, одну цифру, а также специальный символ из !@#$%^&*";
 
 const UPPERCASE_PASSWORD_TEMPLATE = /^.*(?=[A-Z])/;
 const UPPERCASE_PASSWORD_ERROR =
   "Пароль должен содержать хотя бы одну прописную букву";
-
 const LOWERCASE_PASSWORD_TEMPLATE = /^.*(?=[a-z])/;
 const LOWERCASE_PASSWORD_ERROR =
   "Пароль должен содержать хотя бы одну строчную букву";
@@ -75,10 +71,6 @@ const validationData = {
   ],
   'name': [
     {
-      template: LOGIN_TEMPLATE,
-      error: LOGIN_ERROR,
-    },
-    {
       template: LENGTH_LOGIN_TEMPLATE,
       error: LENGTH_LOGIN_ERROR,
     },
@@ -86,72 +78,9 @@ const validationData = {
 };
 
 class SignupForm extends Page {
-  // @param {string} template
-  constructor(template) {
-    super('signup form', template);
+  constructor() {
+    super('signup form', SIGNUP_PAGE_TEMPLATE);
     this.preroute = this.clear;
-    this.template = Handlebars.compile(`
-      <div class="goto-form">
-        <figure class="logo">
-          <img gateway='list-of-places' src="/static/img/logo.svg" alt="GoTo" />
-          <figcaption>
-            <p class="title">Начните путешествовать сейчас</p>
-            <p>моментальная регистрация</p>
-          </figcaption>
-        </figure>
-        <form>
-          <div class="form-item name">
-            <input name="name" type="text" placeholder="Ваше имя" />
-          </div>
-          <div class="form-item email">
-            <input name="email" type="text" placeholder="Ваша почта" />
-          </div>
-          <div class="form-item password">
-            <input name="password" type="password" placeholder="Ваш пароль" />
-          </div>
-          <div class="form-item repeat-password">
-            <input
-              name="repeat-password"
-              type="password"
-              placeholder="Ваш пароль еще раз"
-            />
-          </div>
-          <!-- <div class="input-group-label">Дата рождения</div>
-          <div class="form-item input-group">
-            <div class="input-group-item">
-              <input name="day" type="text" placeholder="День" />
-            </div>
-            <div class="input-group-item">
-              <input name="month" type="text" placeholder="Месяц" />
-            </div>
-            <div class="input-group-item">
-              <input name="year" type="text" placeholder="Год" />
-            </div>
-          </div> -->
-          <div class="form-submit submit">
-            <input name="submit" type="submit" value="Зарегистрироваться" />
-          </div>
-
-          <div>
-              <p error class="validation-error"></p>
-          </div>
-        </form>
-        <div class="form-footer">
-          <p gateway="login" class="login">
-            Уже есть аккаунт? <span class="goto-login-link">Войти</span>
-          </p>
-        </div>
-      </div>
-    `);
-
-    this.render({});
-    this.errorMessage = this.node.querySelector("[error]");
-    this.node
-    .querySelector('form')
-    .addEventListener('submit', event => {
-      event.preventDefault();
-      this.submit();
-    });
   }
 
   submit() {
@@ -169,7 +98,7 @@ class SignupForm extends Page {
     }
 
     const body = JSON.stringify({
-      login: inputs['name'].value,
+      name: inputs['name'].value,
       password: inputs['password'].value,
       email: inputs['email'].value,
     });
@@ -179,9 +108,10 @@ class SignupForm extends Page {
       headers: headers,
       body: body,
     }).then(response => {
-      if (response.status == 200) {
+        console.log(response.json())
+        if (response.status == 204) {
         this.clear();
-        main.route('list-of-places');
+        main.route('#page=main;');
       } else if (response.status == 401) {
         this.errorMessage.innerText = USER_ALREADY_EXISTS_ERROR;
       } else {
@@ -233,28 +163,33 @@ class SignupForm extends Page {
 
   // @return {{Promise|object}}
   async signup(fetchBody) {
-    if (main.temporaryContext.authenticated.pending) {
-      console.error("[signup] Authentication request already pending");
-      return null;
-    }
-
-    main.temporaryContext.authenticated.pending = true;
-
     return fetch(
-      API_V1_URL + 'signup',
+      API_V1_URL + '/signup',
       fetchBody,
     ).then(response => {
-      main.temporaryContext.authenticated.pending = false;
-      if (response.status == 200) {
-        main.temporaryContext.authenticated.status = true;
+      if (response.status == 204) {
+        main.temporaryContext.authenticated = true;
       } else if (response.status == 401) {
-        main.temporaryContext.authenticated.status = false;
+        main.temporaryContext.authenticated = false;
       } else {
-        main.temporaryContext.authenticated.status = false;
+        main.temporaryContext.authenticated = false;
         console.error('Signup fatal error');
       }
 
       return response;
+    });
+  }
+
+  async renderTemplate() {
+    await super.renderTemplate();
+
+    this.errorMessage = this.node.querySelector("[error]");
+    
+    this.node
+    .querySelector('form')
+    .addEventListener('submit', event => {
+      event.preventDefault();
+      this.submit();
     });
   }
 }

@@ -1,0 +1,127 @@
+.profile {
+    --bg-img-height: calc(var(--page-padding) + var(--padding) + (100vw)/6);
+    --bg-img-height-mobile: calc(50vw + var(--page-padding));
+    --padding: calc(2*var(--page-padding));
+
+    width: 100%;
+    display: grid;
+    gap: var(--page-gap);
+}
+
+@media (max-width: 768px) {
+    .info-panel {
+        min-height: fit-content;
+    }
+
+    .profile::before {
+        height: var(--bg-img-height-mobile);
+    }
+
+    .profile::after {
+        height: calc(100% - var(--bg-img-height-mobile));
+    }
+}
+
+@media (min-width: 768px) {
+    .profile {
+        grid-template-columns: 1fr 2fr;
+    }
+
+    .edit-buttons {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .info-panel {
+        height: calc(100% - var(--bg-img-height) + var(--header-height));
+    }
+
+    .profile::before {
+        height: var(--bg-img-height);
+    }
+
+    .profile::after {
+        height: calc(100% - var(--bg-img-height));
+    }
+}
+
+.info-panel {
+    box-sizing: border-box;
+    padding: var(--page-body-content-margin);
+}
+
+.info-panel p+p {
+    margin-top: 25px;
+}
+
+.profile-left-container {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    gap: var(--page-body-content-margin);
+}
+
+.profile-avatar-container {
+    position: relative;
+}
+
+.profile-avatar-container img {
+    width: 100%;
+}
+
+.profile-avatar-input {
+    position: absolute;
+    bottom: var(--page-body-content-margin);
+    right: var(--page-body-content-margin);
+}
+
+.profile-avatar-input button {
+    position: relative;
+}
+
+.profile-avatar-input button input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.edit-buttons {
+    display: grid;
+    gap: 1rem;
+}
+
+.profile::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: var(--gray);
+    z-index: -1;
+}
+
+.profile::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 -10px 15px var(--transparent-dark-gray);
+    z-index: -1;
+}
+
+.profile-info-field {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.profile-info-field textarea {
+    border-start-start-radius: 0 !important;
+    vertical-align: top;
+}
+
+.profile-info-input {
+    width: 100%;
+}

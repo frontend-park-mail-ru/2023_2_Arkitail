@@ -1,0 +1,36 @@
+.reviews {
+    display: grid;
+    gap: var(--page-body-content-margin) 0;
+    width: 100%;
+}
+
+@media (max-width: 370px) {
+
+    .reviews .reviews-header .write-review .btn {
+        width: 100%;
+    }
+}
+
+@media (min-width: 370px) {
+
+    .reviews .reviews-header {
+        grid-template-columns: auto 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .reviews .reviews-header .write-review  {
+        justify-self: end;
+    }
+}
+
+.reviews .reviews-header {
+    display: grid;
+    gap: var(--page-body-content-margin);
+}
+
+.reviews .list-of-reviews{
+    display: grid;
+    gap: var(--page-body-content-margin) 0;
+}

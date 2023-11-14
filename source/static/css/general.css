@@ -1,5 +1,6 @@
 :root {
     --light-gray: #d6dde4;
+    --gray: #AFBFD1;
     --dark-gray: #667085;
     --transparent-dark-gray: rgba(102, 112, 133, .5);
     --transparent-darkest-gray: rgba(0, 11, 35, .5);
@@ -11,17 +12,32 @@
     --black: #000;
     --red: rgb(136, 8, 15);
     --extra-red: rgb(210, 8, 18);
+
+    --page-padding: min(2vh, 2rem);
+    --page-body-margin: 3vw;
+    --page-body-content-margin: 1rem;
+    --page-gap: 2rem;
+    --btn-padding: calc(0.6rem - 2px);
+
     --header-height: 4rem;
     --logo-wight: 6rem;
-    --title: Open Sans;
-    --card-radius: 4px;
+    --field-radius: 8px;
+    --card-radius: var(--field-radius);
+    --carousel-btn-size: 50px;
+
+    --title-font-family: "GoTo Bold";
+    --xs-font-size: .8rem;
+    --sm-font-size: 1rem;
+    --md-font-size: 1.2rem;
+    --lg-font-size: 1.5rem;
+    --xl-font-size: 2rem;
 }
 
 * {
     margin: 0;
     padding: 0;
-    font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    font-size: var(--sm-font-size);
+    font-family: "GoTo Regular";
 }
 
 body {
@@ -36,7 +52,250 @@ ul {
     list-style: none;
 }
 
+hr {
+    height: 0;
+    border: none;
+    border-bottom: 2px solid var(--transparent-darkest-gray);
+}
+
+
+/* стили для страниц */
+[gateway] {
+    cursor: pointer;
+}
+
+.page-body-margin {
+    margin: 0 var(--page-body-margin);
+}
+
+.page-padding-vertical {
+    padding-top: var(--page-padding);
+    padding-bottom: var(--page-padding);
+}
+
+.page-padding-horizontal {
+    padding-left: var(--page-body-margin);
+    padding-right: var(--page-body-margin);
+}
+
+.grid-bottom {
+    align-items: end;
+}
+
+
+/* стиль для карточек */
 .card {
     border-radius: var(--card-radius);
     box-shadow: 0px 0px 15px 3px var(--transparent-dark-gray);
+    background-color: var(--white);
+}
+
+
+/* стили для текста */
+
+.gray-text {
+    color: var(--dark-gray);
+}
+
+.green-text {
+    color: var(--secondary);
+}
+
+.gray-underline-text {
+    color: var(--dark-gray);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.sm-text {
+    font-size: var(--xs-font-size);
+}
+
+.md-text,
+.md-text * {
+    font-size: var(--md-font-size);
+}
+
+.general-main-title {
+    font-size: var(--xl-font-size);
+    font-weight: 700;
+    font-family: var(--title-font-family);
+}
+
+.general-title {
+    font-size: var(--lg-font-size);
+    font-weight: 650;
+    font-family: var(--title-font-family);
+}
+
+.general-subtitle {
+    font-size: var(--md-font-size);
+    font-weight: 550;
+    font-family: var(--title-font-family);
+}
+
+.rating {
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.broken-text {
+    white-space: pre-wrap;
+}
+
+
+/* стили для звезд */
+svg.star {
+    height: var(--sm-font-size);
+    width: var(--sm-font-size);
+    fill: var(--dark-gray);
+    padding: 0 .2rem;
+}
+
+.md-text svg,
+svg.md-text {
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+    padding: 0 .4rem;
+}
+
+svg.star.active {
+    fill: var(--primary);
+}
+
+.stars svg.star:nth-child(1),
+svg.star:nth-child(2) {
+    padding-right: 0;
+}
+
+.stars svg.star+svg.star {
+    padding: 0;
+}
+
+.stars {
+    display: flex;
+}
+
+
+/* стили для кнопок */
+@media (max-width: 768px) {
+    svg.clickable {
+        height: var(--lg-font-size) !important;
+        width: var(--lg-font-size) !important;
+    }
+}
+
+svg.close {
+    fill: var(--dark-gray);
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+}
+
+svg.trash {
+    fill: var(--red);
+    height: var(--md-font-size);
+    width: var(--md-font-size);
+}
+
+svg.trash:hover,
+.red-btn:hover {
+    fill: var(--extra-red);
+}
+
+.btn {
+    cursor: pointer;
+    padding: var(--btn-padding);
+    border-radius: 8px;
+}
+
+.fill-green-btn {
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
+    color: var(--white);
+}
+
+.green-btn {
+    background-color: var(--white);
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+}
+
+.blue-btn {
+    background-color: var(--white);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.gray-btn {
+    background-color: var(--white);
+    border: 2px solid var(--transparent-dark-gray);
+    color: var(--dark-gray);
+}
+
+.red-btn {
+    background-color: var(--white);
+    border: 2px solid var(--red);
+    color: var(--red);
+}
+
+/* стиль для отображения маленькой аватрки */
+.mini-avatar {
+    height: 2.4rem !important;
+    width: 2.4rem !important;
+    background-color: var(--transparent-dark-gray);
+    border-radius: 50%;
+    padding: 0 !important;
+}
+
+/* стиль для инпутов */
+.input-field {
+    padding: var(--field-radius);
+    outline: 0;
+    outline-offset: 0;
+    border-radius: var(--field-radius);
+    border: 1px solid var(--light-gray);
+    height: fit-content;
+    background-color: var(--white);
+}
+
+.input-field:focus {
+    border: 1px solid var(--primary);
+}
+
+.none-input-field {
+    padding: 0;
+    outline: 0;
+    outline-offset: 0;
+    border: none;
+    height: fit-content;
+    background-color: var(--white);
+}
+
+.left-input-field {
+    border-end-end-radius: 0 !important;
+    border-start-end-radius: 0 !important;
+    border-right: 0;
+}
+
+.right-input-field {
+    border-start-start-radius: 0 !important;
+    border-end-start-radius: 0 !important;
+}
+
+@font-face {
+  font-family: "GoTo Bold";
+  src:
+    url("/static/fonts/open-sans/OpenSans-Bold.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "GoTo Regular";
+  src: 
+    url("/static/fonts/open-sans/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GoTo Italic";
+  src: 
+    url("/static/fonts/open-sans/OpenSans-Italic.ttf") format("truetype");
 }

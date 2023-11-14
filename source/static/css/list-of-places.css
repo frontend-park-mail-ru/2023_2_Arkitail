@@ -12,9 +12,8 @@
     font-size: 1rem;
     height: var(--card-size);
     display: grid;
-    grid-template-rows: 5fr 4fr;
+    grid-template-rows: 9fr 7fr;
 }
-
 .list-of-places .place-card section:first-child img {
     display: block;
     height: auto;
@@ -29,9 +28,7 @@
     width: 3rem;
     position: absolute;
     padding: .4rem 0 .3rem;
-    background-color: var(--white);
     margin: 1rem;
-    border-radius: 8px;
     font-weight: 600;
 }
 
@@ -44,22 +41,67 @@
 .list-of-places .place-card section:last-child .card-description {
     overflow: hidden;
     text-overflow: ellipsis;
+
+    display: -webkit-box;
     -webkit-line-clamp: var(--card-description-size);
     -webkit-box-orient: vertical;
-    display: -webkit-box;
+
+    display: -moz-box;
+    -moz-line-clamp: var(--card-description-size);
+    -moz-box-orient: vertical;
+
+    display: -o-box;
+    -o-line-clamp: var(--card-description-size);
+    -o-box-orient: vertical;
+    
+    display: -ms-box;
+    -ms-line-clamp: var(--card-description-size);
+    -ms-box-orient: vertical;
 }
 
 .list-of-places .card-header {
     display: grid;
-    grid-template-columns: 1fr 2.5rem 1rem;
+    grid-template-columns: 1fr auto auto;
     margin-bottom: .5rem;
 }
 
-.list-of-places .card-rating {
-    color: var(--dark-gray);
-    font-weight: 600;
+.list-of-places .rating {
     margin-left: 1rem;
 }
+
+
+.list-of-places-carousel .slide img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.list-of-places-carousel .desc {
+    position: absolute;
+    top: 10%;
+    left: var(--carousel-btn-size);
+}
+
+.list-of-places-carousel .desc>p {
+    -webkit-text-stroke: 1px var(--black);
+    -moz-text-stroke: 1px var(--black);
+    -o-text-stroke: 1px var(--black);
+    -o-ms-stroke: 1px var(--black);
+    color: var(--white);
+    font-size: 3rem;
+    margin-bottom: 1vw;
+    font-weight: 700;
+    font-family: "GoTo Bold";
+}
+
+.list-of-places-carousel .desc>button {
+    font-weight: 600;
+    background-color: var(--transparent-darkest-gray);
+    color: var(--white);
+    border: 2px solid var(--white);
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
 
 .list-of-places-carousel {
     background-color: var(--dark-gray);

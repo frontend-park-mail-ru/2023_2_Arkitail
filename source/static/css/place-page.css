@@ -1,0 +1,173 @@
+.place {
+    --info-content-margin: .5rem;
+    --info-padding: 1rem;
+    --review-text-size: 8;
+
+    display: grid;
+    gap: var(--page-body-content-margin) 0;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .place .reviews a {
+        text-align: end;
+    }
+
+    .place .work-schedule {
+        padding: .5rem var(--page-body-margin);
+    }
+
+    .place .info-card {
+        width: 100%;
+    }
+
+    .place .info-card img {
+        margin-bottom: var(--page-body-content-margin);
+    }
+
+    .place .info-card .info .description {
+        max-height: 12rem;
+    }
+
+    .place .reviews-header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        text-align: end;
+    }
+
+    .place .write-review {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    .place .write-review .btn {
+        width: 100%;
+        margin-top: var(--page-body-content-margin);
+    }
+}
+
+@media (min-width: 992px) {
+    .place .work-schedule {
+        padding: .5rem calc(2*var(--page-body-margin));
+    }
+
+    .place .info-card {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        padding-left: var(--page-body-margin);
+        margin-top: var(--page-body-content-margin);
+        position: relative;
+    }
+
+    .place .info-card .info {
+        position: absolute;
+        height: 100%;
+    }
+
+    .place .info-card .info .description {
+        max-height: calc(100%);
+    }
+
+    .place .reviews-header {
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        gap: var(--page-body-content-margin);
+    }
+
+    .place .reviews-header .btn {
+        margin-left: var(--page-body-margin);
+    }
+
+    .place .all-reviews-btn {
+        width: fit-content;
+    }
+}
+
+.place .reviews {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    margin-top: calc(var(--page-body-content-margin)/3);
+}
+
+.place .reviews a {
+    margin-left: var(--page-body-content-margin);
+}
+
+.place .work-schedule {
+    background-color: var(--white);
+}
+
+.place .info-card img {
+    width: 100%;
+}
+
+.place .info-card .info-container {
+    height: 100%;
+}
+
+.place .info-card .info {
+    box-sizing: border-box;
+    padding: var(--info-padding);
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    gap: var(--info-content-margin);
+    align-items: start;
+}
+
+.place .info-card .info .description {
+    overflow-y: auto;
+}
+
+.place .info-card .contacts {
+    display: grid;
+}
+
+.place .info-card .contacts p {
+    width: max-content;
+    display: inline-block;
+    padding-right: var(--page-body-content-margin);
+}
+
+.place .place-carousel .carousel-button-previous {
+    left: 0;
+}
+
+.place .place-carousel .carousel-button-next {
+    right: 0;
+}
+
+.place .slide {
+    padding: var(--page-body-content-margin) 0;
+}
+
+.place .slide {
+    height: 15rem;
+}
+
+.place .review-card {
+    height: 15rem;
+    position: absolute;
+    width: calc(100% - 2*var(--page-body-content-margin));
+    left: var(--page-body-content-margin);
+}
+
+.place .review-card p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: var(--review-text-size);
+    -webkit-box-orient: vertical;
+
+    display: -moz-box;
+    -moz-line-clamp: var(--review-text-size);
+    -moz-box-orient: vertical;
+
+    display: -o-box;
+    -o-line-clamp: var(--review-text-size);
+    -o-box-orient: vertical;
+
+    display: -ms-box;
+    -ms-line-clamp: var(--review-text-size);
+    -ms-box-orient: vertical;
+}
